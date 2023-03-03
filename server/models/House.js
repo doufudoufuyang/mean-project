@@ -16,21 +16,6 @@ const LandlordSchema = new Schema({
     email: { type: String, required: true },
 })
 
-const CommentSchema = new Schema({
-    description: { type: String, required: true },
-    createdBy: { type: refType, ref: 'User', required: true },
-    timestamp: { type: Date, required: true },
-})
-
-const ReportSchema = new Schema({
-    title: { type: String, required: true },
-    date: { type: Date, required: true },
-    status: { type: String, enum: ['Open', 'In Progress', 'Closed'], required: true },
-    description: { type: String, required: true },
-    createdBy: { type: refType, ref: 'User', required: true },
-    comments: [{ type: CommentSchema }],
-})
-
 const HouseSchema = new Schema({
     address: { type: AddressSchema, required: true },
     landlord: { type: LandlordSchema, required: true },
@@ -39,7 +24,7 @@ const HouseSchema = new Schema({
     mattressNum: { type: Number, default: 0, required: true },
     tableNum: { type: Number, default: 0, required: true },
     chairNum: { type: Number, default: 0, required: true },
-    reports: [{ type: ReportSchema }],
+    reports: [{ type: refType, ref: 'Report' }],
 })
 
 const House = mongoose.model('House', HouseSchema, 'House');
