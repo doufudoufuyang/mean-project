@@ -16,14 +16,18 @@ const LandlordSchema = new Schema({
     email: { type: String, required: true },
 })
 
-const HouseSchema = new Schema({
-    address: { type: AddressSchema, required: true },
-    landlord: { type: LandlordSchema, required: true },
-    residents: [{ type: refType, ref: 'User'}],
+const FacilityInfoSchema = new Schema({
     bedNum: { type: Number, default: 0, required: true },
     mattressNum: { type: Number, default: 0, required: true },
     tableNum: { type: Number, default: 0, required: true },
     chairNum: { type: Number, default: 0, required: true },
+})
+
+const HouseSchema = new Schema({
+    address: { type: AddressSchema, required: true },
+    landlord: { type: LandlordSchema, required: true },
+    residents: [{ type: refType, ref: 'User'}],
+    facilityInfo: { type: FacilityInfoSchema, required: true },
     reports: [{ type: refType, ref: 'Report' }],
 })
 

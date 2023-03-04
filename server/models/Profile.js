@@ -2,7 +2,13 @@ const { Timestamp } = require("mongodb");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const refType = Schema.Types.ObjectId;
-const carSchema = new Schema({ model: String, make: String, color: String });
+
+const carSchema = new Schema({
+  model: String,
+  make: String,
+  color: String
+});
+
 const employmentSchema = new Schema({
   step: { type: Number, required: true },
   feedback: { type: String },
@@ -23,11 +29,13 @@ const contactSchema = new Schema({
   email: { type: String, required: true },
   relationship: { type: String, required: true },
 });
+
 const LicenseSchema = new Schema({
   number: { type: String, required: true },
   expireDate: { type: String, required: true },
   document: { type: String, required: true },
 });
+
 const ProfileSchema = new Schema({
   feedback: String,
   firstName: { type: String, required: true },
@@ -46,6 +54,7 @@ const ProfileSchema = new Schema({
   reference: contactSchema,
   emergencyContacts: { type: [contactSchema], required: true },
   employment: employmentSchema,
+  house: { type: refType, ref: 'House' },
 });
 
 const Profile = mongoose.model("Profile", ProfileSchema, "Profile");
