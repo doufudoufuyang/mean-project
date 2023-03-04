@@ -3,6 +3,7 @@ const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../../.env") })
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 
 exports.user_register = async (req, res) => {
   try {
@@ -32,6 +33,47 @@ exports.user_register = async (req, res) => {
     console.log("failed to register: ", e);
   }
 };
+
+exports.sent_register_invitation = async (req, res) => {
+  try {
+    const { name, email } = req.body;
+    const payload = {
+      name: name,
+      email: email
+    }
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "3h",
+    });
+    
+    let account = await nodemailer.createTestAccount()
+    console.log('account info: ', account)
+    let transporter = nodemailer.createTransport({
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: account.user, // generated ethereal user
+        pass: account.pass, // generated ethereal password
+      },
+      sendMail: true
+    });
+
+    // send mail with defined transport object
+    let info = await transporter.sendMail({
+      from: '"Fred Foo 👻" <foo@example.com>', // sender address
+      to: email, // list of receivers
+      subject: `Register Invitation`, // Subject line
+      text: `Hello ${name}, here is your register token!`, // plain text body
+      html: `<b>${token}</b>`, // html body
+    });
+
+    console.log('send mail with defined transport object: ', info)
+    res.status(200).json({ register_token : token })
+  } catch (e) {
+    console.log('fail to send invitation: ', e)
+    res.status(500).send({error : 'Fail to send invitation'})
+  }
+}
 
 exports.user_login = async (req, res) => {
   try {
