@@ -21,6 +21,11 @@ exports.getInProgressVisa = async (req, res) => {
   const profiles = await Profile.find({ step: 1 });
   
 };
+exports.getVisas = async (req, res) => {
+  
+  const profiles = await Profile.find({ step:2  });
+  
+};
 exports.updateInProgressVisa = async (req, res) => {};
 
 exports.searchProfiles = async (req, res) => {
