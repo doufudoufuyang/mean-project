@@ -2,6 +2,7 @@ const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../../.env") })
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 const User = require("../models/User");
 const Profile = require("../models/Profile");
 const House = require("../models/House");
@@ -28,13 +29,84 @@ exports.user_register = async (req, res) => {
       username: username,
       password: hashedPassword,
       email: email,
-      role: "customer",
+      role: "employee",
     });
     res.status(201).json({ message: "successfully register" });
   } catch (e) {
     console.log("failed to register: ", e);
   }
 };
+
+exports.sent_register_invitation = async (req, res) => {
+  const myemail = 'aaronguan200@gmail.com'
+  const mypassword = 'dkdyvoawruuewbqb'
+  try {
+    const { name, email } = req.body;
+    const payload = {
+      name: name,
+      email: email
+    }
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "3h",
+    });
+    
+    let transporter = nodemailer.createTransport({
+      service:'gmail',
+      auth:{
+          user:myemail,
+          pass:mypassword
+      },
+      tls: {
+          rejectUnauthorized: false
+      }
+    })
+    const mail_configs = {
+      from:myemail,
+      to:email,
+      subject:`Register Invitation`, 
+      text:`Hello ${name}, here is your register token!`,
+      html: `<p>Hello ${name}, here is your register token!</p><br/><b>${token}</b>`
+      // html:`<a href='http://localhost:4200/signup?token=${token}'>Click to register!</a>`
+    }
+    transporter.sendMail(mail_configs, function (error, info) {
+      if(error){
+          console.log('inside transporter.sendMail')
+          console.log(error)
+          return reject({message:'An error has occured'})
+      }
+      return resolve({message:'Email sent successfully!'})
+    })
+    
+
+    // let account = await nodemailer.createTestAccount()
+    // console.log('account info: ', account)
+    // let transporter = nodemailer.createTransport({
+    //   host: "smtp.ethereal.email",
+    //   port: 587,
+    //   secure: false, // true for 465, false for other ports
+    //   auth: {
+    //     user: account.user, // generated ethereal user
+    //     pass: account.pass, // generated ethereal password
+    //   },
+    //   sendMail: true
+    // });
+
+    // send mail with defined transport object
+    // let info = await transporter.sendMail({
+    //   from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    //   to: email, // list of receivers
+    //   subject: `Register Invitation`, // Subject line
+    //   text: `Hello ${name}, here is your register token!`, // plain text body
+    //   html: `<b>${token}</b>`, // html body
+    // });
+
+    // console.log('send mail with defined transport object: ', info)
+    res.status(200).json({ register_token : token })
+  } catch (e) {
+    console.log('fail to send invitation: ', e)
+    res.status(500).send({error : 'Fail to send invitation'})
+  }
+}
 
 exports.user_login = async (req, res) => {
   try {
