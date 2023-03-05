@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const UserController = require("../controllers/UserController");
-const { authenticateJWT } = require('../middleware/authenticate')
-const { authorizationJWT } = require('../middleware/authenticate')
+const { authenticateJWT } = require('../middleware/authenticate');
+const { authorizationJWT } = require('../middleware/authenticate');
 
 router.post('/register', UserController.user_register)
 router.post('/login', UserController.user_login)
@@ -9,4 +9,19 @@ router.get('/favorite', authenticateJWT, UserController.get_favorite)
 router.get('/all', authorizationJWT, UserController.admin_overview)
 router.post('/sendInvitation', UserController.sent_register_invitation)
 
-module.exports = router
+// Housing
+// Employee & HR add or update comments
+router.put('/report', authorizationJWT, UserController.put_report);
+// Employee
+router.get('/house', authorizationJWT, UserController.get_house);
+router.post('/report', authorizationJWT, UserController.post_report);
+router.get('/reports', authorizationJWT, UserController.get_reports);
+router.get('/report/:id', authorizationJWT, UserController.get_report);
+// HR
+router.get('/houses', authorizationJWT, UserController.get_houses);
+router.get('/house/:id', authorizationJWT, UserController.get_house_with_id);
+router.post('/house', authorizationJWT, UserController.post_house);
+router.put('/house', authorizationJWT, UserController.put_house);
+router.delete('/house/:id', authorizationJWT, UserController.delete_house);
+
+module.exports = router;
