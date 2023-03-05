@@ -26,7 +26,7 @@ const FacilityInfoSchema = new Schema({
 const HouseSchema = new Schema({
     address: { type: AddressSchema, required: true },
     landlord: { type: LandlordSchema, required: true },
-    residents: [{ type: refType, ref: 'User'}],
+    residents: [{ type: refType, ref: 'User' }],
     facilityInfo: { type: FacilityInfoSchema, required: true },
     reports: [{ type: refType, ref: 'Report' }],
 })

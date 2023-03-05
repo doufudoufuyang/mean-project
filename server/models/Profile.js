@@ -9,6 +9,14 @@ const carSchema = new Schema({
   color: String
 });
 
+const AddressSchema = new Schema({
+  apt: String,
+  street: { type: String, required: true },
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+  zip: { type: String, required: true },
+})
+
 const employmentSchema = new Schema({
   step: { type: Number, required: true },
   feedback: { type: String },
@@ -44,12 +52,12 @@ const ProfileSchema = new Schema({
   preferredName: String,
   pic: String,
   driverLicense: LicenseSchema,
-  address: { type: String, required: true },
+  address: { type: AddressSchema, required: true },
   cellPhoneNumber: { type: String, required: true },
   workPhoneNumber: String,
   car: carSchema,
   SSN: { type: String, required: true },
-  dateOfBirth: { type: Timestamp, required: true },
+  dateOfBirth: { type: Date, required: true },
   gender: String,
   reference: contactSchema,
   emergencyContacts: { type: [contactSchema], required: true },
