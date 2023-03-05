@@ -19,7 +19,7 @@ app.use('/public', express.static(path.join(__dirname, '/public'))); // serve st
 
 // Importing other routes
 app.use('/user', routes.UserRouter)
-
+app.use('/hr', routes.HRRouter)
 // Catch-all route for unsupported paths
 app.all('*', (req, res) => {
   res.status(400).json({ error: "InvalidURI", description: `The URI ${req.url} is not valid.` });

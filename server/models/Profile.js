@@ -18,7 +18,6 @@ const AddressSchema = new Schema({
 })
 
 const employmentSchema = new Schema({
-  step: { type: Number, required: true },
   feedback: { type: String },
   optReceipt: { type: String },
   optEAD: { type: String },
@@ -46,6 +45,10 @@ const LicenseSchema = new Schema({
 
 const ProfileSchema = new Schema({
   feedback: String,
+  step: { type: Number, required: true },//
+  //0:
+  //1:
+  //2:
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   middleName: String,
