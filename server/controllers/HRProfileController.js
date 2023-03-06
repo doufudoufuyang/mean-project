@@ -45,7 +45,7 @@ exports.reject = async (req, res) => {
     const pid = req.params.pid;
     const profile = await Profile.find({ id: pid });
     profile.nextStep = profile.nextStep - 1;
-    profile.employment.feedback = req.params.feedback;
+    profile.feedback = req.params.feedback;
     profile.save();
     return res.status(201).json({ message: "reject successfully" });
   } catch (e) {

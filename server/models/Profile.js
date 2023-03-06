@@ -17,16 +17,16 @@ const AddressSchema = new Schema({
   zip: { type: String, required: true },
 })
 
-const employmentSchema = new Schema({
-  feedback: { type: String },
-  optReceipt: { type: String },
-  optEAD: { type: String },
-  i20: { type: String },
-  i983: { type: String },
-  title: String,
-  startDate: String,
-  endDate: String,
-});
+// const employmentSchema = new Schema({
+//   feedback: { type: String },
+//   optReceipt: { type: String },
+//   optEAD: { type: String },
+//   i20: { type: String },
+//   i983: { type: String },
+//   title: String,
+//   startDate: String,
+//   endDate: String,
+// });
 
 const contactSchema = new Schema({
   firstName: { type: String, required: true },
@@ -66,8 +66,15 @@ const ProfileSchema = new Schema({
   gender: String,
   reference: contactSchema,
   emergencyContacts: { type: [contactSchema], required: true },
-  employment: employmentSchema,
+  // employment: employmentSchema,
   house: { type: refType, ref: 'House' },
+  optReceipt: { type: String },
+  optEAD: { type: String },
+  i20: { type: String },
+  i983: { type: String },
+  title: String,
+  startDate: String,
+  endDate: String,
 });
 
 const Profile = mongoose.model("Profile", ProfileSchema, "Profile");
