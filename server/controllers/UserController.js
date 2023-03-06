@@ -3,18 +3,13 @@ require("dotenv").config({ path: path.join(__dirname, "../../.env") })
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
-const aws = require('aws-sdk')
 const User = require("../models/User");
 const Profile = require("../models/Profile");
 const House = require("../models/House");
 const Report = require("../models/Report");
-aws.config.update({
-  secretAccessKey: process.env.ACCESS_SECRET,
-  accessKeyId: process.env.ACCESS_KEY,
-  region: process.env.REGION,
-});
+const { s3Old } = require('../middleware/aws');
 const BUCKET = process.env.BUCKET
-const s3Old = new aws.S3();
+
 
 
 exports.user_register = async (req, res) => {
