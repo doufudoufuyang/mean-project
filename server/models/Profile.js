@@ -49,9 +49,8 @@ const ProfileSchema = new Schema({
   step: { type: Number, required: true },
   //0:not start
   //1:non-visa
-  //2:wait for approval
-  //3:all done
-  //4:rejected
+  //2:visa-in progress
+  //3:visa-all done
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   middleName: String,
