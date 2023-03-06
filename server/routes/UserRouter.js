@@ -2,34 +2,8 @@ const router = require("express").Router();
 const UserController = require("../controllers/UserController");
 const { authenticateJWT } = require('../middleware/authenticate');
 const { authorizationJWT } = require('../middleware/authenticate');
-const path = require("path");
-require('dotenv').config({ path: path.join(__dirname, '../../.env') });
-const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
-const multer = require('multer')
-const multerS3 = require('multer-s3');
-const BUCKET = process.env.BUCKET
+const { upload } = require('../middleware/aws')
 
-let s3 = new S3Client({
-    region: process.env.REGION,
-    credentials: {
-      accessKeyId: process.env.ACCESS_KEY,
-      secretAccessKey:  process.env.ACCESS_SECRET,
-    },
-    sslEnabled: false,
-    s3ForcePathStyle: true,
-    signatureVersion: 'v4',
-  });
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        // acl: "public-read",
-        bucket: BUCKET,
-        key: function (req, file, cb) {
-            console.log('file=', file);
-            cb(null, file.originalname)
-        }
-    })
-})
 
 router.post('/register', UserController.user_register)
 router.post('/login', UserController.user_login)
