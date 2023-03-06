@@ -45,11 +45,13 @@ const LicenseSchema = new Schema({
 
 const ProfileSchema = new Schema({
   feedback: String,
+  nextStep : Number,
   step: { type: Number, required: true },
   //0:not start
   //1:non-visa
   //2:wait for approval
   //3:all done
+  //4:rejected
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   middleName: String,
