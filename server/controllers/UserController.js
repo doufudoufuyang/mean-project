@@ -3,10 +3,19 @@ require("dotenv").config({ path: path.join(__dirname, "../../.env") })
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
+const aws = require('aws-sdk')
 const User = require("../models/User");
 const Profile = require("../models/Profile");
 const House = require("../models/House");
 const Report = require("../models/Report");
+aws.config.update({
+  secretAccessKey: process.env.ACCESS_SECRET,
+  accessKeyId: process.env.ACCESS_KEY,
+  region: process.env.REGION,
+});
+const BUCKET = process.env.BUCKET
+const s3Old = new aws.S3();
+
 
 exports.user_register = async (req, res) => {
   try {
@@ -357,4 +366,23 @@ exports.delete_house = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+}
+
+//AWS s3, unload a file
+exports.user_upload = async function (req, res) {
+  res.send('Successfully uploaded ' + req.file.location + ' location!')
+}
+
+//AWS s3, download a file
+exports.download_file = async (req, res) => {
+  const filename = req.params.filename
+  let x = await s3Old.getObject({ Bucket: BUCKET, Key: filename }).promise();
+  res.send(x.Body)
+}
+
+//AWS s3, list all files
+exports.get_fileList = async (req, res) => {
+  let r = await s3Old.listObjectsV2({ Bucket: BUCKET }).promise();
+  let x = r.Contents.map(item => item.Key);
+  res.send(x)
 }
