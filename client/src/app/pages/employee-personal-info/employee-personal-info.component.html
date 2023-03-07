@@ -1,1 +1,45 @@
-<p>employee-personal-info works!</p>
+<form [formGroup]="personalInfoForm">
+    <mat-form-field>
+        <mat-label>firstName</mat-label>
+        <input matInput formControlName="firstName">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>lastName</mat-label>
+        <input matInput formControlName="lastName">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>middleName</mat-label>
+        <input matInput formControlName="middleName">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>preferredName</mat-label>
+        <input matInput formControlName="preferredName">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>email</mat-label>
+        <input matInput formControlName="email">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>SSN</mat-label>
+        <input matInput formControlName="SSN">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>date of birth</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-select required>
+            <mat-option value="Female">Female</mat-option>
+            <mat-option value="Male">Male</mat-option>
+            <mat-option value="I wish not to answer">I wish not to answer</mat-option>
+        </mat-select>
+        <mat-label>gender</mat-label>
+    </mat-form-field>
+</form>
+
+<button mat-raised-button color="primary" (click)="edit()">Edit</button>
