@@ -15,7 +15,7 @@ async function run() {
 
     // await Promise.all([User.collection.drop(), Profile.collection.drop(), House.collection.drop(), Report.collection.drop()]);
 
-    const hr = await User.create(hr1);
+    await User.create(hr1);
     const employee = await User.create(employee1);
     const profile = await Profile.create(profile1);
     const house = await House.create(house1);
