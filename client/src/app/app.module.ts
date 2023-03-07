@@ -31,7 +31,6 @@ import { HrEmployeeProfilesComponent } from './pages/hr-employee-profiles/hr-emp
 import { HrVisaManagementComponent } from './pages/hr-visa-management/hr-visa-management.component';
 import { HrHiringManagementComponent } from './pages/hr-hiring-management/hr-hiring-management.component';
 import { HrHousingManagementComponent } from './pages/hr-housing-management/hr-housing-management.component';
-import { AuthGuardService } from './services/auth-guard/auth-guard.service';
 import { InterceptorService } from './services/interceptor/interceptor.service';
 import { reportReducer } from './store/report/report.reducer';
 import { EmployeeReportComponent } from './pages/employee-report/employee-report.component';
@@ -79,7 +78,6 @@ import { EmployeeReportComponent } from './pages/employee-report/employee-report
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'} },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
-    AuthGuardService,
   ],
   bootstrap: [AppComponent]
 })
