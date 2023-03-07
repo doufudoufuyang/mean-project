@@ -2,8 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Report } from 'src/app/interfaces/report';
 import { ReportService } from 'src/app/services/report/report.service';
 import { emptyValidator } from 'src/app/validator/empty.validator';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { selectReportById } from 'src/app/store/report/report.selector';
 
 @Component({
   selector: 'app-employee-report',
@@ -15,34 +19,29 @@ export class EmployeeReportComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private reportService: ReportService,
+    private store: Store,
     private formBuilder: FormBuilder
   ) {}
 
-  report: any;
+  report$: Observable<Report> | undefined;
   form: FormGroup = this.formBuilder.group({
     description: ['', emptyValidator()],
   });
 
   ngOnInit(): void {
-      const id = this.route.snapshot.paramMap.get('id');
-      console.log(id);
-      this.http.get('http://localhost:3000/user/report/' + id).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        this.report = res.report;
-      },
-      error: (e) => {
-        alert(e.error.message);
-      }
-    });
+    this.reportService.getReports();
+    const reportId = this.route.snapshot.paramMap.get('id') as string;
+    this.report$ = this.store.pipe(select(selectReportById(reportId))) as Observable<Report>;
+    // console.log(this.report$)
   }
 
-  onClick(): void {
+  onClick(id: string): void {
     const requestBody = {
-      id: this.report._id,
+      id,
       description: this.form.getRawValue().description,
     }
     console.log(requestBody);
     this.reportService.UpdateReport(requestBody);
+    this.form.reset();
   }
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -20,14 +21,13 @@ export class RegisterComponent {
     private route : ActivatedRoute,
     private router : Router,
     private formBuilder : FormBuilder,
-    private http : HttpClient
+    private http : HttpClient,
+    private _snackBar : MatSnackBar
     ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      console.log('1111: ', params['token'])
       this.registerToken = params['token']
-      console.log('register token: ', this.registerToken)
     })
   }
 
@@ -41,11 +41,16 @@ export class RegisterComponent {
     }
     this.http.post('http://localhost:3000/user/register', requestBody, {
       headers : {'authorization' : token}
-    }).subscribe((data) => {
-      console.log(data)
-      this.router.navigate(['login'])
-    }, (error) => {
-      console.log('error', error)
+    }).subscribe({
+      next: (data) => {
+        this.router.navigate(['login'])
+      },
+      error: (error) => {
+        this._snackBar.open('Error', error.error.message, {
+          duration: 3000
+        })
+      },
+      complete: () => {}
     })
   }
 }

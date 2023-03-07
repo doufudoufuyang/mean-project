@@ -1,3 +1,19 @@
-<app-header></app-header>
-<p>login works!</p>
-<app-footer></app-footer>
+<div class="login-input-container">
+    <form [formGroup]="loginForm">
+        <mat-form-field appearance="fill">
+            <mat-label>username</mat-label>
+            <input matInput formControlName="username">
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill">
+            <mat-label>email</mat-label>
+            <input matInput formControlName="email">
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill">
+            <mat-label>password</mat-label>
+            <input matInput formControlName="password">
+        </mat-form-field>
+    </form>
+    <button mat-raised-button color="primary" (click)="login()">Login</button>
+</div>

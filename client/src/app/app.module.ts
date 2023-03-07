@@ -4,12 +4,16 @@ import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -30,7 +34,7 @@ import { HrHousingManagementComponent } from './pages/hr-housing-management/hr-h
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
 import { InterceptorService } from './services/interceptor/interceptor.service';
 import { reportReducer } from './store/report/report.reducer';
-import { EmployeeReportComponent } from './components/employee-report/employee-report.component';
+import { EmployeeReportComponent } from './pages/employee-report/employee-report.component';
 
 @NgModule({
   declarations: [
@@ -56,25 +60,26 @@ import { EmployeeReportComponent } from './components/employee-report/employee-r
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    HttpClientModule,
     MatCardModule,
     MatGridListModule,
     MatListModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     StoreModule.forRoot({
       reports: reportReducer,
     })
   ],
   providers: [
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'} },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     AuthGuardService,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    HttpClientModule,
   ],
   bootstrap: [AppComponent]
 })

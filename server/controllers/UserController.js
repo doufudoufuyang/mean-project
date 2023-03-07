@@ -28,6 +28,7 @@ exports.user_register = async (req, res) => {
       username: username,
       email: email,
     });
+
     if (userExist) {
       res.status(409).json({ message: "user already exists" });
       return;
@@ -44,9 +45,12 @@ exports.user_register = async (req, res) => {
       email: email,
       role: "employee",
     });
+
     res.status(201).json({ message: "successfully register" });
   } catch (e) {
     console.log("failed to register: ", e);
+    res.status(500).json({ message: "fail to register" });
+    return;
   }
 };
 
@@ -187,7 +191,7 @@ exports.get_reports = async (req, res) => {
     const employee = await User.findOne({ email: email });
     const profile = await Profile.findById(employee.profile);
     const house = await House.findById(profile.house).populate('residents').populate('reports');
-    console.log(house);
+    // console.log(house);
     const reports = house.reports.filter(report => report.createdBy.equals(employee.id));
     res.status(200).json({ reports });
   } catch (err) {
