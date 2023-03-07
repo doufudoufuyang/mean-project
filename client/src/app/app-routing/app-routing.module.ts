@@ -11,6 +11,7 @@ import { HrEmployeeProfilesComponent } from '../pages/hr-employee-profiles/hr-em
 import { HrHiringManagementComponent } from '../pages/hr-hiring-management/hr-hiring-management.component';
 import { HrVisaManagementComponent } from '../pages/hr-visa-management/hr-visa-management.component';
 import { HrHousingManagementComponent } from '../pages/hr-housing-management/hr-housing-management.component';
+import { EmployeeReportComponent } from '../pages/employee-report/employee-report.component';
 
 const routes: Routes = [
   {path : '', component: LoginComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path : 'employeeInfo', component: EmployeePersonalInfoComponent},
   {path : 'employeeVisa', component: EmployeeVisaStatusComponent},
   {path : 'employeeHousing', component: EmployeeHousingComponent},
+  {path : 'employeeHousing/report/:id', component: EmployeeReportComponent},
   {path : 'hrHome', component: HrHomeComponent},
   {path : 'hrEmployeeProfiles', component: HrEmployeeProfilesComponent},
   {path : 'hrVisaManagement', component: HrVisaManagementComponent},

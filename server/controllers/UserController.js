@@ -143,7 +143,7 @@ exports.user_login = async (req, res) => {
 exports.get_house = async (req, res) => {
   try {
     const { email, role } = req.payload;
-    if (role === 'HR') return res.status(403).json({ error: "Forbidden" });
+    if (role === 'HR') return res.status(403).json({ message: "Not authorized" });
     const employee = await User.findOne({ email: email });
     const profile = await Profile.findById(employee.profile);
     const house = await House.findById(profile.house).populate('residents').populate('reports');
@@ -163,7 +163,7 @@ exports.get_house = async (req, res) => {
 exports.post_report = async (req, res) => {
   try {
     const { email, role } = req.payload;
-    if (role === 'HR') return res.status(403).json({ error: "Forbidden" });
+    if (role === 'HR') return res.status(403).json({ message: "Not authorized" });
     const { title, description } = req.body;
     const employee = await User.findOne({ email: email });
     const profile = await Profile.findById(employee.profile);
@@ -187,10 +187,11 @@ exports.post_report = async (req, res) => {
 exports.get_reports = async (req, res) => {
   try {
     const { email, role } = req.payload;
-    if (role === 'HR') return res.status(403).json({ error: "Forbidden" });
+    if (role === 'HR') return res.status(403).json({ message: "Not authorized" });
     const employee = await User.findOne({ email: email });
     const profile = await Profile.findById(employee.profile);
-    const house = await House.findById(profile.house).populate('residents');
+    const house = await House.findById(profile.house).populate('residents').populate('reports');
+    // console.log(house);
     const reports = house.reports.filter(report => report.createdBy.equals(employee.id));
     res.status(200).json({ reports });
   } catch (err) {
@@ -202,11 +203,11 @@ exports.get_reports = async (req, res) => {
 exports.get_report = async (req, res) => {
   try {
     const { email, role } = req.payload;
-    if (role === 'HR') return res.status(403).json({ error: "Forbidden" });
+    if (role === 'HR') return res.status(403).json({ message: "Not authorized" });
     const { id } = req.params;
     const employee = await User.findOne({ email: email });
     const report = await Report.findById(id);
-    if (!report.createdBy.equals(employee.id)) return res.status(403).json({ error: "Forbidden" });
+    if (!report.createdBy.equals(employee.id)) return res.status(403).json({ message: "Not authorized" });
     res.status(200).json({ report });
   } catch (err) {
     console.log(err);
@@ -218,8 +219,9 @@ exports.put_report = async (req, res) => {
   try {
     const { email, role } = req.payload;
     const user = await User.findOne({ email: email });
+    const profile = await  Profile.findById(user.profile);
     const { id, description, status } = req.body;
-    if (!id) res.status(400).json({ error: "Bad Request", message: "Report ID is required" });
+    if (!id) res.status(400).json({ message: "Report ID is required" });
     const report = await Report.findById(id);
     let updatedReport = report;
     if (role === 'HR' && status) { // HR close a facility report
@@ -227,12 +229,12 @@ exports.put_report = async (req, res) => {
     } else { // add comment
       const comment = {
         description,
-        createdBy: user.id,
+        createdBy: profile ? (profile.firstName + ' ' + profile.lastName) : 'HR',
         timestamp: Date.now(),
       }
       updatedReport = await Report.findByIdAndUpdate(report, { comments: [...report.comments, comment] }, { new: true });
       if (role === 'HR' && report.status === 'Open') {
-        updatedReport = await Report.findByIdAndUpdate(report, { status: 'In Progress' }, { new: true });
+        updatedReport = await Report.findByIdAndUpdate(report, { status: 'InProgress' }, { new: true });
       }
     }
     res.status(200).json({ report: updatedReport });
@@ -245,7 +247,7 @@ exports.put_report = async (req, res) => {
 exports.get_houses = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ error: "Forbidden" });
+    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
     const houses = await House.find();
     res.status(200).json({ houses });
   } catch (err) {
@@ -257,7 +259,7 @@ exports.get_houses = async (req, res) => {
 exports.get_house_with_id = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ error: "Forbidden" });
+    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
     const { id } = req.params;
     const house = await House.findById(id).populate('residents').populate('reports');
     return res.status(200).json({ house });
@@ -270,7 +272,7 @@ exports.get_house_with_id = async (req, res) => {
 exports.post_house = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ error: "Forbidden" });
+    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
     const { address, landlord, facilityInfo } = req.body;
     const house = { address, landlord, facilityInfo };
     const createdHouse = await House.create(house);
@@ -284,9 +286,9 @@ exports.post_house = async (req, res) => {
 exports.put_house = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ error: "Forbidden" });
+    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
     const { id, address, landlord, facilityInfo, resident } = req.body;
-    if (!id) res.status(400).json({ error: "Bad Request", message: "House ID is required" });
+    if (!id) res.status(400).json({ message: "House ID is required" });
     const house = await House.findById(id);
     const update = {};
     address && (update.address = address);
@@ -295,7 +297,7 @@ exports.put_house = async (req, res) => {
     if (resident) {
       const employee = await User.findById(resident);
       const profile = await Profile.findById(employee.profile);
-      if (profile.house) return res.status(409).json({ error: "Conflict", message: "Employee already been assigned a house" });
+      if (profile.house) return res.status(409).json({ message: "Employee already been assigned a house" });
       update.residents = [...house.residents, employee.id];
     }
     const updatedHouse = await House.findByIdAndUpdate(house, update, { new: true }).populate('residents').populate('reports');
@@ -309,7 +311,7 @@ exports.put_house = async (req, res) => {
 exports.delete_house = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ error: "Forbidden" });
+    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
     const { id } = req.params;
     const house = await House.findById(id).populate('residents');
     // console.log(house)
