@@ -13,22 +13,12 @@ const BUCKET = process.env.BUCKET
 
 
 exports.user_register = async (req, res) => {
-  const header = req.headers['authorization']
-  let token
-  
-  if (!header){
-    res.status(400).json({ message :  "register token required"})
-    return
-  }
-  token = header.split(" ")[1]
-  console.log('register token: ', token)
   try {
     const { username, password, email } = req.body;
     const userExist = await User.findOne({
       username: username,
       email: email,
     });
-
     if (userExist) {
       res.status(409).json({ message: "user already exists" });
       return;
@@ -45,18 +35,15 @@ exports.user_register = async (req, res) => {
       email: email,
       role: "employee",
     });
-
     res.status(201).json({ message: "successfully register" });
   } catch (e) {
     console.log("failed to register: ", e);
-    res.status(500).json({ message: "fail to register" });
-    return;
   }
 };
 
 exports.sent_register_invitation = async (req, res) => {
-  const hostEmail = 'aaronguan200@gmail.com'
-  const hostPassword = 'dkdyvoawruuewbqb'
+  const myemail = 'aaronguan200@gmail.com'
+  const mypassword = 'dkdyvoawruuewbqb'
   try {
     const { name, email } = req.body;
     const payload = {
@@ -70,31 +57,54 @@ exports.sent_register_invitation = async (req, res) => {
     let transporter = nodemailer.createTransport({
       service:'gmail',
       auth:{
-          user: hostEmail,
-          pass: hostPassword
+          user:myemail,
+          pass:mypassword
       },
       tls: {
           rejectUnauthorized: false
       }
     })
     const mail_configs = {
-      from: hostEmail,
+      from:myemail,
       to:email,
       subject:`Register Invitation`, 
       text:`Hello ${name}, here is your register token!`,
-      html: `<p>Hello ${name}, here is your register token!</p><br/>
-            <a href='http://localhost:4200/register?token=${token}'>Click to register!</a>
-            ` 
+      html: `<p>Hello ${name}, here is your register token!</p><br/><b>${token}</b>`
+      // html:`<a href='http://localhost:4200/signup?token=${token}'>Click to register!</a>`
     }
-
     transporter.sendMail(mail_configs, function (error, info) {
       if(error){
           console.log('inside transporter.sendMail')
           console.log(error)
-          return reject({message: 'Fail to send invitation link'})
+          return reject({message:'An error has occured'})
       }
       return resolve({message:'Email sent successfully!'})
     })
+    
+
+    // let account = await nodemailer.createTestAccount()
+    // console.log('account info: ', account)
+    // let transporter = nodemailer.createTransport({
+    //   host: "smtp.ethereal.email",
+    //   port: 587,
+    //   secure: false, // true for 465, false for other ports
+    //   auth: {
+    //     user: account.user, // generated ethereal user
+    //     pass: account.pass, // generated ethereal password
+    //   },
+    //   sendMail: true
+    // });
+
+    // send mail with defined transport object
+    // let info = await transporter.sendMail({
+    //   from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    //   to: email, // list of receivers
+    //   subject: `Register Invitation`, // Subject line
+    //   text: `Hello ${name}, here is your register token!`, // plain text body
+    //   html: `<b>${token}</b>`, // html body
+    // });
+
+    // console.log('send mail with defined transport object: ', info)
     res.status(200).json({ register_token : token })
   } catch (e) {
     console.log('fail to send invitation: ', e)
@@ -137,6 +147,34 @@ exports.user_login = async (req, res) => {
     console.log("fail to login: ", e);
   }
 };
+
+
+exports.get_favorite = async (req, res) => {
+  try {
+    const { username, email } = req.payload
+    const userFavorites = await User.findOne({
+      username: username,
+      email: email
+    }).populate('favorites')
+    const products = userFavorites.favorites.map(product => product)
+    res.status(200).json({ favorites: products})
+  } catch (e) {
+    console.log('fail to get user favorites: ', e)
+  }
+}
+
+exports.admin_overview = async (req, res) => {
+  try {
+    const { username, email } = req.payload
+    const userFavorites = await User.find({
+      username: { $ne:  username},
+      email: { $ne:  email}
+    }).populate('favorites')
+    res.status(200).json({ all: userFavorites})
+  } catch (e) {
+    console.log('fail to get user favorites: ', e)
+  }
+}
 
 // Housing
 // Employee get house details
@@ -327,7 +365,11 @@ exports.delete_house = async (req, res) => {
 
 //AWS s3, unload a file
 exports.user_upload = async function (req, res) {
-  res.send('Successfully uploaded ' + req.file.location + ' location!')
+  console.log('req.file.key =', req.file.key)
+  console.log('req.file.location =', req.file.location)
+  res.send([req.file.location])
+  // res.send([req.file.key])
+  // res.send([req.file.key])
 }
 
 //AWS s3, download a file
