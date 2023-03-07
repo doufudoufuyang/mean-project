@@ -7,6 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class InterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (req.url.includes('/register') || req.url.includes('/login')) {
+      return next.handle(req);
+    }
     const TOKEN = localStorage.getItem('token');
     const BEARER_TOKEN = `BEARER ${TOKEN}`;
     return next.handle(req.clone({ setHeaders: { Authorization: BEARER_TOKEN } }));
