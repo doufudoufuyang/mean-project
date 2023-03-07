@@ -141,7 +141,7 @@ exports.user_login = async (req, res) => {
 async function updateProfile(username, profileData) {
   try {
     const user = await User.findOne({ username: username });
-    if(1){
+    if(!user.profile){
       var profile = new Profile();
       profile.step=profileData.step
       profile.firstName = profileData.firstName;
@@ -161,7 +161,41 @@ async function updateProfile(username, profileData) {
       await profile.save();
       await User.updateOne({ username: username }, { profile: profile._id })
     }
-  
+    else{
+      Profile.findById(user.profile, (err, profile) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Original profile:', profile);
+      
+          // update the profile fields
+          profile.step=profileData.step
+          profile.firstName = profileData.firstName;
+          profile.lastName = profileData.lastName;
+          profile.middleName = profileData.middleName;
+          profile.preferredName = profileData.preferredName;
+          profile.pic = profileData.pic;
+          profile.address = profileData.address;
+          profile.cellPhoneNumber = profileData.cellPhoneNumber;
+          profile.workPhoneNumber = profileData.workPhoneNumber;
+          profile.car = profileData.car;
+          profile.SSN = profileData.SSN;
+          profile.dateOfBirth = profileData.dateOfBirth;
+          profile.gender = profileData.gender;
+          profile.reference = profileData.reference;
+          profile.emergencyContacts = profileData.emergencyContacts;
+        
+          // save the updated profile to MongoDB
+          profile.save((err, updatedProfile) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('Updated profile:', updatedProfile);
+            }
+          });
+        }
+      });
+    }
 
     
 
