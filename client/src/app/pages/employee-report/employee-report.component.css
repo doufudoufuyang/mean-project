@@ -1,0 +1,27 @@
+.layout {
+    padding: 3rem;
+}
+
+.Open {
+    color: red;
+}
+
+.InProgress {
+    color: yellow
+}
+
+.Closed {
+    color: green;
+}
+
+.font-secondary {
+    color: gray;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 400px;
+}

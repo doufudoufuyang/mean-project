@@ -1,0 +1,33 @@
+<div class="layout" *ngIf="report$ | async as report">
+    <h3>{{ report.title }}</h3>
+    <span class='{{ report.status }}'>●</span><span class="font-secondary"> {{ report.status }}</span>
+    <mat-list>
+        <mat-list-item>
+            <span matListItemTitle>{{ report.description }}</span>
+            <span matListItemLine>{{ report.date | date : 'mediumDate' }}</span>
+        </mat-list-item>
+    </mat-list>
+    <hr>
+
+    <h3>Comments</h3>
+    <mat-list>
+        <mat-list-item *ngFor="let comment of report.comments">
+            <span matListItemTitle>{{ comment.createdBy }}</span>
+            <span matListItemLine>{{ comment.timestamp | date : 'medium' }}</span>
+            <div class="flex-row">
+                <span matListItemLine>{{ comment.description }} </span>
+                <mat-icon (click)="openCommentDialog(report._id, comment._id, comment.description)">edit</mat-icon>
+            </div>
+            <br>
+            <br>
+        </mat-list-item>
+    </mat-list>
+
+    <form [formGroup]="form">
+        <mat-form-field appearance="fill">
+            <mat-label >Leave a comment</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+    </form>
+    <button mat-stroked-button color="primary" (click)="onAddComment(report._id)" [disabled]="!form.valid">Add Comment</button>
+</div>

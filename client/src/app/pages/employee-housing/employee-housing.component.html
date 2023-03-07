@@ -1,2 +1,40 @@
+<div *ngIf="house">
+    <mat-grid-list cols="4" rowHeight="2:1">
+        <mat-grid-tile class="bold">Address</mat-grid-tile>
+        <mat-grid-tile>
+            <div class="flex-container">
+                <p>{{ house.address.street}}</p>
+                <p *ngIf="house.address.apt !== undefined">{{ house.address.apt }}</p>
+                <p>{{ house.address.city + ", " + house.address.state + " " + house.address.zip }}</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile class="bold">Roommates</mat-grid-tile>
+        <mat-grid-tile *ngFor="let roommate of house.roommates">
+            <div class="flex-container">
+                <p>{{ roommate.firstName }} {{ roommate.lastName }}</p>
+                <p>{{ roommate.cellPhoneNumber }}</p>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
 
-<p>employee-housing works!</p>
+    <div class="layout">
+        <div *ngFor="let report of reports$ | async">
+            <a routerLink="report/{{ report._id }}">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>{{ report.title }}</mat-card-title>
+                        <mat-card-subtitle>{{ report.date | date : 'mediumDate' }}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>{{ report.description }}</p>
+                    </mat-card-content>
+                </mat-card>
+            </a>
+            <br>
+        </div>
+    
+        <button mat-raised-button color="primary" (click)="openDialog()">Create New Facility Report</button>
+    </div>
+</div>

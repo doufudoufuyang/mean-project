@@ -1,16 +1,31 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { StoreModule } from '@ngrx/store';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
-import { HttpClientModule } from '@angular/common/http'
-import { AppRoutingModule } from './app-routing/app-routing.module';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { OnboardComponent } from './pages/onboard/onboard.component';
+import { EmployeeHousingComponent } from './pages/employee-housing/employee-housing.component';
 import { EmployeePersonalInfoComponent } from './pages/employee-personal-info/employee-personal-info.component';
 import { EmployeeVisaStatusComponent } from './pages/employee-visa-status/employee-visa-status.component';
 import { HrHomeComponent } from './pages/hr-home/hr-home.component';
@@ -18,21 +33,15 @@ import { HrEmployeeProfilesComponent } from './pages/hr-employee-profiles/hr-emp
 import { HrVisaManagementComponent } from './pages/hr-visa-management/hr-visa-management.component';
 import { HrHiringManagementComponent } from './pages/hr-hiring-management/hr-hiring-management.component';
 import { HrHousingManagementComponent } from './pages/hr-housing-management/hr-housing-management.component';
-// import { StoreModule } from '@ngrx/store';
-// import { userReducer } from './store/user.reducer';
+import { InterceptorService } from './services/interceptor/interceptor.service';
+import { reportReducer } from './store/report/report.reducer';
+import { EmployeeReportComponent } from './pages/employee-report/employee-report.component';
+import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
+import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
+import { employeeReducer } from './store/employee/employee.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { StoreModule } from '@ngrx/store';
-import { userReducer } from './store/user.reducer';
 @NgModule({
-
   declarations: [
     AppComponent,
     HeaderComponent,
@@ -41,6 +50,7 @@ import { userReducer } from './store/user.reducer';
     LoginComponent,
     RegisterComponent,
     OnboardComponent,
+    EmployeeHousingComponent,
     EmployeePersonalInfoComponent,
     EmployeeVisaStatusComponent,
     HrHomeComponent,
@@ -48,7 +58,9 @@ import { userReducer } from './store/user.reducer';
     HrVisaManagementComponent,
     HrHiringManagementComponent,
     HrHousingManagementComponent,
-
+    EmployeeReportComponent,
+    ReportDialogComponent,
+    CommentDialogComponent,
   ],
   imports: [
     FormsModule,
@@ -60,17 +72,24 @@ import { userReducer } from './store/user.reducer';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatCardModule,
+    MatGridListModule,
+    MatListModule,
     MatSnackBarModule,
-    HttpClientModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatDialogModule,
+    MatIconModule,
     StoreModule.forRoot({
-      users: userReducer
-    })
+      reports: reportReducer,
+      employee: employeeReducer
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
   ],
   bootstrap: [AppComponent]
 })

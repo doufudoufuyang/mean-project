@@ -4,7 +4,7 @@ const refType = Schema.Types.ObjectId;
 
 const CommentSchema = new Schema({
     description: { type: String, required: true },
-    createdBy: { type: refType, ref: 'User', required: true },
+    createdBy: { type: String, required: true },
     timestamp: { type: Date, required: true },
 })
 
@@ -12,7 +12,7 @@ const ReportSchema = new Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: Date, required: true },
-    status: { type: String, enum: ['Open', 'In Progress', 'Closed'], required: true },
+    status: { type: String, enum: ['Open', 'InProgress', 'Closed'], required: true },
     createdBy: { type: refType, ref: 'User', required: true },
     comments: [{ type: CommentSchema }],
 })

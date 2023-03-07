@@ -13,7 +13,7 @@ const authenticateJWT = (req, res, next) => {
             next()
         })
     } else {
-        return res.sendStatus(403)
+        return res.status(403).json({ message: "Not authorized" });
     }
 }
 
@@ -28,7 +28,7 @@ const authorizationJWT = (req, res, next) => {
             next()
         })
     } else {
-        return res.sendStatus(403)
+        return res.status(403).json({ message: "Not authorized" });
     }
 }
 
