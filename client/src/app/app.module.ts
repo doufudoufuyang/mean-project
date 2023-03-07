@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +34,8 @@ import { HrHousingManagementComponent } from './pages/hr-housing-management/hr-h
 import { InterceptorService } from './services/interceptor/interceptor.service';
 import { reportReducer } from './store/report/report.reducer';
 import { EmployeeReportComponent } from './pages/employee-report/employee-report.component';
+import { employeeReducer } from './store/employee/employee.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import { EmployeeReportComponent } from './pages/employee-report/employee-report
     MatNativeDateModule,
     StoreModule.forRoot({
       reports: reportReducer,
-    })
+      employee : employeeReducer
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'} },
