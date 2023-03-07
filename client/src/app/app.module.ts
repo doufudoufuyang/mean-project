@@ -14,6 +14,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -34,6 +36,8 @@ import { HrHousingManagementComponent } from './pages/hr-housing-management/hr-h
 import { InterceptorService } from './services/interceptor/interceptor.service';
 import { reportReducer } from './store/report/report.reducer';
 import { EmployeeReportComponent } from './pages/employee-report/employee-report.component';
+import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
+import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 import { employeeReducer } from './store/employee/employee.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
@@ -55,6 +59,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HrHiringManagementComponent,
     HrHousingManagementComponent,
     EmployeeReportComponent,
+    ReportDialogComponent,
+    CommentDialogComponent,
   ],
   imports: [
     FormsModule,
@@ -73,6 +79,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatDialogModule,
+    MatIconModule,
     StoreModule.forRoot({
       reports: reportReducer,
       employee : employeeReducer

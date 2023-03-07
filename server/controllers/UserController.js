@@ -137,6 +137,83 @@ exports.user_login = async (req, res) => {
     console.log("fail to login: ", e);
   }
 };
+//onboarind upload
+async function updateProfile(username, profileData) {
+  try {
+    const user = await User.findOne({ username: username });
+    if(!user.profile){
+      var profile = new Profile();
+      profile.step=profileData.step
+      profile.firstName = profileData.firstName;
+      profile.lastName = profileData.lastName;
+      profile.middleName = profileData.middleName;
+      profile.preferredName = profileData.preferredName;
+      profile.pic = profileData.pic;
+      profile.address = profileData.address;
+      profile.cellPhoneNumber = profileData.cellPhoneNumber;
+      profile.workPhoneNumber = profileData.workPhoneNumber;
+      profile.car = profileData.car;
+      profile.SSN = profileData.SSN;
+      profile.dateOfBirth = profileData.dateOfBirth;
+      profile.gender = profileData.gender;
+      profile.reference = profileData.reference;
+      profile.emergencyContacts = profileData.emergencyContacts;
+      await profile.save();
+      await User.updateOne({ username: username }, { profile: profile._id })
+    }
+    else{
+      Profile.findById(user.profile, (err, profile) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Original profile:', profile);
+      
+          // update the profile fields
+          profile.step=profileData.step
+          profile.firstName = profileData.firstName;
+          profile.lastName = profileData.lastName;
+          profile.middleName = profileData.middleName;
+          profile.preferredName = profileData.preferredName;
+          profile.pic = profileData.pic;
+          profile.address = profileData.address;
+          profile.cellPhoneNumber = profileData.cellPhoneNumber;
+          profile.workPhoneNumber = profileData.workPhoneNumber;
+          profile.car = profileData.car;
+          profile.SSN = profileData.SSN;
+          profile.dateOfBirth = profileData.dateOfBirth;
+          profile.gender = profileData.gender;
+          profile.reference = profileData.reference;
+          profile.emergencyContacts = profileData.emergencyContacts;
+        
+          // save the updated profile to MongoDB
+          profile.save((err, updatedProfile) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('Updated profile:', updatedProfile);
+            }
+          });
+        }
+      });
+    }
+
+    
+
+    return profile;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+exports.profile_upload = async (req, res) => {
+  try {
+    const { username, profileData} = req.body;
+    await updateProfile(username, profileData)
+    res.status(201).json({ message: "successfully update profile" });
+  } catch (e) {
+    console.log("failed to register: ", e);
+  }
+};
 
 // Housing
 // Employee get house details
@@ -214,18 +291,27 @@ exports.get_report = async (req, res) => {
   }
 }
 
-// Employee or HR add comments of facility report, HR close a facility report
+// Employee or HR add/update comments of facility report, HR close a facility report
 exports.put_report = async (req, res) => {
   try {
     const { email, role } = req.payload;
     const user = await User.findOne({ email: email });
     const profile = await  Profile.findById(user.profile);
-    const { id, description, status } = req.body;
-    if (!id) res.status(400).json({ message: "Report ID is required" });
-    const report = await Report.findById(id);
+    const { reportId, commentId, description, status } = req.body;
+    if (!reportId) res.status(400).json({ message: "Report ID is required" });
+    const report = await Report.findById(reportId);
     let updatedReport = report;
     if (role === 'HR' && status) { // HR close a facility report
       updatedReport = await Report.findByIdAndUpdate(report, { status: status }, { new: true });
+    } else if (commentId) { // update comment
+      const updatedComment = {
+        description,
+        createdBy: profile ? (profile.firstName + ' ' + profile.lastName) : 'HR',
+        timestamp: Date.now(),
+      };
+      const updatedComments = report.comments.map(comment => (comment.id === commentId ? updatedComment : comment));
+      updatedComments.sort((a, b) => a.timestamp - b.timestamp);
+      updatedReport = await Report.findByIdAndUpdate(report, { comments: updatedComments }, { new : true});
     } else { // add comment
       const comment = {
         description,

@@ -14,7 +14,12 @@
         <mat-list-item *ngFor="let comment of report.comments">
             <span matListItemTitle>{{ comment.createdBy }}</span>
             <span matListItemLine>{{ comment.timestamp | date : 'medium' }}</span>
-            <span matListItemLine>{{ comment.description }}</span>
+            <div class="flex-row">
+                <span matListItemLine>{{ comment.description }} </span>
+                <mat-icon (click)="openCommentDialog(report._id, comment._id, comment.description)">edit</mat-icon>
+            </div>
+            <br>
+            <br>
         </mat-list-item>
     </mat-list>
 
@@ -24,5 +29,5 @@
             <textarea matInput formControlName="description"></textarea>
         </mat-form-field>
     </form>
-    <button mat-stroked-button color="primary" (click)="onClick(report._id)" [disabled]="!form.valid">Add Comment</button>
+    <button mat-stroked-button color="primary" (click)="onAddComment(report._id)" [disabled]="!form.valid">Add Comment</button>
 </div>
