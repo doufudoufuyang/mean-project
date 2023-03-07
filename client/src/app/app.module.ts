@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
+import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -16,8 +18,14 @@ import { HrEmployeeProfilesComponent } from './pages/hr-employee-profiles/hr-emp
 import { HrVisaManagementComponent } from './pages/hr-visa-management/hr-visa-management.component';
 import { HrHiringManagementComponent } from './pages/hr-hiring-management/hr-hiring-management.component';
 import { HrHousingManagementComponent } from './pages/hr-housing-management/hr-housing-management.component';
-import { StoreModule } from '@ngrx/store';
-import { userReducer } from './store/user.reducer';
+// import { StoreModule } from '@ngrx/store';
+// import { userReducer } from './store/user.reducer';
+
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -37,12 +45,15 @@ import { userReducer } from './store/user.reducer';
     HrHousingManagementComponent,
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({
-      users: userReducer,
-    }),
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

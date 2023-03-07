@@ -1,3 +1,18 @@
-<app-header></app-header>
-<p>register works!</p>
-<app-footer></app-footer>
+<form [formGroup]="registerForm">
+    <mat-form-field>
+        <mat-label>username</mat-label>
+        <input matInput formControlName="username">
+    </mat-form-field>
+    
+    <mat-form-field>
+        <mat-label>email</mat-label>
+        <input matInput formControlName="email">
+    </mat-form-field>
+    
+    <mat-form-field>
+        <mat-label>password</mat-label>
+        <input matInput formControlName="password">
+    </mat-form-field>
+</form>
+
+<button mat-raised-button color="primary" (click)="register()">Primary</button>
