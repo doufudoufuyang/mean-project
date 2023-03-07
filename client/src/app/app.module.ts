@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -38,6 +38,8 @@ import { reportReducer } from './store/report/report.reducer';
 import { EmployeeReportComponent } from './pages/employee-report/employee-report.component';
 import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
+import { employeeReducer } from './store/employee/employee.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,9 @@ import { CommentDialogComponent } from './components/comment-dialog/comment-dial
     MatIconModule,
     StoreModule.forRoot({
       reports: reportReducer,
-    })
+      employee : employeeReducer
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'} },
