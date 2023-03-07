@@ -8,7 +8,8 @@ const { upload } = require('../middleware/aws')
 router.post('/register', UserController.user_register)
 router.post('/login', UserController.user_login)
 router.post('/sendInvitation', UserController.sent_register_invitation)
-
+//onboarding upload
+router.post('/profile', authorizationJWT, UserController.profile_upload);
 // Housing
 // Employee & HR add or update comments
 router.put('/report', authorizationJWT, UserController.put_report);
