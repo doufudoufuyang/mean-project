@@ -28,6 +28,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 @NgModule({
   
   declarations: [
@@ -52,10 +53,12 @@ import {MatNativeDateModule} from '@angular/material/core';
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatSnackBarModule,
     HttpClientModule,
     MatSelectModule,
     MatDatepickerModule,
