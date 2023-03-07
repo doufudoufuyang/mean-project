@@ -22,12 +22,15 @@ import { HrHousingManagementComponent } from './pages/hr-housing-management/hr-h
 // import { userReducer } from './store/user.reducer';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-
 @NgModule({
+  
   declarations: [
     AppComponent,
     HeaderComponent,
@@ -43,6 +46,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     HrVisaManagementComponent,
     HrHiringManagementComponent,
     HrHousingManagementComponent,
+
   ],
   imports: [
     FormsModule,
@@ -54,9 +58,15 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    HttpClientModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
