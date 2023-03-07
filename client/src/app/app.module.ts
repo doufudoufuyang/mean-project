@@ -25,7 +25,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -49,11 +49,12 @@ import {MatButtonModule} from '@angular/material/button';
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    HttpClientModule
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

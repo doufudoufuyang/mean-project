@@ -1,0 +1,13 @@
+.register-input-container{
+    border: 1px black solid;
+    border-radius: 10%;
+    padding: 25px;
+    margin-top: 200px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 25%;
+}
+
+.mat-mdc-form-field {
+    display: block;
+}
