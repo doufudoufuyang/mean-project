@@ -1,34 +1,29 @@
 const path = require("path");
-require('dotenv').config(path.join(__dirname, '../.env')); // .env is in different folder
+require('dotenv').config(path.join(__dirname, '../../.env'));
 const mongoose = require('mongoose');
 const { MONGO_URL } = process.env;
 const User = require("../models/User");
-const Post = require("../models/Post");
+const Profile = require("../models/Profile");
+const House = require("../models/House");
+const Report = require("../models/Report");
+const { report1, house1, profile1, employee1, hr1 } = require("./sampledata");
 
 async function run() {
   try {
     await mongoose.connect(MONGO_URL);
     console.log("Connected to DB.");
 
-    // Resetting User
-    await Promise.all([User.collection.drop(), Post.collection.drop()]);
+    // await Promise.all([User.collection.drop(), Profile.collection.drop(), House.collection.drop(), Report.collection.drop()]);
 
-    // Create a user
-    const createUser = await User.create({ username: "user1", email: "user1@gmail.com" });
-    console.log("createUser =", createUser);
-    // Create many posts
-    const posts = [];
-    for (let i = 1; i <= 5; i++) {
-      posts.push({ title: `Post${i}`, body: `Post${i} Body Data` });
-    }
-    const insertManyPosts = await Post.insertMany(posts);
-    // console.log("insertManyPosts =", insertManyPosts);
-    const postIds = insertManyPosts.map((post) => post._id);
-
-    // Update the user reference to a list of post IDs
-    const updatedUser = await User.findByIdAndUpdate(createUser._id, { posts: postIds }, { new: true });
-    // console.log("updatedUser =", updatedUser);
-
+    const hr = await User.create(hr1);
+    const employee = await User.create(employee1);
+    const profile = await Profile.create(profile1);
+    const house = await House.create(house1);
+    const report = await Report.create(report1);
+    await User.findByIdAndUpdate(employee, { profile: profile }, { new: true });
+    await Profile.findByIdAndUpdate(profile, { house: house }, { new: true });
+    await House.findByIdAndUpdate(house, { residents: [...house.residents, employee], reports: [...house.reports, report] }, { new: true });
+    await Report.findByIdAndUpdate(report, { createdBy: employee }, { new: true });
   } catch (err) {
     console.log(err);
   } finally {

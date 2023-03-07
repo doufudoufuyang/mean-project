@@ -1,0 +1,9 @@
+.register-input-container {
+  margin: auto;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
