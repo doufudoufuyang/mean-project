@@ -4,6 +4,14 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ReportService } from 'src/app/services/report/report.service';
 import { selectReports } from 'src/app/store/report/report.selector';
+import { MatDialog } from '@angular/material/dialog';
+import { ReportDialogComponent } from 'src/app/components/report-dialog/report-dialog.component';
+
+export interface ReportDialogData {
+  animal: string,
+  title: string,
+  description: string,
+}
 
 @Component({
   selector: 'app-employee-housing',
@@ -11,16 +19,20 @@ import { selectReports } from 'src/app/store/report/report.selector';
   styleUrls: ['./employee-housing.component.css']
 })
 export class EmployeeHousingComponent implements OnInit {
+  house: any;
+  reports$: Observable<any> = this.store.select(selectReports);
+  animal: string = '';
+  title: string = '';
+  description: string = '';
+
   constructor (
+    public dialog: MatDialog,
     private http: HttpClient,
     private reportService: ReportService,
     private store: Store,
   ) {}
 
-  house: any;
-  reports$: Observable<any> = this.store.select(selectReports);
-
-  ngOnInit () {
+  ngOnInit(): void {
     this.http.get('http://localhost:3000/user/house').subscribe({
       next: (res: any) => {
         console.log(res);
@@ -32,5 +44,15 @@ export class EmployeeHousingComponent implements OnInit {
     });
 
     this.reportService.getReports();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ReportDialogComponent, {
+      data: { animal: this.animal, title: this.title, description: this.description },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.animal = result;
+    });
   }
 }

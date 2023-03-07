@@ -291,18 +291,27 @@ exports.get_report = async (req, res) => {
   }
 }
 
-// Employee or HR add comments of facility report, HR close a facility report
+// Employee or HR add/update comments of facility report, HR close a facility report
 exports.put_report = async (req, res) => {
   try {
     const { email, role } = req.payload;
     const user = await User.findOne({ email: email });
     const profile = await  Profile.findById(user.profile);
-    const { id, description, status } = req.body;
-    if (!id) res.status(400).json({ message: "Report ID is required" });
-    const report = await Report.findById(id);
+    const { reportId, commentId, description, status } = req.body;
+    if (!reportId) res.status(400).json({ message: "Report ID is required" });
+    const report = await Report.findById(reportId);
     let updatedReport = report;
     if (role === 'HR' && status) { // HR close a facility report
       updatedReport = await Report.findByIdAndUpdate(report, { status: status }, { new: true });
+    } else if (commentId) { // update comment
+      const updatedComment = {
+        description,
+        createdBy: profile ? (profile.firstName + ' ' + profile.lastName) : 'HR',
+        timestamp: Date.now(),
+      };
+      const updatedComments = report.comments.map(comment => (comment.id === commentId ? updatedComment : comment));
+      updatedComments.sort((a, b) => a.timestamp - b.timestamp);
+      updatedReport = await Report.findByIdAndUpdate(report, { comments: updatedComments }, { new : true});
     } else { // add comment
       const comment = {
         description,

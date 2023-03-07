@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Update Comment</h1>
+<from [formGroup]="form">
+    <div mat-dialog-content class="flex-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onCancelClick()">Cancel</button>
+        <button mat-button (click)="onSubmit()" [mat-dialog-close]="data.animal" [disabled]="!form.valid">Submit</button>
+    </div>
+</from>
