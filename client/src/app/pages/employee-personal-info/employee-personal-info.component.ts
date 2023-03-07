@@ -14,7 +14,7 @@ export class EmployeePersonalInfoComponent {
     private formBuilder: FormBuilder,
     private http: HttpClient
   ) {}
-  disabled: boolean = true;
+  editable: boolean = false;
   personalInfoForm: FormGroup = this.formBuilder.group({
     firstName: [{ value:'yingji yan', disabled: true }, Validators.required],
     lastName: [{ value:'', disabled: true }, Validators.required],
@@ -49,10 +49,14 @@ export class EmployeePersonalInfoComponent {
     this.personalInfoForm.disable();
   }
   edit() {
+    this.editable = true;
     this.personalInfoForm.enable();
   }
   cancel(){
-    
+    this.personalInfoForm.reset();
+    this.personalInfoForm.disable();
+  }
+  save(){
     this.personalInfoForm.disable();
   }
 }

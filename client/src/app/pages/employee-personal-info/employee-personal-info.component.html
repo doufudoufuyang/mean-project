@@ -131,4 +131,10 @@
     </div>
 </form>
 
-<button mat-raised-button color="primary" (click)="edit()">Edit</button>
+<button *ngIf="!editable; else elseBlock" mat-raised-button color="primary" (click)="edit()">Edit</button>
+<ng-template #elseBlock>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+
+    <button  mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+
+</ng-template>
