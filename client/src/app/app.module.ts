@@ -13,7 +13,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import {
+  MatFormFieldModule,
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+} from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -46,7 +49,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HrHouseDetailComponent } from './pages/hr-house-detail/hr-house-detail.component';
 import { HrReportComponent } from './pages/hr-report/hr-report.component';
 import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comment-dialog.component';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,9 +74,10 @@ import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comm
     HrHouseDetailComponent,
     HrReportComponent,
     HrCommentDialogComponent,
-    ConnectFormDirective
+    ConnectFormDirective,
   ],
   imports: [
+    MatExpansionModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
@@ -95,14 +99,17 @@ import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comm
     StoreModule.forRoot({
       reports: reportReducer,
       houses: houseReducer,
-      employee: employeeReducer
+      employee: employeeReducer,
     }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline' },
+    },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

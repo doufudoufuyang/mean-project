@@ -156,6 +156,7 @@ async function updateProfile(username, profileData) {
     await user.save()
     if(!user.profile){
       var profile = new Profile();
+      profile.email = user.email
       profile.step=profileData.step
       profile.firstName = profileData.firstName;
       profile.lastName = profileData.lastName;
