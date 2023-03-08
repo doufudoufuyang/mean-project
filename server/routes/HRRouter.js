@@ -11,6 +11,9 @@ router.get('/searchVisa', HRProfileController.getAllProfiles);
 //application
 router.post('/rejectApplication', HRProfileController.rejectApplication);
 router.post('/approveApplication', HRProfileController.approveApplication);
+router.get('/pending', HRProfileController.getPendingApplication);
+router.get('/getApproved', HRProfileController.getApprovedApplication);
+router.get('/getRejected', HRProfileController.getRejectedApplication);
 //documents
 router.post('/reject', HRProfileController.reject);
 router.post('/approve', HRProfileController.approve);

@@ -40,7 +40,7 @@ exports.getPendingApplication = async (req, res) => {
 };
 exports.getApprovedApplication = async (req, res) => {
   try {
-    const profiles = await User.find({ status: "Pending" }).populate("profile");
+    const profiles = await User.find({ status: "Approved" }).populate("profile");
     return res.status(201).json({ data: profiles });
   } catch (e) {
     console.log(e);
@@ -48,7 +48,7 @@ exports.getApprovedApplication = async (req, res) => {
 };
 exports.getRejectedApplication = async (req, res) => {
   try {
-    const profiles = await User.find({ status: "Pending" }).populate("profile");
+    const profiles = await User.find({ status: "Rejected" }).populate("profile");
     return res.status(201).json({ data: profiles });
   } catch (e) {
     console.log(e);
