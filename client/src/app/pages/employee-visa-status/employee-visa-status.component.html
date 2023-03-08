@@ -1,1 +1,16 @@
-<p>employee-visa-status works!</p>
+<h1>Employee Visa Management</h1>
+<h2>Upload Files</h2>
+
+<div [ngSwitch]='optReceiptStatus'>
+    <div *ngSwitchCase="'Pending'">Waiting for HR to approve</div>
+    <div *ngSwitchCase="'Approved'">
+        <input type="file" (change)="onFilePickedOptEAD($event)">
+        <button (click)="onFileUpload()">Upload OPT EAD</button>
+    </div>
+    <div *ngSwitchCase="'Rejected'">Your application is rejected for the following reason: </div>
+</div>
+
+
+
+<!-- <input type="file" [(ngModel)]="test">
+<div>{{test}}</div> -->
