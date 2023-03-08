@@ -27,6 +27,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { OnboardComponent } from './pages/onboard/onboard.component';
 import { EmployeeHousingComponent } from './pages/employee-housing/employee-housing.component';
 import { EmployeePersonalInfoComponent } from './pages/employee-personal-info/employee-personal-info.component';
+import { ConnectFormDirective } from './pages/employee-personal-info/ConnectForm.directive';
 import { EmployeeVisaStatusComponent } from './pages/employee-visa-status/employee-visa-status.component';
 import { HrHomeComponent } from './pages/hr-home/hr-home.component';
 import { HrEmployeeProfilesComponent } from './pages/hr-employee-profiles/hr-employee-profiles.component';
@@ -70,6 +71,7 @@ import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comm
     HrHouseDetailComponent,
     HrReportComponent,
     HrCommentDialogComponent,
+    ConnectFormDirective
   ],
   imports: [
     FormsModule,
