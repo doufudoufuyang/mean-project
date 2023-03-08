@@ -1,7 +1,7 @@
 
 <div *ngIf="profiles.length; else elseBlock">
     <mat-accordion>
-        <mat-expansion-panel hideToggle *ngFor="let p of profiles">
+        <mat-expansion-panel hideToggle *ngFor="let p of profiles;let i = index">
             <mat-expansion-panel-header class="hr-employee-panel-header">
                 <mat-panel-title>
                     {{ p.firstName }} {{p.lastName}}
@@ -15,6 +15,9 @@
                 <span>Start At:</span> <span>{{ p.start }}</span>
                 <span>End At:</span> <span>{{ p.end }}</span>
                 <span>Days Remaining:</span><span>{{ p.title }}</span>
+                    {{fileList[i]}}
+                    <a href='http://localhost:3000/user/download/{{fileList[i]}}'>Download {{fileList[i]}}</a>
+    
             </div>
         </mat-expansion-panel>
     </mat-accordion>

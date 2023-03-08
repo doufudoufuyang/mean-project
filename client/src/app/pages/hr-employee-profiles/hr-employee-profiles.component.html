@@ -40,7 +40,46 @@
                     </div>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <p>This is the primary content of the panel.</p>
+            <div class="panel-box-container">
+            <div class="panel-box">Name:
+                <p><span>firstName: </span><span>{{p.firstName}}</span></p>
+                <p><span>lastName: </span><span>{{p.lastName}}</span></p>
+                <p><span>middleName: </span><span>{{p.middleName}}</span></p>
+                <p><span>preferredName: </span><span>{{p.preferredName}}</span></p>
+                <p><span>email: </span><span>{{p.email}}</span></p>
+                <p><span>date of birth: </span><span>{{p.dateOfBirth}}</span></p>
+                <p><span>gender: </span><span>{{p.gender}}</span></p>
+                <p><span>SSN: </span><span>{{p.SSN}}</span></p>
+            </div>
+
+            <div class="panel-box">Address:
+                <p><span>Building/apt#: </span><span>{{p.apt}}</span></p>
+                <p><span>street: </span><span>{{p.street}}</span></p>
+                <p><span>city: </span><span>{{p.city}}</span></p>
+                <p><span>state: </span><span>{{p.state}}</span></p>
+                <p><span>zip: </span><span>{{p.zip}}</span></p>
+            </div>
+            <div class="panel-box">Contact Info:
+                <p><span>cellPhoneNumber: </span><span>{{p.cellPhoneNumber}}</span></p>
+                <p><span>workPhoneNumber: </span><span>{{p.workPhoneNumber}}</span></p>
+            </div>
+            <div class="panel-box">Employment:
+                <p><span>visa title: </span><span>{{p.title}}</span></p>
+                <p><span>startDate: </span><span>{{p.startDate}}</span></p>
+                <p><span>endDate: </span><span>{{p.endDate}}</span></p>
+            </div>
+            <div class="panel-box">Emergency Contact:
+                <div *ngFor="let c of p.emergencyContacts">
+                    <p><span>firstName: </span><span>{{c.firstName}}</span></p>
+                    <p><span>lastName: </span><span>{{c.lastName}}</span></p>
+                    <p><span>middleName: </span><span>{{c.middleName}}</span></p>
+                    <p><span>phone: </span><span>{{c.phone}}</span></p>
+                    <p><span>email: </span><span>{{c.email}}</span></p>
+                    <p><span>relationship: </span><span>{{c.relationship}}</span></p>
+                </div>
+            </div>
+            
+            </div>
         </mat-expansion-panel>
     </mat-accordion>
 
