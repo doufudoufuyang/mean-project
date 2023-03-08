@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { Store } from '@ngrx/store';
+import { EmployeeAction } from 'src/app/store/employee/employee.action';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +13,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class LoginComponent {
   constructor(
+    private store : Store,
     private formBuilder : FormBuilder,
     private router : Router,
     private http : HttpClient,
@@ -29,7 +32,20 @@ export class LoginComponent {
     .subscribe({
       next: (data : any) => {
         localStorage.setItem('JWT_TOKEN', data['jwt'])
-        this.router.navigate(['onboard'])
+        const employeeInfo = data.user
+        if (data.user.role === 'employee'){
+          this.store.dispatch(EmployeeAction.setEmployeeInfo({ employeeInfo }))
+          if (data.user.status !== 'Approved'){
+            this.router.navigate(['onboard'])
+            return
+          } else {
+            this.router.navigate(['employeeInfo'])
+            return
+          }
+        } else {
+          this.router.navigate(['hrHome'])
+          return
+        }
       },
       error: (error) => {
         this._snackBar.open('Error', error.error.message, {

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -40,6 +40,8 @@ import { ReportDialogComponent } from './components/report-dialog/report-dialog.
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 import { houseReducer } from './store/house/house.reducer';
 import { HouseDialogComponent } from './components/house-dialog/house-dialog.component';
+import { employeeReducer } from './store/employee/employee.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -85,10 +87,12 @@ import { HouseDialogComponent } from './components/house-dialog/house-dialog.com
     StoreModule.forRoot({
       reports: reportReducer,
       houses: houseReducer,
-    })
+      employee: employeeReducer
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'} },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
   ],
   bootstrap: [AppComponent]
