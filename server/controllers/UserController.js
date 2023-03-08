@@ -7,6 +7,7 @@ const User = require("../models/User");
 const Profile = require("../models/Profile");
 const House = require("../models/House");
 const Report = require("../models/Report");
+const Invitation = require("../models/Invitation")
 const { s3Old } = require('../middleware/aws');
 const BUCKET = process.env.BUCKET
 
@@ -23,6 +24,7 @@ exports.user_register = async (req, res) => {
   token = header.split(" ")[1]
   console.log('register token: ', token)
   try {
+    const invitation = await Invitation.updateOne({ token : token }, {status : 'Accept'})
     const { username, password, email } = req.body;
     const userExist = await User.findOne({
       username: username,
@@ -44,6 +46,7 @@ exports.user_register = async (req, res) => {
       password: hashedPassword,
       email: email,
       role: "employee",
+      status: "Not Started"
     });
 
     res.status(201).json({ message: "successfully register" });
@@ -95,7 +98,15 @@ exports.sent_register_invitation = async (req, res) => {
       }
       return resolve({message:'Email sent successfully!'})
     })
-    res.status(200).json({ register_token : token })
+    const invitation = await Invitation.create({
+      name: name,
+      email : email,
+      token : token,
+      status : 'Pending'
+      
+    })
+    console.log('Invitation details: ', invitation)
+    res.status(200).json({ message : 'Invitation sent' })
   } catch (e) {
     console.log('fail to send invitation: ', e)
     res.status(500).send({error : 'Fail to send invitation'})
@@ -108,7 +119,7 @@ exports.user_login = async (req, res) => {
     const user = await User.findOne({
       username: username,
       email: email,
-    });
+    }).populate('profile')
     if (!user) {
       res.status(401).json({ message: "user not exists, check username and password" });
       return;
@@ -131,7 +142,7 @@ exports.user_login = async (req, res) => {
       const token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: "30m",
       });
-      res.status(200).json({ jwt: token });
+      res.status(200).json({ jwt: token, user : user });
     }
   } catch (e) {
     console.log("fail to login: ", e);

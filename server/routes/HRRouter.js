@@ -7,4 +7,6 @@ router.get('/profiles', HRProfileController.getAllProfiles);
 router.get('/searchProfiles', HRProfileController.searchProfiles);
 // router.get('/visas', HRProfileController.ge);
 router.get('/searchVisa', HRProfileController.getAllProfiles);
+router.get('/getAllInvitations', HRProfileController.getAllInvitations)
+
 module.exports = router;
