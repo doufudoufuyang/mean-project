@@ -12,6 +12,8 @@ import { HrHiringManagementComponent } from '../pages/hr-hiring-management/hr-hi
 import { HrVisaManagementComponent } from '../pages/hr-visa-management/hr-visa-management.component';
 import { HrHousingManagementComponent } from '../pages/hr-housing-management/hr-housing-management.component';
 import { EmployeeReportComponent } from '../pages/employee-report/employee-report.component';
+import { HrHouseDetailComponent } from '../pages/hr-house-detail/hr-house-detail.component';
+import { HrReportComponent } from '../pages/hr-report/hr-report.component';
 
 const routes: Routes = [
   {path : '', component: LoginComponent},
@@ -26,7 +28,9 @@ const routes: Routes = [
   {path : 'hrEmployeeProfiles', component: HrEmployeeProfilesComponent},
   {path : 'hrVisaManagement', component: HrVisaManagementComponent},
   {path : 'hrHiringManagement', component: HrHiringManagementComponent},
-  {path : 'hrHousingManagement', component: HrHousingManagementComponent}
+  {path : 'hrHousingManagement', component: HrHousingManagementComponent},
+  {path : 'hrHousingManagement/house/:id', component: HrHouseDetailComponent},
+  {path : 'hrHousingManagement/house/:hid/report/:rid', component: HrReportComponent},
 ];
 
 @NgModule({

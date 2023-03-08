@@ -12,5 +12,6 @@ export interface Report {
     date: Date,
     status: string,
     createdBy: string,
+    username: string,
     comments: Comment[],
 }

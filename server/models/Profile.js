@@ -55,6 +55,7 @@ const ProfileSchema = new Schema({
   lastName: { type: String, required: true },
   middleName: String,
   preferredName: String,
+  email:String,
   pic: String,
   driverLicense: LicenseSchema,
   address: { type: AddressSchema, required: true },

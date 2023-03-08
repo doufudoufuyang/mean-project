@@ -13,6 +13,48 @@ const nextStep = {
   6: "submit I-20",
   7: "wait for HR approval",
 };
+exports.rejectApplication = async (req, res) => {
+  try {
+    const uid = req.params.uid;
+    await User.update({ id: uid }, { status: "Rejected" });
+    return res.status(201).json({ message: "Reject successfully" });
+  } catch (e) {
+    console.log(e);
+  }
+};
+exports.approveApplication = async (req, res) => {
+  try {
+    const uid = req.params.uid;
+    await User.update({ id: uid }, { status: "Approved" });
+    return res.status(201).json({ message: "Approve successfully" });
+  } catch (e) {
+    console.log(e);
+  }
+};
+exports.getPendingApplication = async (req, res) => {
+  try {
+    const profiles = await User.find({ status: "Pending" }).populate("profile");
+    return res.status(201).json({ data: profiles });
+  } catch (e) {
+    console.log(e);
+  }
+};
+exports.getApprovedApplication = async (req, res) => {
+  try {
+    const profiles = await User.find({ status: "Approved" }).populate("profile");
+    return res.status(201).json({ data: profiles });
+  } catch (e) {
+    console.log(e);
+  }
+};
+exports.getRejectedApplication = async (req, res) => {
+  try {
+    const profiles = await User.find({ status: "Rejected" }).populate("profile");
+    return res.status(201).json({ data: profiles });
+  } catch (e) {
+    console.log(e);
+  }
+};
 exports.getAllProfiles = async (req, res) => {
   try {
     const profiles = await Profile.find();
@@ -68,18 +110,20 @@ exports.approve = async (req, res) => {
 exports.searchProfiles = async (req, res) => {
   try {
     const name = req.query.name;
-    const key = req.query.key;
-    if (key && name) {
-      //   const query = {
-      //     $or: [
-      //       { firstName: name },
-      //       { lastName: name },
-      //     ],
-      //   };
-      console.log(key);
-      const query = { [key]: name };
+    const type = req.query.type;
+    if (type) {
+      if (
+        type !== "firstName" &&
+        type !== "lastName" &&
+        type !== "preferredName"
+      )
+        return res.status(401).json({ message: "invalid type" });
+      let query;
+      if (name) query = { [type]: name };
+      else query = {};
       console.log(query);
-      const profiles = await Profile.find({ [key]: name });
+
+      const profiles = await Profile.find(query);
       return res.status(201).json({ data: profiles });
     } else return res.status(401).json({ message: "invalid page" });
   } catch (e) {

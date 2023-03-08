@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { Report } from 'src/app/interfaces/report';
 import { ReportAction } from 'src/app/store/report/report.action';
 
@@ -34,8 +33,8 @@ export class ReportService {
   addReport(report: Report): void {
     this.http.post(this.url + 'report', report)
       .subscribe({
-        next: (report: any) => {
-          console.log(report);
+        next: (res: any) => {
+          const report = res.report;
           this.store.dispatch(ReportAction.addReport({ report }));
         },
         error: (e) => {
@@ -44,12 +43,11 @@ export class ReportService {
       });
   }
 
-  UpdateReport(requestBody: any): void {
+  updateReport(requestBody: any): void {
     this.http.put(this.url + 'report', requestBody)
       .subscribe({
         next: (res: any) => {
           const report = res.report;
-          console.log(report);
           this.store.dispatch(ReportAction.updateReport({ report }));
         },
         error: (e) => {
