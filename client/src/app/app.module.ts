@@ -19,6 +19,7 @@ import {
 } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import {MatTableModule} from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -50,6 +51,9 @@ import { HrHouseDetailComponent } from './pages/hr-house-detail/hr-house-detail.
 import { HrReportComponent } from './pages/hr-report/hr-report.component';
 import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comment-dialog.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { hrReducer } from './store/hr/hr.reducer';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -100,8 +104,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
       reports: reportReducer,
       houses: houseReducer,
       employee: employeeReducer,
+      hr: hrReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    MatTableModule,
+    MatToolbarModule
   ],
   providers: [
     {
