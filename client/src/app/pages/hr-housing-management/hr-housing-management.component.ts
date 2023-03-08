@@ -6,6 +6,7 @@ import { HouseService } from 'src/app/services/house/house.service';
 import { selectHouses } from 'src/app/store/house/house.selector';
 import { MatDialog } from '@angular/material/dialog';
 import { HouseDialogComponent } from 'src/app/components/house-dialog/house-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hr-housing-management',
@@ -18,6 +19,7 @@ export class HrHousingManagementComponent implements OnInit {
   constructor(
     private houseService: HouseService,
     private store: Store,
+    private router : Router,
     private dialog: MatDialog,
   ) {}
 
@@ -27,5 +29,13 @@ export class HrHousingManagementComponent implements OnInit {
 
   openHouseDialog(): void {
     this.dialog.open(HouseDialogComponent);
+  }
+
+  onDeleteClick(id: string): void {
+    this.houseService.deleteHouse(id);
+  }
+
+  onCardClick(id: string): void {
+    this.router.navigate(['hrHousingManagement/house/' + id]);
   }
 }

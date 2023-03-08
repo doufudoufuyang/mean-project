@@ -27,7 +27,7 @@ export class EmployeeReportComponent implements OnInit {
   });
 
   constructor(
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private route: ActivatedRoute,
     private reportService: ReportService,
     private store: Store,

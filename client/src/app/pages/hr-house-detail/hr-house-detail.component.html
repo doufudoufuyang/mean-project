@@ -1,0 +1,55 @@
+<div class="layout" *ngIf="house$ | async as house">
+    <h3>Address</h3>
+    <div class="flex-column">
+        <p>{{ house.address.street }}</p>
+        <p *ngIf="house.address.apt">{{ house.address.apt }}</p>
+        <p>{{ house.address.city + ", " + house.address.state + " " + house.address.zip }}</p>
+    </div>
+    <hr><br>
+
+    <h3>Landlord</h3>
+    <div class="flex-column">
+        <p>{{ "Name: " + house.landlord.name }}</p>
+        <p>{{ "Phone Number: " + house.landlord.phone }}</p>
+        <p>{{ "Email: " + house.landlord.email }}</p>
+    </div>
+    <hr><br>
+
+    <h3>Employee Information</h3>
+    <mat-grid-list cols="{{ house.residents.length }}" rowHeight="150px">
+        <!-- TODO: link to employee profile -->
+        <mat-grid-tile *ngFor="let employee of house.residents">
+            <mat-card class="felx-column">
+                <p>{{ employee.profile.firstName + " " + employee.profile.lastName }}</p>
+                <p>{{ employee.profile.cellPhoneNumber }}</p>
+                <p>{{ employee.email }}</p>
+                <p *ngIf="employee.car">{{ employee.car }}</p>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <hr><br>
+
+    <h3>Facility Information</h3>
+    <div class="flex-column">
+        <p>{{ "Number of beds: " + house.facilityInfo.bedNum }}</p>
+        <p>{{ "Number of mattresses: " + house.facilityInfo.mattressNum }}</p>
+        <p>{{ "Number of tables: " + house.facilityInfo.tableNum }}</p>
+        <p>{{ "Number of chairs: " + house.facilityInfo.chairNum }}</p>
+    </div>
+    <hr><br>
+
+    <h3>Facility Reports</h3>
+    <div *ngFor="let report of house.reports">
+        <mat-card (click)="onClickCard(report._id)">
+            <mat-card-header>
+                <mat-card-title>{{ report.title }}</mat-card-title>
+                <span class='{{ report.status }}'>●</span><span class="font-secondary">{{ report.status }}</span>
+                <mat-card-subtitle>{{ report.username + " " + (report.date | date : 'mediumDate') }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>{{ report.description }}</p>
+            </mat-card-content>
+        </mat-card>
+        <br>
+    </div>
+</div>

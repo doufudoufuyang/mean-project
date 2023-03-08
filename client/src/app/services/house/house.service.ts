@@ -62,7 +62,6 @@ export class HouseService {
       .subscribe({
         next: (res: any) => {
           const id = res.house._id;
-          console.log(res)
           this.store.dispatch(HouseAction.deleteHouse({ id }))
         },
         error: (e) => {

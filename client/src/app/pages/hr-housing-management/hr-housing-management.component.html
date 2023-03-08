@@ -1,5 +1,5 @@
 <div class="layout" *ngFor="let house of houses$ | async">
-    <mat-card>
+    <mat-card (click)="onCardClick(house._id)">
         <mat-grid-list cols="3" rowHeight="1.5:1">
             <mat-grid-tile>
                 <div class="flex-column">
@@ -18,6 +18,9 @@
                 </div>
             </mat-grid-tile>
             <mat-grid-tile>
+                <button mat-icon-button class="corner" (click)="onDeleteClick(house._id)">
+                    <mat-icon>delete_outline</mat-icon>
+                </button>
                 <div class="flex-column" >
                     <p class="font-bold">Residents</p>
                     <div *ngFor="let resident of house.residents">

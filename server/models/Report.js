@@ -14,6 +14,7 @@ const ReportSchema = new Schema({
     date: { type: Date, required: true },
     status: { type: String, enum: ['Open', 'InProgress', 'Closed'], required: true },
     createdBy: { type: refType, ref: 'User', required: true },
+    username: { type: String, required: true },
     comments: [{ type: CommentSchema }],
 })
 
