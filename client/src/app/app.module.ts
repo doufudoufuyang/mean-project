@@ -47,6 +47,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HrHouseDetailComponent } from './pages/hr-house-detail/hr-house-detail.component';
 import { HrReportComponent } from './pages/hr-report/hr-report.component';
 import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comment-dialog.component';
+import { HrApplicationReviewComponent } from './pages/hr-application-review/hr-application-review.component';
+import { HrApplicationDetailComponent } from './pages/hr-application-detail/hr-application-detail.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comm
     HrHouseDetailComponent,
     HrReportComponent,
     HrCommentDialogComponent,
-    ConnectFormDirective
+    ConnectFormDirective,
+    HrApplicationReviewComponent,
+    HrApplicationDetailComponent
   ],
   imports: [
     FormsModule,
