@@ -351,7 +351,6 @@ exports.put_report = async (req, res) => {
 exports.get_houses = async (req, res) => {
   try {
     const { role } = req.payload;
-    console.log(role)
     if (role === 'employee') return res.status(403).json({ message: "Not authorized" });
     const houses = await House.find().populate({
       path: 'residents',
