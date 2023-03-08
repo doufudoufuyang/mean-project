@@ -80,7 +80,11 @@ exports.get_favorite = async (req, res) => {
     const products = userFavorites.favorites.map(product => product)
     res.status(200).json({ favorites: products})
   } catch (e) {
+<<<<<<< Updated upstream
     console.log('fail to get user favorites: ', e)
+=======
+    console.log("failed to update profile: ", e);
+>>>>>>> Stashed changes
   }
 }
 
