@@ -22,7 +22,22 @@ export class EmployeeVisaStatusComponent implements OnInit {
       })
   }
 
-
+  nextStep = {
+    0: "submit onboarding application",
+    1: "wait for HR approval",
+    2: "submit OPT EAD",
+    3: "wait for HR approval",
+    4: "submit I-983",
+    5: "wait for HR approval",
+    6: "submit I-20",
+    7: "wait for HR approval",
+  };
+  next = 2; //get from profile.nextStep;
+  
+  getStep(step:number|string):string | number
+  {
+    return this.nextStep[step as keyof typeof this.nextStep];
+  }
   // optReceiptStatus: String = 'Pending';
   optReceiptStatus: String = 'Approved';
   // optReceiptStatus: String = 'Rejected';
