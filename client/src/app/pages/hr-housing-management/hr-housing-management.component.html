@@ -18,6 +18,9 @@
                 </div>
             </mat-grid-tile>
             <mat-grid-tile>
+                <button mat-icon-button class="corner" (click)="onDeleteClick(house._id)">
+                    <mat-icon>delete_outline</mat-icon>
+                </button>
                 <div class="flex-column" >
                     <p class="font-bold">Residents</p>
                     <div *ngFor="let resident of house.residents">

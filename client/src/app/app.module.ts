@@ -42,6 +42,7 @@ import { houseReducer } from './store/house/house.reducer';
 import { HouseDialogComponent } from './components/house-dialog/house-dialog.component';
 import { employeeReducer } from './store/employee/employee.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HrHouseDetailComponent } from './pages/hr-house-detail/hr-house-detail.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     ReportDialogComponent,
     CommentDialogComponent,
     HouseDialogComponent,
+    HrHouseDetailComponent,
   ],
   imports: [
     FormsModule,

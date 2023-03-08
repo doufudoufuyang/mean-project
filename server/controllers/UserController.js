@@ -226,33 +226,6 @@ exports.profile_upload = async (req, res) => {
 };
 
 
-exports.get_favorite = async (req, res) => {
-  try {
-    const { username, email } = req.payload
-    const userFavorites = await User.findOne({
-      username: username,
-      email: email
-    }).populate('favorites')
-    const products = userFavorites.favorites.map(product => product)
-    res.status(200).json({ favorites: products})
-  } catch (e) {
-    console.log('fail to get user favorites: ', e)
-  }
-}
-
-exports.admin_overview = async (req, res) => {
-  try {
-    const { username, email } = req.payload
-    const userFavorites = await User.find({
-      username: { $ne:  username},
-      email: { $ne:  email}
-    }).populate('favorites')
-    res.status(200).json({ all: userFavorites})
-  } catch (e) {
-    console.log('fail to get user favorites: ', e)
-  }
-}
-
 // Housing
 // Employee get house details
 exports.get_house = async (req, res) => {
@@ -451,7 +424,6 @@ exports.delete_house = async (req, res) => {
     });
     await Report.deleteMany({ id: { $in: house.reports } });
     const deletedHouse = await House.findByIdAndDelete(id);
-    console.log(deletedHouse)
     res.status(200).json({ message: "Successfully delete house", house: deletedHouse });
   } catch (err) {
     console.log(err);

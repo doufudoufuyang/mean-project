@@ -28,4 +28,8 @@ export class HrHousingManagementComponent implements OnInit {
   openHouseDialog(): void {
     this.dialog.open(HouseDialogComponent);
   }
+
+  onDeleteClick(id: string): void {
+    this.houseService.deleteHouse(id);
+  }
 }
