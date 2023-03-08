@@ -49,6 +49,8 @@ import { HrReportComponent } from './pages/hr-report/hr-report.component';
 import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comment-dialog.component';
 import { HrApplicationReviewComponent } from './pages/hr-application-review/hr-application-review.component';
 import { HrApplicationDetailComponent } from './pages/hr-application-detail/hr-application-detail.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { profileReducer } from './store/profile/profile.reducer';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,7 @@ import { HrApplicationDetailComponent } from './pages/hr-application-detail/hr-a
     HrApplicationDetailComponent
   ],
   imports: [
+    MatExpansionModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
@@ -101,14 +104,18 @@ import { HrApplicationDetailComponent } from './pages/hr-application-detail/hr-a
     StoreModule.forRoot({
       reports: reportReducer,
       houses: houseReducer,
-      employee: employeeReducer
+      profiles: profileReducer,
+      employee: employeeReducer,
     }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline' },
+    },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

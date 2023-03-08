@@ -19,7 +19,7 @@ export class HrEmployeeProfilesComponent {
     private http: HttpClient
   ) {}
   searchForm: FormGroup = this.formBuilder.group({
-    name: [{ value: '' }, Validators.required],
+    name: ['', Validators.required],
   });
   profiles: any[] = [
     {
@@ -78,6 +78,7 @@ export class HrEmployeeProfilesComponent {
       });
   }
   search(type: string) {
+    const name = this.searchForm.getRawValue().name;
     fetch(`http://localhost:3000/hr/searchProfiles?type=${type}&name=${name}`, {
       method: 'GET',
       headers: {
@@ -93,7 +94,7 @@ export class HrEmployeeProfilesComponent {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        this.profiles = data.data;
       })
       .catch((error) => {
         console.error('Error:', error);

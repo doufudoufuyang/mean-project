@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Invitation = require("../models/Invitation")
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../../.env") });
 const Profile = require("../models/Profile");
@@ -11,6 +12,48 @@ const nextStep = {
   5: "wait for HR approval",
   6: "submit I-20",
   7: "wait for HR approval",
+};
+exports.rejectApplication = async (req, res) => {
+  try {
+    const uid = req.params.uid;
+    await User.update({ id: uid }, { status: "Rejected" });
+    return res.status(201).json({ message: "Reject successfully" });
+  } catch (e) {
+    console.log(e);
+  }
+};
+exports.approveApplication = async (req, res) => {
+  try {
+    const uid = req.params.uid;
+    await User.update({ id: uid }, { status: "Approved" });
+    return res.status(201).json({ message: "Approve successfully" });
+  } catch (e) {
+    console.log(e);
+  }
+};
+exports.getPendingApplication = async (req, res) => {
+  try {
+    const profiles = await User.find({ status: "Pending" }).populate("profile");
+    return res.status(201).json({ data: profiles });
+  } catch (e) {
+    console.log(e);
+  }
+};
+exports.getApprovedApplication = async (req, res) => {
+  try {
+    const profiles = await User.find({ status: "Approved" }).populate("profile");
+    return res.status(201).json({ data: profiles });
+  } catch (e) {
+    console.log(e);
+  }
+};
+exports.getRejectedApplication = async (req, res) => {
+  try {
+    const profiles = await User.find({ status: "Rejected" }).populate("profile");
+    return res.status(201).json({ data: profiles });
+  } catch (e) {
+    console.log(e);
+  }
 };
 exports.getAllProfiles = async (req, res) => {
   try {
@@ -68,11 +111,19 @@ exports.searchProfiles = async (req, res) => {
   try {
     const name = req.query.name;
     const type = req.query.type;
-    if (type && name) {
-      console.log(type);
-      const query = { [type]: name };
+    if (type) {
+      if (
+        type !== "firstName" &&
+        type !== "lastName" &&
+        type !== "preferredName"
+      )
+        return res.status(401).json({ message: "invalid type" });
+      let query;
+      if (name) query = { [type]: name };
+      else query = {};
       console.log(query);
-      const profiles = await Profile.find({f:name});
+
+      const profiles = await Profile.find(query);
       return res.status(201).json({ data: profiles });
     } else return res.status(401).json({ message: "invalid page" });
   } catch (e) {
@@ -129,3 +180,12 @@ exports.sendNotification = async (req, res) => {
     res.status(500).send({ error: "Fail to send notification" });
   }
 };
+
+exports.getAllInvitations = async (req, res) => {
+  try {
+    const invitations = await Invitation.find()
+    res.status(200).json({ invitations : invitations})
+  } catch (e) {
+    console.log('fail to get all invitations, ', e)
+  }
+}
