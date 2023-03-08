@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -92,6 +93,7 @@ import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comm
     MatNativeDateModule,
     MatDialogModule,
     MatIconModule,
+    MatPaginatorModule,
     StoreModule.forRoot({
       reports: reportReducer,
       houses: houseReducer,
