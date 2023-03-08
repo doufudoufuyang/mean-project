@@ -34,6 +34,7 @@ exports.user_register = async (req, res) => {
       password: hashedPassword,
       email: email,
       role: "employee",
+      status: "Not Started"
     });
     res.status(201).json({ message: "successfully register" });
   } catch (e) {
@@ -118,7 +119,7 @@ exports.user_login = async (req, res) => {
     const user = await User.findOne({
       username: username,
       email: email,
-    });
+    }).populate('profile');
     if (!user) {
       res.status(401).json({ message: "user not exists, check username and password" });
       return;
@@ -141,7 +142,7 @@ exports.user_login = async (req, res) => {
       const token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: "30m",
       });
-      res.status(200).json({ jwt: token });
+      res.status(200).json({ jwt: token, user : user });
     }
   } catch (e) {
     console.log("fail to login: ", e);
@@ -151,6 +152,8 @@ exports.user_login = async (req, res) => {
 async function updateProfile(username, profileData) {
   try {
     const user = await User.findOne({ username: username });
+    user.status = 'Pending'
+    await user.save()
     if(!user.profile){
       var profile = new Profile();
       profile.step=profileData.step
@@ -168,6 +171,8 @@ async function updateProfile(username, profileData) {
       profile.gender = profileData.gender;
       profile.reference = profileData.reference;
       profile.emergencyContacts = profileData.emergencyContacts;
+      profile.optReceipt= profileData.optReceipt
+      profile.driverLicense =profileData.driverLicense;
       await profile.save();
       await User.updateOne({ username: username }, { profile: profile._id })
     }
@@ -194,7 +199,8 @@ async function updateProfile(username, profileData) {
           profile.gender = profileData.gender;
           profile.reference = profileData.reference;
           profile.emergencyContacts = profileData.emergencyContacts;
-        
+          profile.optReceipt= profileData.optReceipt;
+          profile.driverLicense =profileData.driverLicense;
           // save the updated profile to MongoDB
           profile.save((err, updatedProfile) => {
             if (err) {
@@ -435,9 +441,9 @@ exports.delete_house = async (req, res) => {
 exports.user_upload = async function (req, res) {
   console.log('req.file.key =', req.file.key)
   console.log('req.file.location =', req.file.location)
-  res.send([req.file.location])
-  // res.send([req.file.key])
-  // res.send([req.file.key])
+  // res.send([req.file.location])
+  res.send([req.file.key])
+
 }
 
 //AWS s3, download a file

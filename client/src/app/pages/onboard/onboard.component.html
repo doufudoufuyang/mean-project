@@ -34,7 +34,7 @@
 
     <br />
     <label>Profile Picture</label>
-    <input type="file" (change)="onFilePicked($event)" accept="image/*">
+    <input type="file" (change)="onFilePickedPic($event)" accept="image/*">
     <!-- <img [src]="profilePicture"> -->
     <button (click)="onFileUpload()">Upload Pictue</button>
 
@@ -70,7 +70,8 @@
     <input type="text" [(ngModel)]="carColor" name="carColor">
     <br />
     <label>Email *</label>
-    <input type="email" [(ngModel)]="email" name="email" required readonly>
+    <input type="email" [(ngModel)]="email" name="email" required>
+    <!-- <input type="email" [(ngModel)]="email" name="email" required readonly> -->
 
     <label>SSN *</label>
     <input type="text" [(ngModel)]="ssn" name="ssn" required>
@@ -106,8 +107,8 @@
 
         <ng-container *ngIf="workAuthorization === 'f1'">
             <label>OPT Receipt</label>
-            <input type="file" (change)="onFilePicked($event)">
-            <button (click)="onFileUpload()">Upload Driver License</button>
+            <input type="file" (change)="onFilePickedOpt($event)">
+            <button (click)="onFileUpload()">Upload OPT Receipt</button>
         </ng-container>
 
         <ng-container *ngIf="workAuthorization === 'other'">
@@ -133,7 +134,7 @@
         <input type="date" [(ngModel)]="driverLicenseExpiration" name="driverLicenseExpiration" required>
 
         <label>Driver's License Copy</label>
-        <input type="file" (change)="onFilePicked($event)">
+        <input type="file" (change)="onFilePickedDri($event)">
         <button (click)="onFileUpload()">Upload Driver License</button>
     </ng-container>
     <br />
@@ -175,7 +176,8 @@
         </tr>
         <tr>
             <th>Address:</th>
-            <th>{{profile.address}}</th>
+            <th>{{profile.address.apt}} {{profile.address.street}} {{profile.address.city}} {{profile.address.state}}
+                {{profile.address.zip}}</th>
         </tr>
         <tr>
             <th>Cell Phone:</th>
@@ -183,7 +185,7 @@
         </tr>
         <tr>
             <th>Car Information:</th>
-            <th>{{profile.car}}</th>
+            <th>{{profile.car.make}} {{profile.car.model}} {{profile.car.color}}</th>
         </tr>
         <tr>
             <th>Email:</th>
@@ -203,15 +205,24 @@
         </tr>
         <tr>
             <th>Driver Liscense:</th>
-            <th>{{profile.driverLicense}}</th>
+            <th>{{profile.driverLicense.number}}</th>
         </tr>
         <tr>
             <th>Reference:</th>
-            <th>{{profile.reference}}</th>
+            <th>{{profile.reference.firstName}} {{profile.reference.middleName}} {{profile.reference.lastName}}
+                {{profile.reference.phone}} {{profile.reference.email}} {{profile.reference.relationship}}</th>
         </tr>
-        <tr>
-            <th>Emergency Contact:</th>
-            <th>{{profile.emergencyContacts}}</th>
+        <div>
+
+        </div>
+        <tr *ngFor='let contact of profile.emergencyContacts'>
+            <th>Emergency Contact: </th>
+            <th>{{contact.firstName}}</th>
+            <th>{{contact.middleName}}</th>
+            <th>{{contact.lastName}}</th>
+            <th>{{contact.phone}}</th>
+            <th>{{contact.email}}</th>
+            <th>{{contact.relationship}}</th>
         </tr>
     </table>
     <ul>
