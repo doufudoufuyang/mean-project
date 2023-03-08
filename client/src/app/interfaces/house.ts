@@ -15,7 +15,7 @@ export interface House {
         email: string,
     },
     facilityInfo: {
-        betNum: number,
+        bedNum: number,
         mattressNum: number,
         tableNum: number,
         chairNum: number,

@@ -1,0 +1,23 @@
+.layout {
+    padding: 2rem;
+}
+
+.Open {
+    color: red;
+}
+
+.InProgress {
+    color: yellow
+}
+
+.Closed {
+    color: green;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 400px;
+}

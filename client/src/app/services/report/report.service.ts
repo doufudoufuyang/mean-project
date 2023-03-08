@@ -48,7 +48,6 @@ export class ReportService {
       .subscribe({
         next: (res: any) => {
           const report = res.report;
-          console.log(report);
           this.store.dispatch(ReportAction.updateReport({ report }));
         },
         error: (e) => {

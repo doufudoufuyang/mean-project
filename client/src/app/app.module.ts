@@ -43,6 +43,8 @@ import { HouseDialogComponent } from './components/house-dialog/house-dialog.com
 import { employeeReducer } from './store/employee/employee.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HrHouseDetailComponent } from './pages/hr-house-detail/hr-house-detail.component';
+import { HrReportComponent } from './pages/hr-report/hr-report.component';
+import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,8 @@ import { HrHouseDetailComponent } from './pages/hr-house-detail/hr-house-detail.
     CommentDialogComponent,
     HouseDialogComponent,
     HrHouseDetailComponent,
+    HrReportComponent,
+    HrCommentDialogComponent,
   ],
   imports: [
     FormsModule,
