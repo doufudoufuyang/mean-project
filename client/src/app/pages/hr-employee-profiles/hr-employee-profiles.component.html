@@ -1,17 +1,18 @@
-<form class="form">
+<form class="form" [formGroup]="searchForm">
     <mat-form-field class="formField">
         <mat-label>firstName</mat-label>
-        <input matInput formControlName="firstName">
+        <input matInput formControlName="name">
     </mat-form-field>
+    <button mat-raised-button color="primary" (click)="search('firstName')">search FirstName</button>
+    <button mat-raised-button color="primary" (click)="search('lastName')">search LastName</button>
+    <button mat-raised-button color="primary" (click)="search('preferedName')">search PreferredName</button>
 </form>
 <mat-list>
     <mat-list-item *ngFor="let p of profiles">
         <span matListItemTitle>{{ p.firstName }} {{p.lastName}}</span>
         <span matListItemLine>SSN: {{ p.SSN }}</span>
-        <span matListItemLine>Work Authorization title: {{ p.SSN }}</span>
-        <span matListItemLine>Email: {{ p.SSN }}</span>
+        <span matListItemLine>Work Authorization title: {{ p.title }}</span>
+        <span matListItemLine>Email: {{ p.email }}</span>
         <span matListItemLine>Phone Number: {{ p.cellPhoneNumber }}</span>
-        <span matListItemLine>{{ p.SSN }}</span>
-        </mat-list-item>
     </mat-list-item>
 </mat-list>

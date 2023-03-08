@@ -227,7 +227,7 @@ exports.profile_upload = async (req, res) => {
     await updateProfile(username, profileData)
     res.status(201).json({ message: "successfully update profile" });
   } catch (e) {
-    console.log("failed to register: ", e);
+    console.log("failed to update profile: ", e);
   }
 };
 
