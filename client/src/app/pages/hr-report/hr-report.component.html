@@ -1,4 +1,4 @@
-<div class="layout" *ngIf="report$ | async as report">
+<div class="layout" *ngIf="report">
     <h3>{{ report.title }}</h3>
     <span class='{{ report.status }}'>●</span><span class="font-secondary"> {{ report.status }}</span>
     <mat-list>
@@ -16,8 +16,8 @@
             <span matListItemLine>{{ comment.timestamp | date : 'medium' }}</span>
             <div class="flex-row">
                 <span matListItemLine>{{ comment.description }} </span>
-                <!-- TODO: add *ngIf comment.username === emplouee.username -->
-                <mat-icon (click)="openCommentDialog(report._id, comment._id, comment.description)">edit</mat-icon>
+                <!-- TODO: add *ngIf comment.username === hr.username -->
+                <mat-icon (click)="openHrCommentDialog(report._id, comment._id, comment.description)">edit</mat-icon>
             </div>
             <br>
             <br>

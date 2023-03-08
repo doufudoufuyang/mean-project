@@ -38,8 +38,13 @@ import { reportReducer } from './store/report/report.reducer';
 import { EmployeeReportComponent } from './pages/employee-report/employee-report.component';
 import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
+import { houseReducer } from './store/house/house.reducer';
+import { HouseDialogComponent } from './components/house-dialog/house-dialog.component';
 import { employeeReducer } from './store/employee/employee.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HrHouseDetailComponent } from './pages/hr-house-detail/hr-house-detail.component';
+import { HrReportComponent } from './pages/hr-report/hr-report.component';
+import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +66,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     EmployeeReportComponent,
     ReportDialogComponent,
     CommentDialogComponent,
+    HouseDialogComponent,
+    HrHouseDetailComponent,
+    HrReportComponent,
+    HrCommentDialogComponent,
   ],
   imports: [
     FormsModule,
@@ -83,6 +92,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     MatIconModule,
     StoreModule.forRoot({
       reports: reportReducer,
+      houses: houseReducer,
       employee: employeeReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })

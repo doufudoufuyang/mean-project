@@ -232,33 +232,6 @@ exports.profile_upload = async (req, res) => {
 };
 
 
-exports.get_favorite = async (req, res) => {
-  try {
-    const { username, email } = req.payload
-    const userFavorites = await User.findOne({
-      username: username,
-      email: email
-    }).populate('favorites')
-    const products = userFavorites.favorites.map(product => product)
-    res.status(200).json({ favorites: products})
-  } catch (e) {
-    console.log('fail to get user favorites: ', e)
-  }
-}
-
-exports.admin_overview = async (req, res) => {
-  try {
-    const { username, email } = req.payload
-    const userFavorites = await User.find({
-      username: { $ne:  username},
-      email: { $ne:  email}
-    }).populate('favorites')
-    res.status(200).json({ all: userFavorites})
-  } catch (e) {
-    console.log('fail to get user favorites: ', e)
-  }
-}
-
 // Housing
 // Employee get house details
 exports.get_house = async (req, res) => {
@@ -294,6 +267,7 @@ exports.post_report = async (req, res) => {
       date: Date.now(),
       status: 'Open',
       createdBy: employee.id,
+      username: employee.username,
     }
     const createdReport = await Report.create(report);
     const house = await House.findById(profile.house);
@@ -350,7 +324,7 @@ exports.put_report = async (req, res) => {
     } else if (commentId) { // update comment
       const updatedComment = {
         description,
-        createdBy: profile ? (profile.firstName + ' ' + profile.lastName) : 'HR',
+        createdBy: user.username,
         timestamp: Date.now(),
       };
       const updatedComments = report.comments.map(comment => (comment.id === commentId ? updatedComment : comment));
@@ -359,7 +333,7 @@ exports.put_report = async (req, res) => {
     } else { // add comment
       const comment = {
         description,
-        createdBy: profile ? (profile.firstName + ' ' + profile.lastName) : 'HR',
+        createdBy: user.username,
         timestamp: Date.now(),
       }
       updatedReport = await Report.findByIdAndUpdate(report, { comments: [...report.comments, comment] }, { new: true });
@@ -378,7 +352,13 @@ exports.get_houses = async (req, res) => {
   try {
     const { role } = req.payload;
     if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
-    const houses = await House.find();
+    const houses = await House.find().populate({
+      path: 'residents',
+      populate: {
+        path: 'profile',
+        select: ['firstName', 'lastName', 'cellPhoneNumber', 'car']
+      }
+    }).populate('reports');
     res.status(200).json({ houses });
   } catch (err) {
     console.log(err);
@@ -386,7 +366,7 @@ exports.get_houses = async (req, res) => {
 }
 
 // HR view certain house details
-exports.get_house_with_id = async (req, res) => {
+exports.get_house_by_id = async (req, res) => {
   try {
     const { role } = req.payload;
     if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
@@ -450,8 +430,8 @@ exports.delete_house = async (req, res) => {
       await Profile.findByIdAndUpdate(employee.profile, { $unset: { house: 1 } }, { new: true });
     });
     await Report.deleteMany({ id: { $in: house.reports } });
-    await House.findByIdAndDelete(id);
-    res.status(200).json({ message: "Successfully delete house"});
+    const deletedHouse = await House.findByIdAndDelete(id);
+    res.status(200).json({ message: "Successfully delete house", house: deletedHouse });
   } catch (err) {
     console.log(err);
   }

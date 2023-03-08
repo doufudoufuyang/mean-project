@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-// import { UserAction } from '../../store/user.action';
-// import { selectUsers } from '../../store/user.selector';
-import { selectEmployee } from "../../store/employee/employee.selector";
+import { EmployeeAction } from 'src/app/store/employee/employee.action';
+import { selectEmployee } from 'src/app/store/employee/employee.selector';
 import { FileService } from 'src/app/services/file.service';
 import { Router } from '@angular/router';
 
@@ -55,7 +54,6 @@ export class OnboardComponent implements OnInit {
   opt!: string
 
 
-  // users$: Observable<any> = this.store.select(selectUsers);
   users$: Observable<any> = this.store.select(selectEmployee);
   data: any = {}
   name: string = ''

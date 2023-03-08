@@ -21,7 +21,7 @@ router.get('/reports', authorizationJWT, UserController.get_reports);
 router.get('/report/:id', authorizationJWT, UserController.get_report);
 // HR
 router.get('/houses', authorizationJWT, UserController.get_houses);
-router.get('/house/:id', authorizationJWT, UserController.get_house_with_id);
+router.get('/house/:id', authorizationJWT, UserController.get_house_by_id);
 router.post('/house', authorizationJWT, UserController.post_house);
 router.put('/house', authorizationJWT, UserController.put_house);
 router.delete('/house/:id', authorizationJWT, UserController.delete_house);
