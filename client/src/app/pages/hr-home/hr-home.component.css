@@ -1,0 +1,25 @@
+.send-invitation-container{
+    height: 20%;
+}
+
+.sent-invitation-container {
+    height: 70%;
+}
+
+.form {
+    width: 25%;
+    margin: auto;
+}
+
+.table {
+    max-width: 70%;
+    margin: auto;
+}
+
+.mat-mdc-form-field {
+    display: block;
+}
+
+.truncate-text {
+    max-width: 150px;
+}
