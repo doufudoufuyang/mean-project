@@ -12,6 +12,7 @@ export interface Employee {
         make : string,
         model : string
     }
+    email:string,
     cellPhoneNumber : string,
     dateOfBirth : string,
     emergencyContacts : Contact[],
@@ -23,8 +24,6 @@ export interface Employee {
     reference : Contact[],
     step : number,
     workPhoneNumber : string
-    
-    
 }
 
 interface Contact {

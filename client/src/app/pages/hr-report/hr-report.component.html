@@ -1,6 +1,9 @@
 <div class="layout" *ngIf="report">
     <h3>{{ report.title }}</h3>
+    <span>{{ report.username }}</span>
+    <br><br>
     <span class='{{ report.status }}'>●</span><span class="font-secondary"> {{ report.status }}</span>
+    
     <mat-list>
         <mat-list-item>
             <span matListItemTitle>{{ report.description }}</span>
@@ -19,8 +22,7 @@
                 <!-- TODO: add *ngIf comment.username === hr.username -->
                 <mat-icon (click)="openHrCommentDialog(report._id, comment._id, comment.description)">edit</mat-icon>
             </div>
-            <br>
-            <br>
+            <br><br>
         </mat-list-item>
     </mat-list>
 

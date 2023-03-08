@@ -227,7 +227,7 @@ exports.profile_upload = async (req, res) => {
     await updateProfile(username, profileData)
     res.status(201).json({ message: "successfully update profile" });
   } catch (e) {
-    console.log("failed to register: ", e);
+    console.log("failed to update profile: ", e);
   }
 };
 
@@ -351,7 +351,8 @@ exports.put_report = async (req, res) => {
 exports.get_houses = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
+    console.log(role)
+    if (role === 'employee') return res.status(403).json({ message: "Not authorized" });
     const houses = await House.find().populate({
       path: 'residents',
       populate: {
@@ -369,7 +370,7 @@ exports.get_houses = async (req, res) => {
 exports.get_house_by_id = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
+    if (role === 'employee') return res.status(403).json({ message: "Not authorized" });
     const { id } = req.params;
     const house = await House.findById(id).populate('residents').populate('reports');
     return res.status(200).json({ house });
@@ -382,7 +383,7 @@ exports.get_house_by_id = async (req, res) => {
 exports.post_house = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
+    if (role === 'employee') return res.status(403).json({ message: "Not authorized" });
     const { address, landlord, facilityInfo } = req.body;
     const house = { address, landlord, facilityInfo };
     const createdHouse = await House.create(house);
@@ -396,7 +397,7 @@ exports.post_house = async (req, res) => {
 exports.put_house = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
+    if (role === 'employee') return res.status(403).json({ message: "Not authorized" });
     const { id, address, landlord, facilityInfo, resident } = req.body;
     if (!id) res.status(400).json({ message: "House ID is required" });
     const house = await House.findById(id);
@@ -421,7 +422,7 @@ exports.put_house = async (req, res) => {
 exports.delete_house = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
+    if (role === 'employee') return res.status(403).json({ message: "Not authorized" });
     const { id } = req.params;
     const house = await House.findById(id).populate('residents');
     // console.log(house)

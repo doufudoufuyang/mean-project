@@ -67,18 +67,12 @@ exports.approve = async (req, res) => {
 exports.searchProfiles = async (req, res) => {
   try {
     const name = req.query.name;
-    const key = req.query.key;
-    if (key && name) {
-      //   const query = {
-      //     $or: [
-      //       { firstName: name },
-      //       { lastName: name },
-      //     ],
-      //   };
-      console.log(key);
-      const query = { [key]: name };
+    const type = req.query.type;
+    if (type && name) {
+      console.log(type);
+      const query = { [type]: name };
       console.log(query);
-      const profiles = await Profile.find({ [key]: name });
+      const profiles = await Profile.find({f:name});
       return res.status(201).json({ data: profiles });
     } else return res.status(401).json({ message: "invalid page" });
   } catch (e) {

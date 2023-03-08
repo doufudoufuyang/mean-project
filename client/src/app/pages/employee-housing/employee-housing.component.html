@@ -21,17 +21,16 @@
 
     <div class="layout">
         <div *ngFor="let report of reports$ | async">
-            <a routerLink="report/{{ report._id }}">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title>{{ report.title }}</mat-card-title>
-                        <mat-card-subtitle>{{ report.date | date : 'mediumDate' }}</mat-card-subtitle>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p>{{ report.description }}</p>
-                    </mat-card-content>
-                </mat-card>
-            </a>
+            <mat-card (click)="onCardClick(report._id)">
+                <mat-card-header>
+                    <mat-card-title>{{ report.title }}</mat-card-title>
+                    <span class='{{ report.status }}'>●</span><span class="font-secondary">{{ report.status }}</span>
+                    <mat-card-subtitle>{{ report.date | date : 'mediumDate' }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>{{ report.description }}</p>
+                </mat-card-content>
+            </mat-card>
             <br>
         </div>
     

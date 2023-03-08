@@ -11,18 +11,14 @@ mat-grid-tile.bold {
     padding: 1rem;
 }
 
-a:link {
-    text-decoration: none;
+.Open {
+    color: red;
 }
 
-a:visited {
-    text-decoration: none;
+.InProgress {
+    color: yellow
 }
 
-a:hover {
-    text-decoration: none;
-}
-
-a:active {
-    text-decoration: none;
+.Closed {
+    color: green;
 }
