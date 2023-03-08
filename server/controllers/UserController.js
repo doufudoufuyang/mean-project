@@ -7,6 +7,7 @@ const User = require("../models/User");
 const Profile = require("../models/Profile");
 const House = require("../models/House");
 const Report = require("../models/Report");
+const Invitation = require("../models/Invitation")
 const { s3Old } = require('../middleware/aws');
 const BUCKET = process.env.BUCKET
 
@@ -14,6 +15,7 @@ const BUCKET = process.env.BUCKET
 
 exports.user_register = async (req, res) => {
   try {
+    const invitation = await Invitation.updateOne({ token : token }, {status : 'Accept'})
     const { username, password, email } = req.body;
     const userExist = await User.findOne({
       username: username,
@@ -81,32 +83,15 @@ exports.sent_register_invitation = async (req, res) => {
       }
       return resolve({message:'Email sent successfully!'})
     })
-    
-
-    // let account = await nodemailer.createTestAccount()
-    // console.log('account info: ', account)
-    // let transporter = nodemailer.createTransport({
-    //   host: "smtp.ethereal.email",
-    //   port: 587,
-    //   secure: false, // true for 465, false for other ports
-    //   auth: {
-    //     user: account.user, // generated ethereal user
-    //     pass: account.pass, // generated ethereal password
-    //   },
-    //   sendMail: true
-    // });
-
-    // send mail with defined transport object
-    // let info = await transporter.sendMail({
-    //   from: '"Fred Foo 👻" <foo@example.com>', // sender address
-    //   to: email, // list of receivers
-    //   subject: `Register Invitation`, // Subject line
-    //   text: `Hello ${name}, here is your register token!`, // plain text body
-    //   html: `<b>${token}</b>`, // html body
-    // });
-
-    // console.log('send mail with defined transport object: ', info)
-    res.status(200).json({ register_token : token })
+    const invitation = await Invitation.create({
+      name: name,
+      email : email,
+      token : token,
+      status : 'Pending'
+      
+    })
+    console.log('Invitation details: ', invitation)
+    res.status(200).json({ message : 'Invitation sent' })
   } catch (e) {
     console.log('fail to send invitation: ', e)
     res.status(500).send({error : 'Fail to send invitation'})
@@ -119,7 +104,7 @@ exports.user_login = async (req, res) => {
     const user = await User.findOne({
       username: username,
       email: email,
-    }).populate('profile');
+    }).populate('profile')
     if (!user) {
       res.status(401).json({ message: "user not exists, check username and password" });
       return;

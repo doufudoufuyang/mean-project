@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Invitation = require("../models/Invitation")
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../../.env") });
 const Profile = require("../models/Profile");
@@ -179,3 +180,12 @@ exports.sendNotification = async (req, res) => {
     res.status(500).send({ error: "Fail to send notification" });
   }
 };
+
+exports.getAllInvitations = async (req, res) => {
+  try {
+    const invitations = await Invitation.find()
+    res.status(200).json({ invitations : invitations})
+  } catch (e) {
+    console.log('fail to get all invitations, ', e)
+  }
+}

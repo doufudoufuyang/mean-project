@@ -8,6 +8,8 @@ router.get('/searchProfiles', HRProfileController.searchProfiles);
 router.get('/visas', HRProfileController.getVisas);
 router.get('/inProgressVisas', HRProfileController.getInProgressVisa);
 router.get('/searchVisa', HRProfileController.getAllProfiles);
+router.get('/getAllInvitations', HRProfileController.getAllInvitations)
+
 //application
 router.post('/rejectApplication', HRProfileController.rejectApplication);
 router.post('/approveApplication', HRProfileController.approveApplication);
