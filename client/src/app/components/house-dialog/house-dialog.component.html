@@ -1,0 +1,68 @@
+<h1 mat-dialog-title>Add House</h1>
+<from [formGroup]="form">
+    <div mat-dialog-content class="flex-column">
+        <p>Address</p>
+        <div formGroupName="address">
+            <mat-form-field appearance="fill">
+                <mat-label>Building/Apt #</mat-label>
+                <input matInput formControlName="apt">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Street</mat-label>
+                <input matInput formControlName="street">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>City</mat-label>
+                <input matInput formControlName="city">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>State</mat-label>
+                <input matInput formControlName="state">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Zip</mat-label>
+                <input matInput formControlName="zip">
+            </mat-form-field>
+        </div>
+
+        <p>Landlord Information</p>
+        <div formGroupName="landlord">
+            <mat-form-field appearance="fill">
+                <mat-label>Legal Full Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Phone Number</mat-label>
+                <input matInput formControlName="phone">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email">
+            </mat-form-field>
+        </div>
+
+        <p>Facility Information</p>
+        <div formGroupName="facilityInfo">
+            <mat-form-field appearance="fill">
+                <mat-label>Number of beds</mat-label>
+                <input matInput type="number" formControlName="bedNum">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Number of mattresss</mat-label>
+                <input matInput type="number" formControlName="mattressNum">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Number of tables</mat-label>
+                <input matInput type="number" formControlName="tableNum">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Number of chairs</mat-label>
+                <input matInput type="number" formControlName="chairNum">
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button (click)="onSubmit()" [mat-dialog-close]="true" [disabled]="!form.valid">Submit</button>
+    </div>
+</from>

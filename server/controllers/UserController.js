@@ -372,7 +372,13 @@ exports.get_houses = async (req, res) => {
   try {
     const { role } = req.payload;
     if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
-    const houses = await House.find();
+    const houses = await House.find().populate({
+      path: 'residents',
+      populate: {
+        path: 'profile',
+        select: ['firstName', 'lastName', 'cellPhoneNumber', 'car']
+      }
+    });
     res.status(200).json({ houses });
   } catch (err) {
     console.log(err);
@@ -380,7 +386,7 @@ exports.get_houses = async (req, res) => {
 }
 
 // HR view certain house details
-exports.get_house_with_id = async (req, res) => {
+exports.get_house_by_id = async (req, res) => {
   try {
     const { role } = req.payload;
     if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
@@ -444,8 +450,9 @@ exports.delete_house = async (req, res) => {
       await Profile.findByIdAndUpdate(employee.profile, { $unset: { house: 1 } }, { new: true });
     });
     await Report.deleteMany({ id: { $in: house.reports } });
-    await House.findByIdAndDelete(id);
-    res.status(200).json({ message: "Successfully delete house"});
+    const deletedHouse = await House.findByIdAndDelete(id);
+    console.log(deletedHouse)
+    res.status(200).json({ message: "Successfully delete house", house: deletedHouse });
   } catch (err) {
     console.log(err);
   }

@@ -1,1 +1,34 @@
-<p>hr-housing-management works!</p>
+<div class="layout" *ngFor="let house of houses$ | async">
+    <mat-card>
+        <mat-grid-list cols="3" rowHeight="1.5:1">
+            <mat-grid-tile>
+                <div class="flex-column">
+                    <p class="font-bold">Address</p>
+                    <p>{{ house.address.street }}</p>
+                    <p *ngIf="house.address.apt">{{ house.address.apt }}</p>
+                    <p>{{ house.address.city + ", " + house.address.state + " " + house.address.zip }}</p>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="flex-column">
+                    <p class="font-bold">Landlord</p>
+                    <p>{{ house.landlord.name }}</p>
+                    <p>{{ house.landlord.phone }}</p>
+                    <p>{{ house.landlord.email }}</p>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="flex-column" >
+                    <p class="font-bold">Residents</p>
+                    <div *ngFor="let resident of house.residents">
+                        <p>{{ resident.profile.firstName + " " + resident.profile.lastName }}</p>
+                    </div>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-card>
+    <br>
+</div>
+<div class="layout">
+    <button mat-raised-button color="primary" (click)="openHouseDialog()">Add House</button>
+</div>
