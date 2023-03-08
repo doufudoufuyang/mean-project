@@ -1,5 +1,4 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { Report } from '../../interfaces/report';
 import { ReportState } from "./report.reducer";
 
 export const selectReportState = createFeatureSelector<ReportState>('reports');

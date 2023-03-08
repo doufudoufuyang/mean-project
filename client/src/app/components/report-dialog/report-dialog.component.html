@@ -11,7 +11,7 @@
         </mat-form-field>
     </div>
     <div mat-dialog-actions>
-        <button mat-button (click)="onCancelClick()">Cancel</button>
-        <button mat-button (click)="onSubmit()" [mat-dialog-close]="data.animal" [disabled]="!form.valid">Submit</button>
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button (click)="onSubmit()" [mat-dialog-close]="true" [disabled]="!form.valid">Submit</button>
     </div>
 </from>

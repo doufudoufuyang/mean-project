@@ -1,0 +1,18 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+button {
+    align-self: center;
+}

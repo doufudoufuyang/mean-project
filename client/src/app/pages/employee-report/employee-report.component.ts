@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Report } from 'src/app/interfaces/report';
 import { ReportService } from 'src/app/services/report/report.service';
-import { emptyValidator } from 'src/app/validator/empty.validator';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { selectReportById } from 'src/app/store/report/report.selector';
@@ -11,7 +10,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { CommentDialogComponent } from 'src/app/components/comment-dialog/comment-dialog.component';
 
 export interface CommentDialogData {
-  animal: string,
   reportId: string,
   commentId: string,
   description: string,
@@ -25,9 +23,8 @@ export interface CommentDialogData {
 export class EmployeeReportComponent implements OnInit {
   report$: Observable<Report> | undefined;
   form: FormGroup = this.formBuilder.group({
-    description: ['', emptyValidator()],
+    description: ['', Validators.required],
   });
-  animal: string = '';
 
   constructor(
     public dialog: MatDialog,
@@ -55,12 +52,6 @@ export class EmployeeReportComponent implements OnInit {
   }
 
   openCommentDialog(reportId: string, commentId: string, description: string): void {
-    const dialogRef = this.dialog.open(CommentDialogComponent, {
-      data: { animal: this.animal, reportId, commentId, description },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.animal = result;
-    });
+    this.dialog.open(CommentDialogComponent, { data: { reportId, commentId, description } });
   }
 }

@@ -6,12 +6,7 @@ import { ReportService } from 'src/app/services/report/report.service';
 import { selectReports } from 'src/app/store/report/report.selector';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportDialogComponent } from 'src/app/components/report-dialog/report-dialog.component';
-
-export interface ReportDialogData {
-  animal: string,
-  title: string,
-  description: string,
-}
+import { Report } from 'src/app/interfaces/report';
 
 @Component({
   selector: 'app-employee-housing',
@@ -20,10 +15,7 @@ export interface ReportDialogData {
 })
 export class EmployeeHousingComponent implements OnInit {
   house: any;
-  reports$: Observable<any> = this.store.select(selectReports);
-  animal: string = '';
-  title: string = '';
-  description: string = '';
+  reports$: Observable<Report[]> = this.store.select(selectReports);
 
   constructor (
     public dialog: MatDialog,
@@ -47,12 +39,6 @@ export class EmployeeHousingComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(ReportDialogComponent, {
-      data: { animal: this.animal, title: this.title, description: this.description },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.animal = result;
-    });
+    this.dialog.open(ReportDialogComponent);
   }
 }

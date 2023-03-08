@@ -38,6 +38,8 @@ import { reportReducer } from './store/report/report.reducer';
 import { EmployeeReportComponent } from './pages/employee-report/employee-report.component';
 import { ReportDialogComponent } from './components/report-dialog/report-dialog.component';
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
+import { houseReducer } from './store/house/house.reducer';
+import { HouseDialogComponent } from './components/house-dialog/house-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { CommentDialogComponent } from './components/comment-dialog/comment-dial
     EmployeeReportComponent,
     ReportDialogComponent,
     CommentDialogComponent,
+    HouseDialogComponent,
   ],
   imports: [
     FormsModule,
@@ -81,6 +84,7 @@ import { CommentDialogComponent } from './components/comment-dialog/comment-dial
     MatIconModule,
     StoreModule.forRoot({
       reports: reportReducer,
+      houses: houseReducer,
     })
   ],
   providers: [
