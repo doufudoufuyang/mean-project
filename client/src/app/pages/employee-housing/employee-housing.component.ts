@@ -27,6 +27,7 @@ export class EmployeeHousingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
     this.http.get('http://localhost:3000/user/house').subscribe({
       next: (res: any) => {
         console.log(res);

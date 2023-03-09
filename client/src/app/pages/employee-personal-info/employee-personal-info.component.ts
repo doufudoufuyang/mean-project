@@ -21,7 +21,7 @@ export class EmployeePersonalInfoComponent {
     private formBuilder: FormBuilder,
     private http: HttpClient
   ) {}
-  username: string = 'aaron'
+  username: string = 'aaron';
   personalInfoForm$: Observable<any> = this.store.select(selectEmployee);
   editable: boolean = false;
   personalInfoForm: FormGroup = this.formBuilder.group({
@@ -52,11 +52,8 @@ export class EmployeePersonalInfoComponent {
   init() {
     this.personalInfoForm.disable();
   }
-  
-  ngOnInit() {
-    
 
-    }
+  ngOnInit() {}
 
   edit() {
     this.editable = true;
@@ -68,13 +65,22 @@ export class EmployeePersonalInfoComponent {
   }
 
   save(): void {
-    console.log(this.personalInfoForm.getRawValue() )
+    console.log(this.personalInfoForm.getRawValue());
     this.personalInfoForm.disable();
-    // const token = window.localStorage.getItem("JWT_TOKEN")
-    this.http.post('http://localhost:3000/user/profile',{"profileData":this.personalInfoForm.getRawValue()})
-    .subscribe((res: any) => {
-        console.log(res.message)
+    const token = window.localStorage.getItem('JWT_TOKEN');
+    console.log(token)
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'authorization': `Bearer ${token}`,
     });
+    this.http
+      .post('http://localhost:3000/user/profile', {
+        headers: headers,
+        profileData: this.personalInfoForm.getRawValue(),
+      })
+      .subscribe((res: any) => {
+        console.log(res.message);
+      });
     // fetch('http://localhost:3000/user/profile', {
     //   method: 'POST',
     //   headers: {

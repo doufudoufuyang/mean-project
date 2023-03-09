@@ -249,7 +249,11 @@ async function updateProfile(username, profileData) {
 }
 exports.profile_upload = async (req, res) => {
   try {
-    const { username, profileData} = req.body;
+    const payload = req.payload;
+    const {profileData} = req.body;
+    const username = payload.username;
+    console.log("payload"+payload)
+    console.log("username"+username)
     await updateProfile(username, profileData)
     res.status(201).json({ message: "successfully update profile" });
   } catch (e) {
