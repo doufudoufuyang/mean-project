@@ -10,8 +10,7 @@ export class InterceptorService implements HttpInterceptor {
     if (req.url.includes('/register') || req.url.includes('/login')) {
       return next.handle(req);
     }
-    // const TOKEN = localStorage.getItem('JWT_TOKEN');
-    const TOKEN = 'getAllProfiles';
+    const TOKEN = localStorage.getItem('JWT_TOKEN');
     const BEARER_TOKEN = `BEARER ${TOKEN}`;
     return next.handle(req.clone({ setHeaders: { Authorization: BEARER_TOKEN } }));
   }

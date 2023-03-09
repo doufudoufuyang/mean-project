@@ -19,6 +19,9 @@ export class ProfileService {
           const profiles: any[] = res.data;
           console.log(profiles);
           this.store.dispatch(ProfileAction.getProfiles({ profiles }));
+        },
+        error: (e) => {
+          alert(e.error.message);
         }
       })
   }

@@ -17,6 +17,7 @@ import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/mat
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -78,7 +79,7 @@ import { profileReducer } from './store/profile/profile.reducer';
     HrCommentDialogComponent,
     ConnectFormDirective,
     HrApplicationReviewComponent,
-    HrApplicationDetailComponent
+    HrApplicationDetailComponent,
   ],
   imports: [
     MatExpansionModule,
@@ -101,6 +102,7 @@ import { profileReducer } from './store/profile/profile.reducer';
     MatDialogModule,
     MatIconModule,
     MatPaginatorModule,
+    MatTableModule,
     StoreModule.forRoot({
       reports: reportReducer,
       houses: houseReducer,

@@ -1,1 +1,77 @@
-<p>hr-application-detail works!</p>
+<table>
+    <tr>
+        <th>First Name:</th>
+        <th>{{profile.firstName}}</th>
+    </tr>
+    <tr>
+        <th>Last Name:</th>
+        <th>{{profile.lastName}}</th>
+    </tr>
+    <tr>
+        <th>Address:</th>
+        <th>{{profile.address.apt}} {{profile.address.street}} {{profile.address.city}} {{profile.address.state}}
+            {{profile.address.zip}}</th>
+    </tr>
+    <tr>
+        <th>Cell Phone:</th>
+        <th>{{profile.cellPhoneNumber}}</th>
+    </tr>
+    <tr>
+        <th>Car Information:</th>
+        <th>{{profile.car.make}} {{profile.car.model}} {{profile.car.color}}</th>
+    </tr>
+    <tr>
+        <th>Email:</th>
+        <th>{{profile.email}}</th>
+    </tr>
+    <tr>
+        <th>SSN:</th>
+        <th>{{profile.SSN}}</th>
+    </tr>
+    <tr>
+        <th>Date of Birth:</th>
+        <th>{{profile.dateOfBirth}}</th>
+    </tr>
+    <tr>
+        <th>Gender:</th>
+        <th>{{profile.gender ? profile.gender : null}}</th>
+    </tr>
+    <tr>
+        <th>Driver Liscense:</th>
+        <th>{{profile.driverLicense.number}}</th>
+    </tr>
+    <tr>
+        <th>Reference:</th>
+        <th>{{profile.reference.firstName}} {{profile.reference.middleName}} {{profile.reference.lastName}}
+            {{profile.reference.phone}} {{profile.reference.email}} {{profile.reference.relationship}}</th>
+    </tr>
+    <div>
+
+    </div>
+    <tr *ngFor='let contact of profile.emergencyContacts'>
+        <th>Emergency Contact: </th>
+        <th>{{contact.firstName}}</th>
+        <th>{{contact.middleName}}</th>
+        <th>{{contact.lastName}}</th>
+        <th>{{contact.phone}}</th>
+        <th>{{contact.email}}</th>
+        <th>{{contact.relationship}}</th>
+    </tr>
+</table>
+<ul>
+    <li *ngFor='let file of fileList'>
+        {{file}}
+        <a href='http://localhost:3000/user/download/{{file}}'>Download {{file}}</a>
+    </li>
+</ul>
+<button (click)='showFileList()'>Show File Summary</button>
+<div class="flex-column" *ngIf="employee.status === 'Pending'">
+    <mat-form-field class="example-full-width" color="warn">
+        <mat-label>Feedback</mat-label>
+        <textarea matInput [(ngModel)]="feedback" placeholder="Please give feedback if you reject the application"></textarea>
+    </mat-form-field>
+    <div class="flex-row">
+        <button mat-raised-button color="warn" (click)="onReject()">Reject</button>
+        <button mat-raised-button color="primary" (click)="onApprove()">Approve</button>
+    </div>
+</div>
