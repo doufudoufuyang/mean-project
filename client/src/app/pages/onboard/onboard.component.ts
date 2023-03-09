@@ -182,7 +182,7 @@ export class OnboardComponent implements OnInit {
   submitForm(): void {
     const profile = {
       "firstName": this.firstName,
-      "step": 0,
+      "step": 2,
       "nextStep": 1,
       "lastName": this.lastName,
       "middleName": this.middleName,

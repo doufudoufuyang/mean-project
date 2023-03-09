@@ -19,7 +19,9 @@
                         <span>Days Remaining:</span><span>{{ p.title }}</span>
                         {{fileList[i]}}
                         <a href='http://localhost:3000/user/download/{{fileList[i]}}'>Download {{fileList[i]}}</a>
-
+                        <div *ngIf="isStep(p.step); else sendBlock">
+                        <button>approve</button>    <button>reject</button>
+                        </div>
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
@@ -44,11 +46,11 @@
                         <span>Days Remaining:</span><span>{{ p.title }}</span>
                         {{fileList[i]}}
                         <a href='http://localhost:3000/user/download/{{fileList[i]}}'>Download {{fileList[i]}}</a>
-
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
         </div>
         <ng-template #elseBlock>No profile found</ng-template>
+        <ng-template #sendBlock><button>Send Notification</button></ng-template>
     </mat-tab>
 </mat-tab-group>
