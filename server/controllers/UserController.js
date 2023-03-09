@@ -279,7 +279,6 @@ exports.employee_updateVisa = async(req, res) => {
     if(i20) {
       updatedProfile = await Profile.findByIdAndUpdate(employee.profile,{i20:i20}, {new:true})
     }
-
     res.status(200).json({profile:updatedProfile})
   } catch (e) {
     console.log("failed to update profile: ", e);

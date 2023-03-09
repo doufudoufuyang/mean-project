@@ -13,7 +13,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import {
+  MatFormFieldModule,
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+} from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -53,7 +56,7 @@ import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comm
 import { HrApplicationDetailComponent } from './pages/hr-application-detail/hr-application-detail.component';
 import { profileReducer } from './store/profile/profile.reducer';
 import { hrReducer } from './store/hr/hr.reducer';
-
+import { MatTabsModule } from '@angular/material/tabs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,6 +85,7 @@ import { hrReducer } from './store/hr/hr.reducer';
     HrApplicationDetailComponent,
   ],
   imports: [
+    MatTabsModule,
     MatExpansionModule,
     FormsModule,
     ReactiveFormsModule,
@@ -109,7 +113,7 @@ import { hrReducer } from './store/hr/hr.reducer';
       houses: houseReducer,
       profiles: profileReducer,
       employee: employeeReducer,
-      hr: hrReducer
+      hr: hrReducer,
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
@@ -122,4 +126,4 @@ import { hrReducer } from './store/hr/hr.reducer';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -77,7 +77,7 @@ exports.getEmployeeById = async (req, res) => {
 
 exports.getInProgressVisa = async (req, res) => {
   try {
-    const profiles = await Profile.find({ $or: [{ step: 0 }, { step: 2 }] });
+    const profiles = await Profile.find({ step: 2 });
     return res.status(201).json({ data: profiles });
   } catch (e) {
     console.log(e);
@@ -87,7 +87,7 @@ exports.getInProgressVisa = async (req, res) => {
 exports.getVisas = async (req, res) => {
   try {
     const profiles = await Profile.find({
-      $or: [{ step: 0 }, { step: 2 }, { step: 3 }],
+      $or: [{ step: 2 }, { step: 3 }],
     });
     return res.status(201).json({ data: profiles });
   } catch (e) {

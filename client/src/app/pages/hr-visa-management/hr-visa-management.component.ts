@@ -35,7 +35,9 @@ export class HrVisaManagementComponent {
     name: ['', Validators.required],
   });
   profiles: any[] = [];
+  allProfiles: any[] = [];
   fileList: any[] = [];
+  allFileList: any[] = [];
   ngOnInit() {
     fetch(`http://localhost:3000/hr/inProgressVisas`, {
       method: 'GET',
@@ -58,6 +60,27 @@ export class HrVisaManagementComponent {
       .catch((error) => {
         console.error('Error:', error);
       });
+      fetch(`http://localhost:3000/hr/visas`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g',
+        },
+      })
+        .then((response) => {
+          console.log(response);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((res) => {
+          this.allProfiles = res.data;
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
   }
   getDocumnt() {
     const dlist = this.profiles.map((p) => {
