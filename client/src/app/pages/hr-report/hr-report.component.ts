@@ -25,6 +25,7 @@ export class HrReportComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     description: ['', Validators.required],
   });
+  username!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +47,7 @@ export class HrReportComponent implements OnInit {
         });
         console.log(this.report);
       });
+    this.username = localStorage.getItem('username') as string;
   }
 
   onAddComment(id: string): void {
@@ -64,6 +66,22 @@ export class HrReportComponent implements OnInit {
         }
       });
     this.form.reset();
+  }
+
+  onClose(id: string): void {
+    const requestBody = {
+      reportId: id,
+      status: 'Closed',
+    }
+    this.http.put('http://localhost:3000/user/report', requestBody)
+      .subscribe({
+        next: (res: any) => {
+          this.report = res.report;
+        },
+        error: (e) => {
+          alert(e.error.message);
+        }
+      });
   }
 
   openHrCommentDialog(reportId: string, commentId: string, description: string): void {

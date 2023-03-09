@@ -25,6 +25,7 @@ export class EmployeeReportComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     description: ['', Validators.required],
   });
+  username!: string;
 
   constructor(
     private dialog: MatDialog,
@@ -39,6 +40,7 @@ export class EmployeeReportComponent implements OnInit {
     const reportId = this.route.snapshot.paramMap.get('id') as string;
     this.report$ = this.store.pipe(select(selectReportById(reportId))) as Observable<Report>;
     // console.log(this.report$)
+    this.username = localStorage.getItem('username') as string;
   }
 
   onAddComment(id: string): void {

@@ -49,7 +49,14 @@ export class OnboardComponent implements OnInit {
   referencePhone!: string;
   referenceEmail!: string;
   referenceRelationship!: string;
-  emergencyContacts: any[] = [];
+  emergencyContacts: any[] = [        {
+    "firstName": "",
+    "lastName": "",
+    "middleName": "",
+    "phone": "",
+    "email": "",
+    "relationship": ""
+  }];
   documents: any[] = [];
   opt!: string
 
@@ -178,7 +185,22 @@ export class OnboardComponent implements OnInit {
         console.log('fileName =', fileName[0])
       })
   }
-
+  removeEmergencyContact(index: number) {
+    // event.preventDefault()
+    this.emergencyContacts.splice(index, 1);
+  }
+  addEmergencyContact() {
+    // event.preventDefault()
+    const newContact = {
+      firstName: '',
+      lastName: '',
+      middleName: '',
+      phone: '',
+      email: '',
+      relationship: ''
+    };
+    this.emergencyContacts.push(newContact);
+  }
 
   submitForm(): void {
     const profile = {

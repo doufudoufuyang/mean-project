@@ -35,7 +35,7 @@
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-select required>
+                    <mat-select required formControlName="gender">
                         <mat-option value="Female">Female</mat-option>
                         <mat-option value="Male">Male</mat-option>
                         <mat-option value="I wish not to answer">I wish not to answer</mat-option>
@@ -44,7 +44,7 @@
                 </mat-form-field>
             </div>
             <P>Address</P>
-            <div>
+            <div formGroupName="address">
                 <mat-form-field class="formField">
                     <mat-label>building/apt</mat-label>
                     <input matInput required formControlName="building">
@@ -70,36 +70,36 @@
             <div>
                 <mat-form-field class="formField">
                     <mat-label>cell phone number</mat-label>
-                    <input matInput required formControlName="cellphone">
+                    <input matInput required formControlName="cellPhoneNumber">
                 </mat-form-field>
                 <mat-form-field class="formField">
                     <mat-label>work phone number</mat-label>
-                    <input matInput formControlName="workphone">
+                    <input matInput formControlName="workPhoneNumber">
                 </mat-form-field>
             </div>
             <p>Employment</p>
             <div>
                 <mat-form-field class="formField">
                     <mat-label>visa title</mat-label>
-                    <input matInput required formControlName="visatitle">
+                    <input matInput required formControlName="title">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>start date</mat-label>
-                    <input matInput required [matDatepicker]="startpicker" formControlName="start">
+                    <input matInput required [matDatepicker]="startpicker" formControlName="startDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="startpicker"></mat-datepicker-toggle>
                     <mat-datepicker #startpicker></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>end date</mat-label>
-                    <input matInput required [matDatepicker]="endpicker" formControlName="end">
+                    <input matInput required [matDatepicker]="endpicker" formControlName="endDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="endpicker"></mat-datepicker-toggle>
                     <mat-datepicker #endpicker></mat-datepicker>
                 </mat-form-field>
             </div>
             <p>Emergency Contact </p>
-            <div>
+            <!-- <div>
                 <mat-form-field class="formField">
                     <mat-label>first name</mat-label>
                     <input matInput required formControlName="efirstName">
@@ -124,7 +124,7 @@
                     <mat-label>relationship</mat-label>
                     <input matInput required formControlName="relationship">
                 </mat-form-field>
-            </div>
+            </div> -->
             <p>Documents</p>
             <div>
             </div>

@@ -16,8 +16,7 @@
             <span matListItemLine>{{ comment.timestamp | date : 'medium' }}</span>
             <div class="flex-row">
                 <span matListItemLine>{{ comment.description }} </span>
-                <!-- TODO: add *ngIf comment.username === emplouee.username -->
-                <mat-icon (click)="openCommentDialog(report._id, comment._id, comment.description)">edit</mat-icon>
+                <mat-icon *ngIf="comment.createdBy === username" (click)="openCommentDialog(report._id, comment._id, comment.description)">edit</mat-icon>
             </div>
             <br>
             <br>

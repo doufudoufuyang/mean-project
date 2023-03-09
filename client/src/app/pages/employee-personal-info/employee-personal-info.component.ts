@@ -5,7 +5,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { FileService } from 'src/app/services/file.service';
-import { selectEmployee } from 'src/app/store/employee/employee.selector';
+import {
+  selectEmployee,
+  selectProfile,
+} from 'src/app/store/employee/employee.selector';
 
 @Component({
   selector: 'app-employee-personal-info',
@@ -22,7 +25,7 @@ export class EmployeePersonalInfoComponent {
     private http: HttpClient
   ) {}
   username: string = 'aaron';
-  personalInfoForm$: Observable<any> = this.store.select(selectEmployee);
+  personalInfoForm$: Observable<any> = this.store.select(selectProfile);
   editable: boolean = false;
   // personalInfoForm: FormGroup = this.formBuilder.group({
   //   firstName: [{ value: '', disabled: true }],
@@ -55,22 +58,24 @@ export class EmployeePersonalInfoComponent {
     preferredName: [{ value: '', disabled: true }],
     SSN: [{ value: '', disabled: true }, Validators.required],
     dateOfBirth: [{ value: '', disabled: true }, Validators.required],
-    building: [{ value: '', disabled: true }, Validators.required],
-    street: [{ value: '', disabled: true }, Validators.required],
-    city: [{ value: '', disabled: true }, Validators.required],
-    state: [{ value: '', disabled: true }, Validators.required],
-    zip: [{ value: '', disabled: true }, Validators.required],
-    cellphone: [{ value: '', disabled: true }, Validators.required],
-    workphone: [{ value: '', disabled: true }],
-    visatitle: [{ value: '', disabled: true }, Validators.required],
-    start: [{ value: '', disabled: true }, Validators.required],
-    end: [{ value: '', disabled: true }, Validators.required],
-    efirstName: [{ value: '', disabled: true }, Validators.required],
-    elastName: [{ value: '', disabled: true }, Validators.required],
-    emiddleName: [{ value: '', disabled: true }],
-    ephone: [{ value: '', disabled: true }],
-    eemail: [{ value: '', disabled: true }, Validators.required],
-    relationship: [{ value: '', disabled: true }, Validators.required],
+    address: this.formBuilder.group({
+      building: [{ value: '', disabled: true }, Validators.required],
+      street: [{ value: '', disabled: true }, Validators.required],
+      city: [{ value: '', disabled: true }, Validators.required],
+      state: [{ value: '', disabled: true }, Validators.required],
+      zip: [{ value: '', disabled: true }, Validators.required],
+    }),
+    cellPhoneNumber: [{ value: '', disabled: true }, Validators.required],
+    workPhoneNumber: [{ value: '', disabled: true }],
+    title: [{ value: '', disabled: true }, Validators.required],
+    startDate: [{ value: '', disabled: true }, Validators.required],
+    endDate: [{ value: '', disabled: true }, Validators.required],
+    // efirstName: [{ value: '', disabled: true }, Validators.required],
+    // elastName: [{ value: '', disabled: true }, Validators.required],
+    // emiddleName: [{ value: '', disabled: true }],
+    // ephone: [{ value: '', disabled: true }],
+    // eemail: [{ value: '', disabled: true }, Validators.required],
+    // relationship: [{ value: '', disabled: true }, Validators.required],
   });
   init() {
     this.personalInfoForm.disable();
