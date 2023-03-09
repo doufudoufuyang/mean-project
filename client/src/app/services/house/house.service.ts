@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 import { House } from 'src/app/interfaces/house';
 import { HouseAction } from 'src/app/store/house/house.action';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -57,16 +59,20 @@ export class HouseService {
       })
   }
 
-  deleteHouse(id: string): void {
+  deleteHouse(id: string): Subject<string> {
+    const subject = new Subject<string>();
     this.http.delete(this.url + 'house/' + id)
       .subscribe({
         next: (res: any) => {
           const id = res.house._id;
-          this.store.dispatch(HouseAction.deleteHouse({ id }))
+          this.store.dispatch(HouseAction.deleteHouse({ id }));
+          subject.next(res.message);
+          subject.complete();
         },
         error: (e) => {
           alert(e.error.message);
         }
-      })
+      });
+    return subject;
   }
 }
