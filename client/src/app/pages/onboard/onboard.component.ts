@@ -238,24 +238,7 @@ export class OnboardComponent implements OnInit {
         "email": this.referenceEmail,
         "relationship": this.referenceRelationship
       },
-      "emergencyContacts": [
-        {
-          "firstName": "Bob",
-          "lastName": "Smith",
-          "middleName": "",
-          "phone": "555-5555",
-          "email": "bob@example.com",
-          "relationship": "spouse"
-        },
-        {
-          "firstName": "Alice",
-          "lastName": "Johnson",
-          "middleName": "Marie",
-          "phone": "555-5555",
-          "email": "alice@example.com",
-          "relationship": "friend"
-        }
-      ],
+      "emergencyContacts": this.emergencyContacts,
       "driverLicense": {
         "number": this.driverLicenseNumber,
         "expireDate": this.driverLicenseExpiration,
