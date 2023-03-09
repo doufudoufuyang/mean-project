@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { selectEmployee } from 'src/app/store/employee/employee.selector';
 import { selectHr } from 'src/app/store/hr/hr.selector';
 @Component({
@@ -10,9 +11,14 @@ import { selectHr } from 'src/app/store/hr/hr.selector';
 })
 export class NavbarComponent {
   isHr : boolean = false
-  constructor(private store : Store){}
+  constructor(private router : Router){}
 
   ngOnInit(){
     this.isHr = localStorage.getItem('isHr') === 'true' ? true : false;
+  }
+
+  logout(){
+    localStorage.clear()
+    this.router.navigate(['login'])
   }
 }

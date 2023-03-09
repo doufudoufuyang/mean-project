@@ -12,7 +12,8 @@
 
         <mat-form-field appearance="fill">
             <mat-label>password</mat-label>
-            <input matInput formControlName="password">
+            <input matInput  [type]="showPassword ? 'text' : 'password'" name="password" formControlName="password">
+            <mat-icon matSuffix (click)="togglePasswordVisibility()">visibility</mat-icon>
         </mat-form-field>
     </form>
     <button mat-raised-button color="primary" (click)="login()">Login</button>

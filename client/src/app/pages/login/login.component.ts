@@ -21,12 +21,18 @@ export class LoginComponent {
     private _snackBar: MatSnackBar
   ) { }
 
+  showPassword: boolean = false;
+
   loginForm: FormGroup = this.formBuilder.group({
     username: ['', Validators.required],
     email: ['', Validators.required],
     password: ['', Validators.required]
   })
 
+  public togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+  
   login() {
     const requestBody = this.loginForm.getRawValue()
     this.http.post('http://localhost:3000/user/login', requestBody)
