@@ -70,26 +70,30 @@ export class EmployeePersonalInfoComponent {
   save(): void {
     console.log(this.personalInfoForm.getRawValue() )
     this.personalInfoForm.disable();
-    const token:string = window.localStorage.getItem("JWT_TOKEN")? window.localStorage.getItem("JWT_TOKEN"):"t"
-    fetch('http://localhost:3000/user/profile', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token
-      },
-      body: JSON.stringify({ "username": this.username, "profileData":this.personalInfoForm.getRawValue()})
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    // const token = window.localStorage.getItem("JWT_TOKEN")
+    this.http.post('http://localhost:3000/user/profile',{"profileData":this.personalInfoForm.getRawValue()})
+    .subscribe((res: any) => {
+        console.log(res.message)
+    });
+    // fetch('http://localhost:3000/user/profile', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Authorization': token
+    //   },
+    //   body: JSON.stringify({ "username": this.username, "profileData":this.personalInfoForm.getRawValue()})
+    // })
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! status: ${response.status}`);
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     console.log(data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error:', error);
+    //   });
   }
 }
