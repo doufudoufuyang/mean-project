@@ -34,6 +34,7 @@ export class LoginComponent {
         next: (data: any) => {
           console.log('data=', data)
           localStorage.setItem('JWT_TOKEN', data['jwt'])
+          localStorage.setItem('username', data.user.username)
           if (data.user.role === 'employee') {
             const employeeInfo = data.user
             this.store.dispatch(EmployeeAction.setEmployeeInfo({ employeeInfo }))

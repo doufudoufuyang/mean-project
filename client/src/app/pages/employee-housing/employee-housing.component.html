@@ -20,7 +20,7 @@
         </mat-grid-tile>
     </mat-grid-list>
 
-    <div class="layout">
+    <div class="layout flex-column">
         <div *ngFor="let report of reports$ | async">
             <mat-card (click)="onCardClick(report._id)">
                 <mat-card-header>
