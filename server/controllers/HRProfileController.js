@@ -4,6 +4,8 @@ const User = require("../models/User");
 const Invitation = require("../models/Invitation");
 const Profile = require("../models/Profile");
 const House = require("../models/House");
+const nodemailer = require("nodemailer");
+
 
 const nextStep = {
   0: "submit onboarding application",
@@ -123,8 +125,8 @@ exports.getVisas = async (req, res) => {
 };
 exports.reject = async (req, res) => {
   try {
-    const { pid, nextStep, feedback } = req.params;
-    const profile = await Profile.findByIdAndUpdate(
+    const { pid, nextStep, feedback } = req.body;
+    await Profile.findByIdAndUpdate(
       { _id: pid },
       { nextStep: nextStep },
       { feedback: feedback }
@@ -193,12 +195,11 @@ exports.sendNotification = async (req, res) => {
   const myemail = "aaronguan200@gmail.com";
   const mypassword = "dkdyvoawruuewbqb";
   try {
-    const { name, email } = req.body;
-    const n = req.params.nextStep;
-    const next = nextStep[n];
+    const { name, email,nextstep} = req.body;
+    const next = nextStep[nextstep];
     console.log("name" + name);
     console.log("email" + email);
-    console.log("next" + next);
+    console.log("nextstep" + nextstep);
     if (name && email) {
       let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -225,7 +226,7 @@ exports.sendNotification = async (req, res) => {
         }
         return resolve({ message: "notification sent successfully!" });
       });
-      res.status(200).json({ register_token: token });
+      res.status(200).json({ message: "ok" });
     }
   } catch (e) {
     console.log("fail to send notification: ", e);

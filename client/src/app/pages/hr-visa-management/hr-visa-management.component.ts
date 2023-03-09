@@ -86,7 +86,9 @@ export class HrVisaManagementComponent {
     //     console.error('Error:', error);
     //   });
   }
-  sendNotification(name: string, email: string, nextStep: number) {
+  sendNotification(name: string, email: string, nextstep: number) {
+    console.log(email)
+    console.log(nextstep)
     fetch(`http://localhost:3000/hr/sendNotification`, {
       method: 'POST',
       headers: {
@@ -94,7 +96,7 @@ export class HrVisaManagementComponent {
         authorization:
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g',
       },
-      body: JSON.stringify({ name: name, email: email, nextStep: nextStep }),
+      body: JSON.stringify({ name: name, email: email, nextstep: nextstep }),
     })
       .then((response) => {
         console.log(response);
