@@ -72,8 +72,8 @@ exports.sent_register_invitation = async (req, res) => {
       to:email,
       subject:`Register Invitation`, 
       text:`Hello ${name}, here is your register token!`,
-      html: `<p>Hello ${name}, here is your register token!</p><br/><b>${token}</b>`
-      // html:`<a href='http://localhost:4200/signup?token=${token}'>Click to register!</a>`
+      // html: `<p>Hello ${name}, here is your register token!</p><br/><b>${token}</b>`
+      html:`<a href='http://localhost:4200/signup?token=${token}'>Click to register!</a>`
     }
     transporter.sendMail(mail_configs, function (error, info) {
       if(error){
