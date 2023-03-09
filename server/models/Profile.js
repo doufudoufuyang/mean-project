@@ -38,9 +38,9 @@ const contactSchema = new Schema({
 });
 
 const LicenseSchema = new Schema({
-  number: { type: String, required: true },
-  expireDate: { type: String, required: true },
-  document: { type: String, required: true },
+  number: { type: String},
+  expireDate: { type: String},
+  document: { type: String},
 });
 
 const ProfileSchema = new Schema({

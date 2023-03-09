@@ -21,15 +21,38 @@ export class EmployeePersonalInfoComponent {
     private formBuilder: FormBuilder,
     private http: HttpClient
   ) {}
-  username: string = 'aaron'
+  username: string = 'aaron';
   personalInfoForm$: Observable<any> = this.store.select(selectEmployee);
   editable: boolean = false;
+  // personalInfoForm: FormGroup = this.formBuilder.group({
+  //   firstName: [{ value: '', disabled: true }],
+  //   lastName: [{ value: '', disabled: true }, ],
+  //   middleName: [{ value: '', disabled: true }],
+  //   preferredName: [{ value: '', disabled: true }],
+  //   SSN: [{ value: '', disabled: true }, ],
+  //   dateOfBirth: [{ value: '', disabled: true },],
+  //   building: [{ value: '', disabled: true }, ],
+  //   street: [{ value: '', disabled: true }, ],
+  //   city: [{ value: '', disabled: true }, ],
+  //   state: [{ value: '', disabled: true }, ],
+  //   zip: [{ value: '', disabled: true }, ],
+  //   cellphone: [{ value: '', disabled: true }, ],
+  //   workphone: [{ value: '', disabled: true }, ],
+  //   visatitle: [{ value: '', disabled: true }, ],
+  //   start: [{ value: '', disabled: true }, ],
+  //   end: [{ value: '', disabled: true }, ],
+  //   efirstName: [{ value: 'yingji yan', disabled: true }],
+  //   elastName: [{ value: '', disabled: true }],
+  //   emiddleName: [{ value: '', disabled: true }],
+  //   ephone: [{ value: 'yingji yan', disabled: true }],
+  //   eemail: [{ value: '', disabled: true }],
+  //   relationship: [{ value: '', disabled: true }, Validators.required],
+  // });
   personalInfoForm: FormGroup = this.formBuilder.group({
     firstName: [{ value: '', disabled: true }, Validators.required],
     lastName: [{ value: '', disabled: true }, Validators.required],
     middleName: [{ value: '', disabled: true }],
-    preferredName: [{ value: 'yingji yan', disabled: true }],
-    email: [{ value: '', disabled: true }, Validators.required],
+    preferredName: [{ value: '', disabled: true }],
     SSN: [{ value: '', disabled: true }, Validators.required],
     dateOfBirth: [{ value: '', disabled: true }, Validators.required],
     building: [{ value: '', disabled: true }, Validators.required],
@@ -38,25 +61,22 @@ export class EmployeePersonalInfoComponent {
     state: [{ value: '', disabled: true }, Validators.required],
     zip: [{ value: '', disabled: true }, Validators.required],
     cellphone: [{ value: '', disabled: true }, Validators.required],
-    workphone: [{ value: '', disabled: true }, Validators.required],
+    workphone: [{ value: '', disabled: true }],
     visatitle: [{ value: '', disabled: true }, Validators.required],
     start: [{ value: '', disabled: true }, Validators.required],
     end: [{ value: '', disabled: true }, Validators.required],
-    efirstName: [{ value: 'yingji yan', disabled: true }, Validators.required],
+    efirstName: [{ value: '', disabled: true }, Validators.required],
     elastName: [{ value: '', disabled: true }, Validators.required],
     emiddleName: [{ value: '', disabled: true }],
-    ephone: [{ value: 'yingji yan', disabled: true }],
+    ephone: [{ value: '', disabled: true }],
     eemail: [{ value: '', disabled: true }, Validators.required],
     relationship: [{ value: '', disabled: true }, Validators.required],
   });
   init() {
     this.personalInfoForm.disable();
   }
-  
-  ngOnInit() {
-    
 
-    }
+  ngOnInit() {}
 
   edit() {
     this.editable = true;
@@ -68,27 +88,21 @@ export class EmployeePersonalInfoComponent {
   }
 
   save(): void {
-    console.log(this.personalInfoForm.getRawValue() )
+    console.log(this.personalInfoForm.getRawValue());
     this.personalInfoForm.disable();
-    fetch('http://localhost:3000/user/profile', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g'
-      },
-      body: JSON.stringify({ "username": this.username, "profileData":this.personalInfoForm.getRawValue()})
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
+    const token = window.localStorage.getItem('JWT_TOKEN');
+    console.log(token);
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    });
+    this.http
+      .post('http://localhost:3000/user/profile', {
+        headers: headers,
+        profileData: this.personalInfoForm.getRawValue(),
       })
-      .then(data => {
-        console.log(data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
+      .subscribe((res: any) => {
+        console.log(res.message);
       });
   }
 }

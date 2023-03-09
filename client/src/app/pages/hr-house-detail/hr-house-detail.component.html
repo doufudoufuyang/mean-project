@@ -1,5 +1,6 @@
+<app-navbar></app-navbar>
 <div class="layout" *ngIf="house$ | async as house">
-    <h3>Address</h3>
+    <h3 class="font-bold">Address</h3>
     <div class="flex-column">
         <p>{{ house.address.street }}</p>
         <p *ngIf="house.address.apt">{{ house.address.apt }}</p>
@@ -7,7 +8,7 @@
     </div>
     <hr><br>
 
-    <h3>Landlord</h3>
+    <h3 class="font-bold">Landlord</h3>
     <div class="flex-column">
         <p>{{ "Name: " + house.landlord.name }}</p>
         <p>{{ "Phone Number: " + house.landlord.phone }}</p>
@@ -15,7 +16,7 @@
     </div>
     <hr><br>
 
-    <h3>Employee Information</h3>
+    <h3 class="font-bold">Employee Information</h3>
     <mat-grid-list cols="{{ house.residents.length }}" rowHeight="150px">
         <!-- TODO: link to employee profile -->
         <mat-grid-tile *ngFor="let employee of house.residents">
@@ -29,7 +30,7 @@
     </mat-grid-list>
     <hr><br>
 
-    <h3>Facility Information</h3>
+    <h3 class="font-bold">Facility Information</h3>
     <div class="flex-column">
         <p>{{ "Number of beds: " + house.facilityInfo.bedNum }}</p>
         <p>{{ "Number of mattresses: " + house.facilityInfo.mattressNum }}</p>
@@ -38,7 +39,7 @@
     </div>
     <hr><br>
 
-    <h3>Facility Reports</h3>
+    <h3 class="font-bold">Facility Reports</h3>
     <div *ngFor="let report of reportsForCurrPage">
         <mat-card (click)="onClickCard(report._id)">
             <mat-card-header>

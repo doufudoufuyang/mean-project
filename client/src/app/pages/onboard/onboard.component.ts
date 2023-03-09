@@ -89,10 +89,13 @@ export class OnboardComponent implements OnInit {
           this.profile = user.profile
           this.status = user.status
           this.username = user.username
-          this.userOpt = user.profile.optReceipt;
-          this.userPic = user.profile.pic;
-          if (user.profile.driverLicense) {
-            this.userDriverlicense = user.profile.driverLicense.document;
+          this.email=user.email
+          if (user.profile) {
+            this.userOpt = user.profile.optReceipt;
+            this.userPic = user.profile.pic;
+            if (user.profile.driverLicense) {
+              this.userDriverlicense = user.profile.driverLicense.document;
+            }
           }
         }
       });
@@ -180,7 +183,8 @@ export class OnboardComponent implements OnInit {
   submitForm(): void {
     const profile = {
       "firstName": this.firstName,
-      "step": 0,
+      "step": 2,
+      "nextStep": 1,
       "lastName": this.lastName,
       "middleName": this.middleName,
       "preferredName": this.preferredName,
@@ -235,13 +239,16 @@ export class OnboardComponent implements OnInit {
       },
       "optReceipt": this.opt
     }
+    const token = window.localStorage.getItem('JWT_TOKEN');
+    console.log(token)
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'authorization': `Bearer ${token}`,
+    });
     fetch('http://localhost:3000/user/profile', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g'
-      },
-      body: JSON.stringify({ "username": this.username, "profileData": profile })
+      headers,
+      body: JSON.stringify({ "profileData": profile })
     })
       .then(response => {
         if (!response.ok) {
@@ -251,9 +258,14 @@ export class OnboardComponent implements OnInit {
       })
       .then(data => {
         console.log(data);
+        this.router.navigate(['employeeVisa'])
       })
       .catch(error => {
         console.error('Error:', error);
       });
+  }
+
+  navigateToEmployeeVisa() {
+    this.router.navigate(['employeeVisa'])
   }
 }

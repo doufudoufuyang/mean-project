@@ -13,3 +13,7 @@
 .Closed {
     color: green;
 }
+
+.font-bold {
+    font-weight: bold;
+}

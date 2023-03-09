@@ -1,139 +1,141 @@
 <app-navbar></app-navbar>
-<form [formGroup]="personalInfoForm" [connectForm]="personalInfoForm$" class="form">
-    <P>Name</P>
-    <div>
-    <mat-form-field class="formField">
-        <mat-label>firstName</mat-label>
-        <input matInput formControlName="firstName">
-    </mat-form-field>
+<div class="container">
+    <div class="personal-container">
+        <form [formGroup]="personalInfoForm" [connectForm]="personalInfoForm$| async" class="form">
+            <P>Name</P>
+            <div>
+                <mat-form-field class="formField">
+                    <mat-label>firstName</mat-label>
+                    <input matInput formControlName="firstName" required>
+                </mat-form-field>
 
-    <mat-form-field class="formField">
-        <mat-label>lastName</mat-label>
-        <input matInput formControlName="lastName">
-    </mat-form-field>
+                <mat-form-field class="formField">
+                    <mat-label>lastName</mat-label>
+                    <input matInput formControlName="lastName" required>
+                </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>middleName</mat-label>
-        <input matInput formControlName="middleName">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>preferredName</mat-label>
-        <input matInput formControlName="preferredName">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>email</mat-label>
-        <input matInput formControlName="email">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>SSN</mat-label>
-        <input matInput formControlName="SSN">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>date of birth</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-select required>
-            <mat-option value="Female">Female</mat-option>
-            <mat-option value="Male">Male</mat-option>
-            <mat-option value="I wish not to answer">I wish not to answer</mat-option>
-        </mat-select>
-        <mat-label>gender</mat-label>
-    </mat-form-field>
-    </div>
-    <P>Address</P>
-    <div>
-        <mat-form-field class="formField">
-            <mat-label>building/apt</mat-label>
-            <input matInput formControlName="building">
-        </mat-form-field>
-        <mat-form-field class="formField">
-            <mat-label>street</mat-label>
-            <input matInput formControlName="street">
-        </mat-form-field>
-        <mat-form-field class="formField">
-            <mat-label>city</mat-label>
-            <input matInput formControlName="city">
-        </mat-form-field>
-        <mat-form-field class="formField">
-            <mat-label>state</mat-label>
-            <input matInput formControlName="state">
-        </mat-form-field>
-        <mat-form-field class="formField">
-            <mat-label>zip</mat-label>
-            <input matInput formControlName="zip">
-        </mat-form-field>
-    </div>
-    <p>Contact Info</p>
-    <div>
-        <mat-form-field class="formField">
-            <mat-label>cell phone number</mat-label>
-            <input matInput formControlName="cellphone">
-        </mat-form-field>
-        <mat-form-field class="formField">
-            <mat-label>work phone number</mat-label>
-            <input matInput formControlName="workphone">
-        </mat-form-field>
-    </div>
-    <p>Employment</p>
-    <div>
-        <mat-form-field class="formField">
-            <mat-label>visa title</mat-label>
-            <input matInput formControlName="visatitle">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>start date</mat-label>
-            <input matInput [matDatepicker]="startpicker" formControlName="start">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="startpicker"></mat-datepicker-toggle>
-            <mat-datepicker #startpicker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>end date</mat-label>
-            <input matInput [matDatepicker]="endpicker" formControlName="end">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="endpicker"></mat-datepicker-toggle>
-            <mat-datepicker #endpicker></mat-datepicker>
-        </mat-form-field>
-    </div>
-    <p>Emergency Contact </p>
-    <div>
-        <mat-form-field class="formField">
-            <mat-label>first name</mat-label>
-            <input matInput formControlName="efirstName">
-        </mat-form-field>
-        <mat-form-field class="formField">
-            <mat-label>last name</mat-label>
-            <input matInput formControlName="elastName">
-        </mat-form-field>
-        <mat-form-field class="formField">
-            <mat-label>middle name</mat-label>
-            <input matInput formControlName="emiddleName">
-        </mat-form-field>
-        <mat-form-field class="formField">
-            <mat-label>phone</mat-label>
-            <input matInput formControlName="ephone">
-        </mat-form-field>
-        <mat-form-field class="formField">
-            <mat-label>email</mat-label>
-            <input matInput formControlName="eemail">
-        </mat-form-field>
-        <mat-form-field class="formField">
-            <mat-label>relationship</mat-label>
-            <input matInput formControlName="relationship">
-        </mat-form-field>
-    </div>
-    <p>Documents</p>
-    <div>
-        
-    </div>
-</form>
+                <mat-form-field>
+                    <mat-label>middleName</mat-label>
+                    <input matInput formControlName="middleName">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>preferredName</mat-label>
+                    <input matInput formControlName="preferredName">
+                </mat-form-field>
 
-<button *ngIf="!editable; else elseBlock" mat-raised-button color="primary" (click)="edit()">Edit</button>
-<ng-template #elseBlock>
-    <button mat-raised-button color="primary" (click)="save()">Save</button>
-    <button  mat-raised-button color="primary" (click)="cancel()">Cancel</button>
-</ng-template>
+                <mat-form-field>
+                    <mat-label>SSN</mat-label>
+                    <input matInput formControlName="SSN" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>date of birth</mat-label>
+                    <input matInput [matDatepicker]="picker" required formControlName="dateOfBirth">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select required>
+                        <mat-option value="Female">Female</mat-option>
+                        <mat-option value="Male">Male</mat-option>
+                        <mat-option value="I wish not to answer">I wish not to answer</mat-option>
+                    </mat-select>
+                    <mat-label>gender</mat-label>
+                </mat-form-field>
+            </div>
+            <P>Address</P>
+            <div>
+                <mat-form-field class="formField">
+                    <mat-label>building/apt</mat-label>
+                    <input matInput required formControlName="building">
+                </mat-form-field>
+                <mat-form-field class="formField">
+                    <mat-label>street</mat-label>
+                    <input matInput required formControlName="street">
+                </mat-form-field>
+                <mat-form-field class="formField">
+                    <mat-label>city</mat-label>
+                    <input matInput required formControlName="city">
+                </mat-form-field>
+                <mat-form-field class="formField">
+                    <mat-label>state</mat-label>
+                    <input matInput required formControlName="state">
+                </mat-form-field>
+                <mat-form-field class="formField">
+                    <mat-label>zip</mat-label>
+                    <input matInput required formControlName="zip">
+                </mat-form-field>
+            </div>
+            <p>Contact Info</p>
+            <div>
+                <mat-form-field class="formField">
+                    <mat-label>cell phone number</mat-label>
+                    <input matInput required formControlName="cellphone">
+                </mat-form-field>
+                <mat-form-field class="formField">
+                    <mat-label>work phone number</mat-label>
+                    <input matInput formControlName="workphone">
+                </mat-form-field>
+            </div>
+            <p>Employment</p>
+            <div>
+                <mat-form-field class="formField">
+                    <mat-label>visa title</mat-label>
+                    <input matInput required formControlName="visatitle">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>start date</mat-label>
+                    <input matInput required [matDatepicker]="startpicker" formControlName="start">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="startpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startpicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>end date</mat-label>
+                    <input matInput required [matDatepicker]="endpicker" formControlName="end">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="endpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endpicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <p>Emergency Contact </p>
+            <div>
+                <mat-form-field class="formField">
+                    <mat-label>first name</mat-label>
+                    <input matInput required formControlName="efirstName">
+                </mat-form-field>
+                <mat-form-field class="formField">
+                    <mat-label>last name</mat-label>
+                    <input matInput required formControlName="elastName">
+                </mat-form-field>
+                <mat-form-field class="formField">
+                    <mat-label>middle name</mat-label>
+                    <input matInput formControlName="emiddleName">
+                </mat-form-field>
+                <mat-form-field class="formField">
+                    <mat-label>phone</mat-label>
+                    <input matInput formControlName="ephone">
+                </mat-form-field>
+                <mat-form-field class="formField">
+                    <mat-label>email</mat-label>
+                    <input matInput required formControlName="eemail">
+                </mat-form-field>
+                <mat-form-field class="formField">
+                    <mat-label>relationship</mat-label>
+                    <input matInput required formControlName="relationship">
+                </mat-form-field>
+            </div>
+            <p>Documents</p>
+            <div>
+            </div>
+        </form>
+
+        <button *ngIf="!editable; else elseBlock" mat-raised-button color="primary" (click)="edit()">Edit</button>
+        <ng-template #elseBlock>
+            <div *ngIf="personalInfoForm.invalid; else saveBlock">
+                <button type="submit" disabled>save</button>
+            </div>
+            <button mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+        </ng-template> <ng-template #saveBlock> <button type="submit" (click)="save()">save</button></ng-template>
+    </div>
+</div>

@@ -63,7 +63,7 @@ export class HrApplicationDetailComponent implements OnInit {
             verticalPosition: this.verticalPosition,
             duration: 1000,
           })
-          this.router.navigate(['hrHiringManagement/applicationReview']);
+          this.router.navigate(['hrHiringManagement']);
         },
         error: (e) => {
           alert(e.error.message);
@@ -81,7 +81,7 @@ export class HrApplicationDetailComponent implements OnInit {
             verticalPosition: this.verticalPosition,
             duration: 1000,
           })
-          this.router.navigate(['hrHiringManagement/applicationReview']);
+          this.router.navigate(['hrHiringManagement']);
         },
         error: (e) => {
           alert(e.error.message);
