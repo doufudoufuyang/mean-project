@@ -68,9 +68,7 @@
     <input type="text" [(ngModel)]="carColor" name="carColor">
     <br />
     <label>Email *</label>
-    <input type="email" [(ngModel)]="email" name="email" required>
-    <!-- <input type="email" [(ngModel)]="email" name="email" required readonly> -->
-
+    <input type="text" readonly [(ngModel)]="email" value={{email}}>
     <label>SSN *</label>
     <input type="text" [(ngModel)]="ssn" name="ssn" required>
 
