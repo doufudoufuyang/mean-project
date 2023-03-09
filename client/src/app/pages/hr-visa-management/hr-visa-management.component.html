@@ -9,7 +9,7 @@
                             {{ p.firstName }} {{p.lastName}}
                         </mat-panel-title>
                         <mat-panel-description>
-                            {{getStep(p.step)}}
+                            {{getStep(p.nextStep)}}
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <div>
@@ -19,9 +19,13 @@
                         <span>Days Remaining:</span><span>{{ p.title }}</span>
                         {{fileList[i]}}
                         <a href='http://localhost:3000/user/download/{{fileList[i]}}'>Download {{fileList[i]}}</a>
-                        <div *ngIf="isStep(p.step); else sendBlock">
-                        <button>approve</button>    <button>reject</button>
+                        <div *ngIf="isStep(p.nextStep); else sendBlock">
+                            {{p._id}}
+                            <button (click)="approve(p._id,p.nextStep)">approve</button> <button
+                                (click)="reject(p._id,p.nextStep)">reject</button>
                         </div>
+                        <ng-template #sendBlock><button (click)="sendNotification(p.firstName,p.email,p.nextStep)">Send Notification</button></ng-template>
+
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
@@ -36,7 +40,7 @@
                             {{ p.firstName }} {{p.lastName}}
                         </mat-panel-title>
                         <mat-panel-description>
-                            {{getStep(p.step)}}
+                            {{getStep(p.nextStep)}}
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <div>
@@ -51,6 +55,5 @@
             </mat-accordion>
         </div>
         <ng-template #elseBlock>No profile found</ng-template>
-        <ng-template #sendBlock><button>Send Notification</button></ng-template>
     </mat-tab>
 </mat-tab-group>

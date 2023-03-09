@@ -26,6 +26,7 @@ export class HrVisaManagementComponent {
     private http: HttpClient
   ) {}
   getStep(step: number | string): string | number {
+    // console.log(step);
     return this.nextStep[step as keyof typeof this.nextStep];
   }
   isStep(step: number): boolean {
@@ -57,16 +58,43 @@ export class HrVisaManagementComponent {
       .then((res) => {
         this.profiles = res.data;
       })
+      .then((res) => {
+        this.getDocumnt();
+      })
       .catch((error) => {
         console.error('Error:', error);
       });
-    fetch(`http://localhost:3000/hr/visas`, {
-      method: 'GET',
+    // fetch(`http://localhost:3000/hr/visas`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     authorization:
+    //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g',
+    //   },
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! status: ${response.status}`);
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((res) => {
+    //     this.allProfiles = res.data;
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error:', error);
+    //   });
+  }
+  sendNotification(name: string, email: string, nextStep: number) {
+    fetch(`http://localhost:3000/hr/sendNotification`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         authorization:
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g',
       },
+      body: JSON.stringify({ name: name, email: email, nextStep: nextStep }),
     })
       .then((response) => {
         console.log(response);
@@ -76,7 +104,57 @@ export class HrVisaManagementComponent {
         return response.json();
       })
       .then((res) => {
-        this.allProfiles = res.data;
+        // this.profiles = res.data;
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+  approve(pid: string, next: number) {
+    console.log(pid);
+    fetch(`http://localhost:3000/hr/approve`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g',
+      },
+      body: JSON.stringify({ pid: pid, nextStep: next + 1 }),
+    })
+      .then((response) => {
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+  reject(pid: string, next: number) {
+    fetch(`http://localhost:3000/hr/a`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g',
+      },
+      body: JSON.stringify({ pid: pid }),
+    })
+      .then((response) => {
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((res) => {
+        console.log(res);
       })
       .catch((error) => {
         console.error('Error:', error);

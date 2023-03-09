@@ -20,4 +20,5 @@ router.get('/getRejected', HRProfileController.getRejectedApplication);
 //documents
 router.post('/reject', HRProfileController.reject);
 router.post('/approve', HRProfileController.approve);
+router.post('/sendNotification', HRProfileController.sendNotification);
 module.exports = router;
