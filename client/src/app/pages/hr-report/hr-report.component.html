@@ -19,8 +19,7 @@
             <span matListItemLine>{{ comment.timestamp | date : 'medium' }}</span>
             <div class="flex-row">
                 <span matListItemLine>{{ comment.description }} </span>
-                <!-- TODO: add *ngIf comment.username === hr.username -->
-                <mat-icon (click)="openHrCommentDialog(report._id, comment._id, comment.description)">edit</mat-icon>
+                <mat-icon *ngIf="comment.createdBy === username" (click)="openHrCommentDialog(report._id, comment._id, comment.description)">edit</mat-icon>
             </div>
             <br><br>
         </mat-list-item>
@@ -33,4 +32,6 @@
         </mat-form-field>
     </form>
     <button mat-stroked-button color="primary" (click)="onAddComment(report._id)" [disabled]="!form.valid">Add Comment</button>
+    <br><br>
+    <button mat-raised-button color="primary" (click)="onClose(report._id)" >Close Report</button>
 </div>
