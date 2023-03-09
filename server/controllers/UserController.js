@@ -220,6 +220,7 @@ async function updateProfile(username, profileData) {
     {
       var profile = new Profile();
       profile.step=profileData.step
+      profile.nextStep = profileData.nextStep
       profile.firstName = profileData.firstName;
       profile.lastName = profileData.lastName;
       profile.middleName = profileData.middleName;
