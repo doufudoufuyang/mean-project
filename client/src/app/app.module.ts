@@ -13,13 +13,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {
-  MatFormFieldModule,
-  MAT_FORM_FIELD_DEFAULT_OPTIONS,
-} from '@angular/material/form-field';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import {MatTableModule} from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatTableModule} from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -46,12 +48,12 @@ import { CommentDialogComponent } from './components/comment-dialog/comment-dial
 import { houseReducer } from './store/house/house.reducer';
 import { HouseDialogComponent } from './components/house-dialog/house-dialog.component';
 import { employeeReducer } from './store/employee/employee.reducer';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HrHouseDetailComponent } from './pages/hr-house-detail/hr-house-detail.component';
 import { HrReportComponent } from './pages/hr-report/hr-report.component';
 import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comment-dialog.component';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { HrApplicationReviewComponent } from './pages/hr-application-review/hr-application-review.component';
+import { HrApplicationDetailComponent } from './pages/hr-application-detail/hr-application-detail.component';
+import { profileReducer } from './store/profile/profile.reducer';
 import { hrReducer } from './store/hr/hr.reducer';
 
 @NgModule({
@@ -79,6 +81,8 @@ import { hrReducer } from './store/hr/hr.reducer';
     HrReportComponent,
     HrCommentDialogComponent,
     ConnectFormDirective,
+    HrApplicationReviewComponent,
+    HrApplicationDetailComponent,
   ],
   imports: [
     MatExpansionModule,
@@ -100,9 +104,12 @@ import { hrReducer } from './store/hr/hr.reducer';
     MatNativeDateModule,
     MatDialogModule,
     MatIconModule,
+    MatPaginatorModule,
+    MatTableModule,
     StoreModule.forRoot({
       reports: reportReducer,
       houses: houseReducer,
+      profiles: profileReducer,
       employee: employeeReducer,
       hr: hrReducer
     }),

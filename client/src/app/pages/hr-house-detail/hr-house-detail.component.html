@@ -39,7 +39,7 @@
     <hr><br>
 
     <h3>Facility Reports</h3>
-    <div *ngFor="let report of house.reports">
+    <div *ngFor="let report of reportsForCurrPage">
         <mat-card (click)="onClickCard(report._id)">
             <mat-card-header>
                 <mat-card-title>{{ report.title }}</mat-card-title>
@@ -52,4 +52,12 @@
         </mat-card>
         <br>
     </div>
+    <mat-paginator *ngIf="house.reports.length"
+        [length]="house.reports.length"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [hidePageSize]="true"
+        [showFirstLastButtons]="true"
+        (page)="onPageChange($event)">
+    </mat-paginator>
 </div>
