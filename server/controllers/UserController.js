@@ -148,43 +148,21 @@ exports.user_login = async (req, res) => {
 //onboarind upload
 async function updateProfile(username, profileData) {
   try {
+    console.log(username)
     const user = await User.findOne({ username: username });
     user.status = 'Pending'
     await user.save()
-    if(!user.profile){
-      var profile = new Profile();
-      profile.email = user.email
-      profile.step=profileData.step
-      profile.nextStep = profileData.nextStep
-      profile.firstName = profileData.firstName;
-      profile.lastName = profileData.lastName;
-      profile.middleName = profileData.middleName;
-      profile.preferredName = profileData.preferredName;
-      profile.pic = profileData.pic;
-      profile.address = profileData.address;
-      profile.cellPhoneNumber = profileData.cellPhoneNumber;
-      profile.workPhoneNumber = profileData.workPhoneNumber;
-      profile.car = profileData.car;
-      profile.SSN = profileData.SSN;
-      profile.dateOfBirth = profileData.dateOfBirth;
-      profile.gender = profileData.gender;
-      profile.reference = profileData.reference;
-      profile.emergencyContacts = profileData.emergencyContacts;
-      profile.optReceipt= profileData.optReceipt
-      profile.driverLicense =profileData.driverLicense;
-      await profile.save();
-      await User.updateOne({ username: username }, { profile: profile._id })
-    }
-    else{
+    if(user.profile){
       Profile.findById(user.profile, (err, profile) => {
         if (err) {
           console.log(err);
         } else {
-          console.log('Original profile:', profile);
-      
+  
+          console.log('id',user.profile)
+           console.log('Original profile:', profile);
+      if(profile){
           // update the profile fields
-          profile.step=profileData.step;
-          profile.nextStep = profileData.nextStep
+          profile.step=profileData.step
           profile.firstName = profileData.firstName;
           profile.lastName = profileData.lastName;
           profile.middleName = profileData.middleName;
@@ -204,20 +182,67 @@ async function updateProfile(username, profileData) {
           // save the updated profile to MongoDB
           profile.save((err, updatedProfile) => {
             if (err) {
-              console.log(err);
+              console.log('err',err);
             } else {
               console.log('Updated profile:', updatedProfile);
             }
           });
         }
+      else
+    {
+      var profile = new Profile();
+      profile.step=profileData.step
+      profile.firstName = profileData.firstName;
+      profile.lastName = profileData.lastName;
+      profile.middleName = profileData.middleName;
+      profile.preferredName = profileData.preferredName;
+      profile.pic = profileData.pic;
+      profile.address = profileData.address;
+      profile.cellPhoneNumber = profileData.cellPhoneNumber;
+      profile.workPhoneNumber = profileData.workPhoneNumber;
+      profile.car = profileData.car;
+      profile.SSN = profileData.SSN;
+      profile.dateOfBirth = profileData.dateOfBirth;
+      profile.gender = profileData.gender;
+      profile.reference = profileData.reference;
+      profile.emergencyContacts = profileData.emergencyContacts;
+      profile.optReceipt= profileData.optReceipt
+      profile.driverLicense =profileData.driverLicense;
+       profile.save();
+      User.updateOne({ username: username }, { profile: profile._id })
+  
+    }}
       });
     }
 
+    else
+    {
+      var profile = new Profile();
+      profile.step=profileData.step
+      profile.firstName = profileData.firstName;
+      profile.lastName = profileData.lastName;
+      profile.middleName = profileData.middleName;
+      profile.preferredName = profileData.preferredName;
+      profile.pic = profileData.pic;
+      profile.address = profileData.address;
+      profile.cellPhoneNumber = profileData.cellPhoneNumber;
+      profile.workPhoneNumber = profileData.workPhoneNumber;
+      profile.car = profileData.car;
+      profile.SSN = profileData.SSN;
+      profile.dateOfBirth = profileData.dateOfBirth;
+      profile.gender = profileData.gender;
+      profile.reference = profileData.reference;
+      profile.emergencyContacts = profileData.emergencyContacts;
+      profile.optReceipt= profileData.optReceipt
+      profile.driverLicense =profileData.driverLicense;
+      await profile.save();
+      await User.updateOne({ username: username }, { profile: profile._id })
+    }
     
 
     return profile;
   } catch (err) {
-    console.error(err);
+    console.error('errrr',err);
     throw err;
   }
 }
