@@ -1,4 +1,6 @@
-<br />
+<app-navbar></app-navbar>
+
+<br /><br /><br />
 <h1>Onboarding Page</h1>
 <!-- <table>
     <thead>
@@ -17,8 +19,8 @@
 
 <hr />
 
-<form #myForm="ngForm" *ngIf="status === 'Not Started' || status === 'Rejected'" (ngSubmit)="submitForm()">
-    <!-- <form #myForm="ngForm" *ngIf="status === 'Not Started' || status === 'Rejected'"> -->
+<!-- <form #myForm="ngForm" *ngIf="status === 'Not Started' || status === 'Rejected'" (ngSubmit)="submitForm()"> -->
+<form #myForm="ngForm" *ngIf="status === 'Not Started' || status === 'Rejected'">
     <label>First Name *</label>
     <input type="text" [(ngModel)]="firstName" name="firstName" required>
     <!-- <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">First name is required</div>    <label>Last Name *</label> -->
@@ -69,9 +71,7 @@
     <input type="text" [(ngModel)]="carColor" name="carColor">
     <br />
     <label>Email *</label>
-    <input type="email" [(ngModel)]="email" name="email" required>
-    <!-- <input type="email" [(ngModel)]="email" name="email" required readonly> -->
-
+    <input type="text" readonly [(ngModel)]="email" value={{email}}>
     <label>SSN *</label>
     <input type="text" [(ngModel)]="ssn" name="ssn" required>
 
@@ -145,21 +145,24 @@
     <input type="email" [(ngModel)]="referenceEmail" name="referenceEmail" placeholder="Email" required>
     <input type="text" [(ngModel)]="referenceRelationship" name="referenceRelationship" placeholder="Relationship"
         required>
+    <label>Emergency Contacts *</label>
+    <button (click)="addEmergencyContact()">Add Contact</button>
+    <div *ngFor="let contact of emergencyContacts; let i = index">
+        <input type="text" [(ngModel)]="emergencyContacts[i].firstName" name="emergencyFirstName"
+            placeholder="First Name" required>
+        <input type="text" [(ngModel)]="emergencyContacts[i].lastName" name="emergencyLastName" placeholder="Last Name"
+            required>
+        <input type="text" [(ngModel)]="emergencyContacts[i].middleName" name="emergencyMiddleName"
+            placeholder="Middle Name">
+        <input type="tel" [(ngModel)]="emergencyContacts[i].phone" name="emergencyPhone" placeholder="Phone" required>
+        <input type="email" [(ngModel)]="emergencyContacts[i].email" name="emergencyEmail" placeholder="Email" required>
+        <input type="text" [(ngModel)]="emergencyContacts[i].relationship" name="emergencyRelationship"
+            placeholder="Relationship" required>
 
-    <!-- <label>Emergency Contacts *</label>
-            <div *ngFor="let contact of emergencyContacts; let i = index">
-              <input type="text" [(ngModel)]="emergencyContacts[i].firstName" name="emergencyFirstName" placeholder="First Name" required>
-              <input type="text" [(ngModel)]="emergencyContacts[i].lastName" name="emergencyLastName" placeholder="Last Name" required>
-              <input type="text" [(ngModel)]="emergencyContacts[i].middleName" name="emergencyMiddleName" placeholder="Middle Name">
-              <input type="tel" [(ngModel)]="emergencyContacts[i].phone" name="emergencyPhone" placeholder="Phone" required>
-              <input type="email" [(ngModel)]="emergencyContacts[i].email" name="emergencyEmail" placeholder="Email" required>
-              <input type="text" [(ngModel)]="emergencyContacts[i].relationship" name="emergencyRelationship" placeholder="Relationship" required>
-              <button *ngIf="i === emergencyContacts.length - 1" (click)="addEmergencyContact()">Add Contact</button>
-              <button *ngIf="i !== emergencyContacts.length - 1" (click)="removeEmergencyContact(i)">Remove Contact</button>
-            </div> -->
+        <button (click)="removeEmergencyContact(i)">Remove Contact</button>
+    </div>
 
-    <!-- <input (change)="onFilePicked($event)" placeholder="Upload File" type="file" />
-    <button (click)="onFileUpload()">Upload Driver License</button> -->
+
     <br />
     <div *ngIf="myForm.invalid && (myForm.dirty || myForm.touched)">
         <p>Please fill out all required fields.</p>
@@ -167,8 +170,8 @@
     </div>
     <div *ngIf="!myForm.invalid && (myForm.dirty || myForm.touched)">
         <p>You can submit now.</p>
-        <!-- <button type="submit" (click)="submitForm()">Submit</button> -->
-        <button type="submit">Submit</button>
+        <button type="submit" (click)="submitForm()">Submit</button>
+        <!-- <button type="submit">Submit</button> -->
     </div>
 </form>
 <div *ngIf=" status === 'Pending'">

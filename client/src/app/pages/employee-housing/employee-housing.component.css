@@ -22,3 +22,7 @@ mat-grid-tile.bold {
 .Closed {
     color: green;
 }
+
+button {
+    align-self: center;
+}

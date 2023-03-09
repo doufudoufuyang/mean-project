@@ -2,7 +2,7 @@ import { createReducer, on } from "@ngrx/store";
 import { EmployeeAction } from "./employee.action";
 import { Employee } from "src/app/interfaces/employee";
 
-export const initialState: any = {firstName:"test"}
+export const initialState: any = {profile:{firstName:"eee"}}
 
 export const employeeReducer = createReducer(
     initialState,

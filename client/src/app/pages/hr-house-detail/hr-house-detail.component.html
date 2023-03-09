@@ -17,7 +17,7 @@
     <hr><br>
 
     <h3 class="font-bold">Employee Information</h3>
-    <mat-grid-list cols="{{ house.residents.length }}" rowHeight="150px">
+    <mat-grid-list *ngIf="house.residents.length" cols="{{ house.residents.length }}" rowHeight="150px">
         <!-- TODO: link to employee profile -->
         <mat-grid-tile *ngFor="let employee of house.residents">
             <mat-card class="felx-column">

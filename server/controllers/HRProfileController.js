@@ -1,8 +1,10 @@
-const User = require("../models/User");
-const Invitation = require("../models/Invitation")
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../../.env") });
+const User = require("../models/User");
+const Invitation = require("../models/Invitation")
 const Profile = require("../models/Profile");
+const House = require("../models/House");
+
 const nextStep = {
   0: "submit onboarding application",
   1: "wait for HR approval",
@@ -13,6 +15,7 @@ const nextStep = {
   6: "submit I-20",
   7: "wait for HR approval",
 };
+
 exports.rejectApplication = async (req, res) => {
   try {
     const { id, feedback } = req.body;
@@ -26,7 +29,11 @@ exports.rejectApplication = async (req, res) => {
 exports.approveApplication = async (req, res) => {
   try {
     const { id } = req.body;
-    await User.findByIdAndUpdate(id, { status: "Approved" });
+    const user = await User.findByIdAndUpdate(id, { status: "Approved" });
+    // assign house to user
+    const house = await House.findOne({ "residents.3" : { "$exists": false } });
+    await House.findByIdAndUpdate(house, { residents: [...house.residents, user._id] }, { new: true });
+    await Profile.findByIdAndUpdate(user.profile, { house: house._id }, { new: true });
     return res.status(200).json({ message: "Approve successfully" });
   } catch (e) {
     console.log(e);
@@ -77,7 +84,7 @@ exports.getEmployeeById = async (req, res) => {
 
 exports.getInProgressVisa = async (req, res) => {
   try {
-    const profiles = await Profile.find({ $or: [{ step: 0 }, { step: 2 }] });
+    const profiles = await Profile.find({ step: 2 });
     return res.status(201).json({ data: profiles });
   } catch (e) {
     console.log(e);
@@ -87,7 +94,7 @@ exports.getInProgressVisa = async (req, res) => {
 exports.getVisas = async (req, res) => {
   try {
     const profiles = await Profile.find({
-      $or: [{ step: 0 }, { step: 2 }, { step: 3 }],
+      $or: [{ step: 2 }, { step: 3 }],
     });
     return res.status(201).json({ data: profiles });
   } catch (e) {
