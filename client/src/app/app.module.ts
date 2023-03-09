@@ -122,4 +122,4 @@ import { hrReducer } from './store/hr/hr.reducer';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
