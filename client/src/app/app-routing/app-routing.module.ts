@@ -14,6 +14,8 @@ import { HrHousingManagementComponent } from '../pages/hr-housing-management/hr-
 import { EmployeeReportComponent } from '../pages/employee-report/employee-report.component';
 import { HrHouseDetailComponent } from '../pages/hr-house-detail/hr-house-detail.component';
 import { HrReportComponent } from '../pages/hr-report/hr-report.component';
+import { HrApplicationReviewComponent } from '../pages/hr-application-review/hr-application-review.component';
+import { HrApplicationDetailComponent } from '../pages/hr-application-detail/hr-application-detail.component';
 
 const routes: Routes = [
   {path : '', component: LoginComponent},
@@ -28,6 +30,8 @@ const routes: Routes = [
   {path : 'hrEmployeeProfiles', component: HrEmployeeProfilesComponent},
   {path : 'hrVisaManagement', component: HrVisaManagementComponent},
   {path : 'hrHiringManagement', component: HrHiringManagementComponent},
+  {path : 'hrHiringManagement/applicationReview', component: HrApplicationReviewComponent},
+  {path : 'hrHiringManagement/applicationReview/:id', component: HrApplicationDetailComponent},
   {path : 'hrHousingManagement', component: HrHousingManagementComponent},
   {path : 'hrHousingManagement/house/:id', component: HrHouseDetailComponent},
   {path : 'hrHousingManagement/house/:hid/report/:rid', component: HrReportComponent},

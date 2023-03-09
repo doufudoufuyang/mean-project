@@ -72,8 +72,8 @@ exports.sent_register_invitation = async (req, res) => {
       to:email,
       subject:`Register Invitation`, 
       text:`Hello ${name}, here is your register token!`,
-      html: `<p>Hello ${name}, here is your register token!</p><br/><b>${token}</b>`
-      // html:`<a href='http://localhost:4200/signup?token=${token}'>Click to register!</a>`
+      // html: `<p>Hello ${name}, here is your register token!</p><br/><b>${token}</b>`
+      html:`<a href='http://localhost:4200/register?token=${token}'>Click to register!</a>`
     }
     transporter.sendMail(mail_configs, function (error, info) {
       if(error){
@@ -363,7 +363,7 @@ exports.put_report = async (req, res) => {
 exports.get_houses = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
+    if (role === 'employee') return res.status(403).json({ message: "Not authorized" });
     const houses = await House.find().populate({
       path: 'residents',
       populate: {
@@ -381,7 +381,7 @@ exports.get_houses = async (req, res) => {
 exports.get_house_by_id = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
+    if (role === 'employee') return res.status(403).json({ message: "Not authorized" });
     const { id } = req.params;
     const house = await House.findById(id).populate('residents').populate('reports');
     return res.status(200).json({ house });
@@ -394,7 +394,7 @@ exports.get_house_by_id = async (req, res) => {
 exports.post_house = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
+    if (role === 'employee') return res.status(403).json({ message: "Not authorized" });
     const { address, landlord, facilityInfo } = req.body;
     const house = { address, landlord, facilityInfo };
     const createdHouse = await House.create(house);
@@ -408,7 +408,7 @@ exports.post_house = async (req, res) => {
 exports.put_house = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
+    if (role === 'employee') return res.status(403).json({ message: "Not authorized" });
     const { id, address, landlord, facilityInfo, resident } = req.body;
     if (!id) res.status(400).json({ message: "House ID is required" });
     const house = await House.findById(id);
@@ -433,7 +433,7 @@ exports.put_house = async (req, res) => {
 exports.delete_house = async (req, res) => {
   try {
     const { role } = req.payload;
-    if (role === 'empoyee') return res.status(403).json({ message: "Not authorized" });
+    if (role === 'employee') return res.status(403).json({ message: "Not authorized" });
     const { id } = req.params;
     const house = await House.findById(id).populate('residents');
     // console.log(house)

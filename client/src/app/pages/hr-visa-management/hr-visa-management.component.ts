@@ -7,19 +7,18 @@ import { Observable, catchError, of } from 'rxjs';
 @Component({
   selector: 'app-hr-visa-management',
   templateUrl: './hr-visa-management.component.html',
-  styleUrls: ['./hr-visa-management.component.css']
+  styleUrls: ['./hr-visa-management.component.css'],
 })
-
 export class HrVisaManagementComponent {
-   nextStep = {
-    0: "submit onboarding application",
-    1: "wait for HR approval",
-    2: "submit OPT EAD",
-    3: "wait for HR approval",
-    4: "submit I-983",
-    5: "wait for HR approval",
-    6: "submit I-20",
-    7: "wait for HR approval",
+  nextStep = {
+    0: 'submit onboarding application',
+    1: 'wait for HR approval',
+    2: 'submit OPT EAD',
+    3: 'wait for HR approval',
+    4: 'submit I-983',
+    5: 'wait for HR approval',
+    6: 'submit I-20',
+    7: 'wait for HR approval',
   };
   constructor(
     private fileService: FileService,
@@ -29,15 +28,14 @@ export class HrVisaManagementComponent {
     private formBuilder: FormBuilder,
     private http: HttpClient
   ) {}
-  getStep(step:number|string):string | number
-  {
+  getStep(step: number | string): string | number {
     return this.nextStep[step as keyof typeof this.nextStep];
   }
   searchForm: FormGroup = this.formBuilder.group({
     name: ['', Validators.required],
   });
-  profiles: any[] = []
-
+  profiles: any[] = [];
+  fileList: any[] = [];
   ngOnInit() {
     fetch(`http://localhost:3000/hr/inProgressVisas`, {
       method: 'GET',
@@ -61,30 +59,33 @@ export class HrVisaManagementComponent {
         console.error('Error:', error);
       });
   }
-  // getDocumnt(){
-  //   const d = this.profiles.map((p)=>{
-  //     switch(p.nextStep){
-  //        case 1:return p.optReceipt,
-  //         case 3:return p.optEAD,
-  //         case 5: return p.i983,
-  //         case 7:return p.i20
-  //     }
-    
-  //   })
-  //   const response = this.fileService.fileListService()
-  //   response
-  //     .pipe(catchError((err) => of([{ err }])))
-  //     .subscribe((file: any) => {
-  //       // console.log('file=', file)
-  //       const userFile = [...file].filter((elem: any) => {
-  //         if (elem === this.userOpt || elem === this.userPic || elem === this.userDriverlicense) {
-  //           console.log('inside filter true')
-  //           return true
-  //         }
-  //         console.log('inside filter false')
-  //         return false
-  //       })
-  //       this.fileList = userFile
-  //     })
-  // }
+  getDocumnt() {
+    const dlist = this.profiles.map((p) => {
+      switch (p.nextStep) {
+        case 1:
+          return p.optReceipt;
+        case 3:
+          return p.optEAD;
+        case 5:
+          return p.i983;
+        case 7:
+          return p.i20;
+        default:
+          return '';
+      }
+    });
+    const response = this.fileService.fileListService();
+    response.pipe(catchError((err) => of([{ err }]))).subscribe((file: any) => {
+      // console.log('file=', file)
+      const userFile = [...file].filter((elem: any) => {
+        if (dlist.includes(elem)) {
+          console.log('inside filter true');
+          return true;
+        }
+        console.log('inside filter false');
+        return false;
+      });
+      this.fileList = userFile;
+    });
+  }
 }

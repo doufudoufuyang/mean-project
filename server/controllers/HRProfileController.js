@@ -15,18 +15,19 @@ const nextStep = {
 };
 exports.rejectApplication = async (req, res) => {
   try {
-    const uid = req.params.uid;
-    await User.update({ id: uid }, { status: "Rejected" });
-    return res.status(201).json({ message: "Reject successfully" });
+    const { id, feedback } = req.body;
+    const user = await User.findByIdAndUpdate(id, { status: "Rejected" }, { new: true });
+    await Profile.findByIdAndUpdate(user.profile, { feedback: feedback }, { new: true });
+    return res.status(200).json({ message: "Reject successfully" });
   } catch (e) {
     console.log(e);
   }
 };
 exports.approveApplication = async (req, res) => {
   try {
-    const uid = req.params.uid;
-    await User.update({ id: uid }, { status: "Approved" });
-    return res.status(201).json({ message: "Approve successfully" });
+    const { id } = req.body;
+    await User.findByIdAndUpdate(id, { status: "Approved" });
+    return res.status(200).json({ message: "Approve successfully" });
   } catch (e) {
     console.log(e);
   }
@@ -63,6 +64,16 @@ exports.getAllProfiles = async (req, res) => {
     console.log(e);
   }
 };
+
+exports.getEmployeeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const employee = await User.findById(id).populate('profile');
+    return res.status(200).json({ data: employee });
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 exports.getInProgressVisa = async (req, res) => {
   try {

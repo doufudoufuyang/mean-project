@@ -7,6 +7,7 @@ import { selectReports } from 'src/app/store/report/report.selector';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportDialogComponent } from 'src/app/components/report-dialog/report-dialog.component';
 import { Report } from 'src/app/interfaces/report';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-housing',
@@ -22,6 +23,7 @@ export class EmployeeHousingComponent implements OnInit {
     private http: HttpClient,
     private reportService: ReportService,
     private store: Store,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -40,5 +42,9 @@ export class EmployeeHousingComponent implements OnInit {
 
   openDialog(): void {
     this.dialog.open(ReportDialogComponent);
+  }
+
+  onCardClick(id: string): void {
+    this.router.navigate(['employeeHousing/report/' + id]);
   }
 }
