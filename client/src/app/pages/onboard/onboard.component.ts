@@ -89,6 +89,7 @@ export class OnboardComponent implements OnInit {
           this.profile = user.profile
           this.status = user.status
           this.username = user.username
+          this.email=user.email
           if (user.profile) {
             this.userOpt = user.profile.optReceipt;
             this.userPic = user.profile.pic;
