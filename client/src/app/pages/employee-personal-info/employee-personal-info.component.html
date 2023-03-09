@@ -1,17 +1,17 @@
 <app-navbar></app-navbar>
 <div class="container">
     <div class="personal-container">
-        <form [formGroup]="personalInfoForm" [connectForm]="personalInfoForm$" class="form">
+        <form [formGroup]="personalInfoForm" [connectForm]="personalInfoForm$| async" class="form">
             <P>Name</P>
             <div>
                 <mat-form-field class="formField">
                     <mat-label>firstName</mat-label>
-                    <input matInput formControlName="firstName">
+                    <input matInput formControlName="firstName" required>
                 </mat-form-field>
 
                 <mat-form-field class="formField">
                     <mat-label>lastName</mat-label>
-                    <input matInput formControlName="lastName">
+                    <input matInput formControlName="lastName" required>
                 </mat-form-field>
 
                 <mat-form-field>
@@ -22,17 +22,14 @@
                     <mat-label>preferredName</mat-label>
                     <input matInput formControlName="preferredName">
                 </mat-form-field>
-                <mat-form-field>
-                    <mat-label>email</mat-label>
-                    <input matInput formControlName="email">
-                </mat-form-field>
+
                 <mat-form-field>
                     <mat-label>SSN</mat-label>
-                    <input matInput formControlName="SSN">
+                    <input matInput formControlName="SSN" required>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>date of birth</mat-label>
-                    <input matInput [matDatepicker]="picker">
+                    <input matInput [matDatepicker]="picker" required formControlName="dateOfBirth">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -50,30 +47,30 @@
             <div>
                 <mat-form-field class="formField">
                     <mat-label>building/apt</mat-label>
-                    <input matInput formControlName="building">
+                    <input matInput required formControlName="building">
                 </mat-form-field>
                 <mat-form-field class="formField">
                     <mat-label>street</mat-label>
-                    <input matInput formControlName="street">
+                    <input matInput required formControlName="street">
                 </mat-form-field>
                 <mat-form-field class="formField">
                     <mat-label>city</mat-label>
-                    <input matInput formControlName="city">
+                    <input matInput required formControlName="city">
                 </mat-form-field>
                 <mat-form-field class="formField">
                     <mat-label>state</mat-label>
-                    <input matInput formControlName="state">
+                    <input matInput required formControlName="state">
                 </mat-form-field>
                 <mat-form-field class="formField">
                     <mat-label>zip</mat-label>
-                    <input matInput formControlName="zip">
+                    <input matInput required formControlName="zip">
                 </mat-form-field>
             </div>
             <p>Contact Info</p>
             <div>
                 <mat-form-field class="formField">
                     <mat-label>cell phone number</mat-label>
-                    <input matInput formControlName="cellphone">
+                    <input matInput required formControlName="cellphone">
                 </mat-form-field>
                 <mat-form-field class="formField">
                     <mat-label>work phone number</mat-label>
@@ -84,18 +81,18 @@
             <div>
                 <mat-form-field class="formField">
                     <mat-label>visa title</mat-label>
-                    <input matInput formControlName="visatitle">
+                    <input matInput required formControlName="visatitle">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>start date</mat-label>
-                    <input matInput [matDatepicker]="startpicker" formControlName="start">
+                    <input matInput required [matDatepicker]="startpicker" formControlName="start">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="startpicker"></mat-datepicker-toggle>
                     <mat-datepicker #startpicker></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>end date</mat-label>
-                    <input matInput [matDatepicker]="endpicker" formControlName="end">
+                    <input matInput required [matDatepicker]="endpicker" formControlName="end">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="endpicker"></mat-datepicker-toggle>
                     <mat-datepicker #endpicker></mat-datepicker>
@@ -105,11 +102,11 @@
             <div>
                 <mat-form-field class="formField">
                     <mat-label>first name</mat-label>
-                    <input matInput formControlName="efirstName">
+                    <input matInput required formControlName="efirstName">
                 </mat-form-field>
                 <mat-form-field class="formField">
                     <mat-label>last name</mat-label>
-                    <input matInput formControlName="elastName">
+                    <input matInput required formControlName="elastName">
                 </mat-form-field>
                 <mat-form-field class="formField">
                     <mat-label>middle name</mat-label>
@@ -121,23 +118,24 @@
                 </mat-form-field>
                 <mat-form-field class="formField">
                     <mat-label>email</mat-label>
-                    <input matInput formControlName="eemail">
+                    <input matInput required formControlName="eemail">
                 </mat-form-field>
                 <mat-form-field class="formField">
                     <mat-label>relationship</mat-label>
-                    <input matInput formControlName="relationship">
+                    <input matInput required formControlName="relationship">
                 </mat-form-field>
             </div>
             <p>Documents</p>
             <div>
-
             </div>
         </form>
 
         <button *ngIf="!editable; else elseBlock" mat-raised-button color="primary" (click)="edit()">Edit</button>
         <ng-template #elseBlock>
-            <button mat-raised-button color="primary" (click)="save()">Save</button>
+            <div *ngIf="personalInfoForm.invalid; else saveBlock">
+                <button type="submit" disabled>save</button>
+            </div>
             <button mat-raised-button color="primary" (click)="cancel()">Cancel</button>
-        </ng-template>
+        </ng-template> <ng-template #saveBlock> <button type="submit">save</button></ng-template>
     </div>
 </div>

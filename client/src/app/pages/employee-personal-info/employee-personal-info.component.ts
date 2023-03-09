@@ -24,12 +24,35 @@ export class EmployeePersonalInfoComponent {
   username: string = 'aaron';
   personalInfoForm$: Observable<any> = this.store.select(selectEmployee);
   editable: boolean = false;
+  // personalInfoForm: FormGroup = this.formBuilder.group({
+  //   firstName: [{ value: '', disabled: true }],
+  //   lastName: [{ value: '', disabled: true }, ],
+  //   middleName: [{ value: '', disabled: true }],
+  //   preferredName: [{ value: '', disabled: true }],
+  //   SSN: [{ value: '', disabled: true }, ],
+  //   dateOfBirth: [{ value: '', disabled: true },],
+  //   building: [{ value: '', disabled: true }, ],
+  //   street: [{ value: '', disabled: true }, ],
+  //   city: [{ value: '', disabled: true }, ],
+  //   state: [{ value: '', disabled: true }, ],
+  //   zip: [{ value: '', disabled: true }, ],
+  //   cellphone: [{ value: '', disabled: true }, ],
+  //   workphone: [{ value: '', disabled: true }, ],
+  //   visatitle: [{ value: '', disabled: true }, ],
+  //   start: [{ value: '', disabled: true }, ],
+  //   end: [{ value: '', disabled: true }, ],
+  //   efirstName: [{ value: 'yingji yan', disabled: true }],
+  //   elastName: [{ value: '', disabled: true }],
+  //   emiddleName: [{ value: '', disabled: true }],
+  //   ephone: [{ value: 'yingji yan', disabled: true }],
+  //   eemail: [{ value: '', disabled: true }],
+  //   relationship: [{ value: '', disabled: true }, Validators.required],
+  // });
   personalInfoForm: FormGroup = this.formBuilder.group({
     firstName: [{ value: '', disabled: true }, Validators.required],
     lastName: [{ value: '', disabled: true }, Validators.required],
     middleName: [{ value: '', disabled: true }],
-    preferredName: [{ value: 'yingji yan', disabled: true }],
-    email: [{ value: '', disabled: true }, Validators.required],
+    preferredName: [{ value: '', disabled: true }],
     SSN: [{ value: '', disabled: true }, Validators.required],
     dateOfBirth: [{ value: '', disabled: true }, Validators.required],
     building: [{ value: '', disabled: true }, Validators.required],
@@ -38,14 +61,14 @@ export class EmployeePersonalInfoComponent {
     state: [{ value: '', disabled: true }, Validators.required],
     zip: [{ value: '', disabled: true }, Validators.required],
     cellphone: [{ value: '', disabled: true }, Validators.required],
-    workphone: [{ value: '', disabled: true }, Validators.required],
+    workphone: [{ value: '', disabled: true }],
     visatitle: [{ value: '', disabled: true }, Validators.required],
     start: [{ value: '', disabled: true }, Validators.required],
     end: [{ value: '', disabled: true }, Validators.required],
-    efirstName: [{ value: 'yingji yan', disabled: true }, Validators.required],
+    efirstName: [{ value: '', disabled: true }, Validators.required],
     elastName: [{ value: '', disabled: true }, Validators.required],
     emiddleName: [{ value: '', disabled: true }],
-    ephone: [{ value: 'yingji yan', disabled: true }],
+    ephone: [{ value: '', disabled: true }],
     eemail: [{ value: '', disabled: true }, Validators.required],
     relationship: [{ value: '', disabled: true }, Validators.required],
   });
@@ -68,10 +91,10 @@ export class EmployeePersonalInfoComponent {
     console.log(this.personalInfoForm.getRawValue());
     this.personalInfoForm.disable();
     const token = window.localStorage.getItem('JWT_TOKEN');
-    console.log(token)
+    console.log(token);
     const headers = new Headers({
       'Content-Type': 'application/json',
-      'authorization': `Bearer ${token}`,
+      authorization: `Bearer ${token}`,
     });
     this.http
       .post('http://localhost:3000/user/profile', {
