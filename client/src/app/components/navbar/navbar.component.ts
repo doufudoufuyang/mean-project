@@ -13,7 +13,6 @@ export class NavbarComponent {
   constructor(private store : Store){}
 
   ngOnInit(){
-    const tmp = localStorage.getItem('isHr')
-    this.isHr = Boolean(tmp) ? true : false
+    this.isHr = localStorage.getItem('isHr') === 'true' ? true : false;
   }
 }
