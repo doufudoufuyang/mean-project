@@ -175,7 +175,8 @@ export class OnboardComponent implements OnInit {
     console.log('FILE.name =', FILE.name)
     this.opt = FILE.name
   }
-  onFileUpload() {
+  onFileUpload(e: Event) {
+    e.preventDefault();
     const fileForm = new FormData();
     fileForm.append('file', this.fileObj);
     console.log('imageForm=', fileForm)
@@ -183,6 +184,7 @@ export class OnboardComponent implements OnInit {
       .pipe(catchError((err) => of([{ err }])))
       .subscribe((fileName: any) => {
         console.log('fileName =', fileName[0])
+        window.alert('File unloaded')
       })
   }
   removeEmergencyContact(index: number) {
@@ -285,6 +287,12 @@ export class OnboardComponent implements OnInit {
       .catch(error => {
         console.error('Error:', error);
       });
+
+    // this.http.post('http://localhost:3000/user/profile', { "profileData": profile })
+    //   .subscribe((result: any) => {
+    //     console.log('result =', result)
+    //   })
+
   }
 
   navigateToEmployeeVisa() {
