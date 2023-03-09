@@ -89,10 +89,12 @@ export class OnboardComponent implements OnInit {
           this.profile = user.profile
           this.status = user.status
           this.username = user.username
-          this.userOpt = user.profile.optReceipt;
-          this.userPic = user.profile.pic;
-          if (user.profile.driverLicense) {
-            this.userDriverlicense = user.profile.driverLicense.document;
+          if (user.profile) {
+            this.userOpt = user.profile.optReceipt;
+            this.userPic = user.profile.pic;
+            if (user.profile.driverLicense) {
+              this.userDriverlicense = user.profile.driverLicense.document;
+            }
           }
         }
       });
@@ -181,6 +183,7 @@ export class OnboardComponent implements OnInit {
     const profile = {
       "firstName": this.firstName,
       "step": 0,
+      "nextStep": 1,
       "lastName": this.lastName,
       "middleName": this.middleName,
       "preferredName": this.preferredName,
@@ -255,5 +258,9 @@ export class OnboardComponent implements OnInit {
       .catch(error => {
         console.error('Error:', error);
       });
+  }
+
+  navigateToEmployeeVisa() {
+    this.router.navigate(['employeeVisa'])
   }
 }

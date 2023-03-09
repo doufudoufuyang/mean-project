@@ -155,6 +155,7 @@ async function updateProfile(username, profileData) {
       var profile = new Profile();
       profile.email = user.email
       profile.step=profileData.step
+      profile.nextStep = profileData.nextStep
       profile.firstName = profileData.firstName;
       profile.lastName = profileData.lastName;
       profile.middleName = profileData.middleName;
@@ -182,7 +183,8 @@ async function updateProfile(username, profileData) {
           console.log('Original profile:', profile);
       
           // update the profile fields
-          profile.step=profileData.step
+          profile.step=profileData.step;
+          profile.nextStep = profileData.nextStep
           profile.firstName = profileData.firstName;
           profile.lastName = profileData.lastName;
           profile.middleName = profileData.middleName;
@@ -228,6 +230,30 @@ exports.profile_upload = async (req, res) => {
     console.log("failed to update profile: ", e);
   }
 };
+
+//make nextStep+1, update optEAD, i983, i20 file name if any
+exports.employee_updateVisa = async(req, res) => {
+  try {
+    const {username, optEAD, i983, i20} = req.body
+    const employee = await User.findOne({username: username})
+    const profile = await Profile.findById(employee.profile)
+    const updatedStep = profile.nextStep + 1
+    let updatedProfile = await Profile.findByIdAndUpdate(employee.profile,{nextStep:updatedStep}, {new:true})
+    if(optEAD) {
+      updatedProfile = await Profile.findByIdAndUpdate(employee.profile,{optEAD:optEAD}, {new:true})
+    }
+    if(i983) {
+      updatedProfile = await Profile.findByIdAndUpdate(employee.profile,{i983:i983}, {new:true})
+    }
+    if(i20) {
+      updatedProfile = await Profile.findByIdAndUpdate(employee.profile,{i20:i20}, {new:true})
+    }
+
+    res.status(200).json({profile:updatedProfile})
+  } catch (e) {
+    console.log("failed to update profile: ", e);
+  }
+}
 
 
 // Housing
