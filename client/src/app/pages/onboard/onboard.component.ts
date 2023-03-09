@@ -254,6 +254,7 @@ export class OnboardComponent implements OnInit {
       })
       .then(data => {
         console.log(data);
+        this.router.navigate(['login'])
       })
       .catch(error => {
         console.error('Error:', error);
