@@ -1,3 +1,5 @@
+
+
 <app-header></app-header>
 
 <br /><br /><br />
@@ -19,11 +21,11 @@
 
 <hr />
 
-<form  #myForm="ngForm" *ngIf="status === 'Not Started' || status === 'Rejected'" (ngSubmit)="submitForm()">
-
+<form *ngIf="status === 'Not Started' || status === 'Rejected'" (ngSubmit)="submitForm()">
     <label>First Name *</label>
     <input type="text" [(ngModel)]="firstName" name="firstName" required>
-    <!-- <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">First name is required</div>    <label>Last Name *</label> -->
+
+    <label>Last Name *</label>
     <input type="text" [(ngModel)]="lastName" name="lastName" required>
 
     <label>Middle Name</label>
@@ -134,17 +136,17 @@
         <input type="date" [(ngModel)]="driverLicenseExpiration" name="driverLicenseExpiration" required>
 
         <label>Driver's License Copy</label>
-        <input type="file" (change)="onFilePickedDri($event)" required>
+        <input type="file" (change)="onFilePickedDri($event)">
         <button (click)="onFileUpload()">Upload Driver License</button>
     </ng-container>
     <br />
-    <label>Reference *</label>
-    <input type="text" [(ngModel)]="referenceFirstName" name="referenceFirstName" placeholder="First Name" required>
-    <input type="text" [(ngModel)]="referenceLastName" name="referenceLastName" placeholder="Last Name" required>
+    <label>Reference</label>
+    <input type="text" [(ngModel)]="referenceFirstName" name="referenceFirstName" placeholder="First Name">
+    <input type="text" [(ngModel)]="referenceLastName" name="referenceLastName" placeholder="Last Name">
     <input type="text" [(ngModel)]="referenceMiddleName" name="referenceMiddleName" placeholder="Middle Name">
-    <input type="tel" [(ngModel)]="referencePhone" name="referencePhone" placeholder="Phone" required>
-    <input type="email" [(ngModel)]="referenceEmail" name="referenceEmail" placeholder="Email" required>
-    <input type="text" [(ngModel)]="referenceRelationship" name="referenceRelationship" placeholder="Relationship" required>
+    <input type="tel" [(ngModel)]="referencePhone" name="referencePhone" placeholder="Phone">
+    <input type="email" [(ngModel)]="referenceEmail" name="referenceEmail" placeholder="Email">
+    <input type="text" [(ngModel)]="referenceRelationship" name="referenceRelationship" placeholder="Relationship">
 
     <!-- <label>Emergency Contacts *</label>
             <div *ngFor="let contact of emergencyContacts; let i = index">
@@ -160,14 +162,8 @@
 
     <!-- <input (change)="onFilePicked($event)" placeholder="Upload File" type="file" />
     <button (click)="onFileUpload()">Upload Driver License</button> -->
-    <br />    <div *ngIf="myForm.invalid && (myForm.dirty || myForm.touched)">
-        <p>Please fill out all required fields.</p>
-        <button type="submit" disabled>Submit</button>
-      </div>
-      <div *ngIf="!myForm.invalid && (myForm.dirty || myForm.touched)">
-        <p>You can submit now.</p>
-        <button type="submit">Submit</button>
-      </div>
+    <br />
+    <button type="submit">Submit</button>
 </form>
 
 <div *ngIf=" status === 'Pending'">
@@ -245,4 +241,6 @@
 <p *ngIf="status === 'Approved'">Congratulations! Your application has been approved. You will now be redirected to the
     home page.</p>
 <p *ngIf="status === 'Rejected'">Your application has been rejected for the following reason(s):</p>
+
+<button (click)='navigateToEmployeeVisa()'>navigate to employee visa</button>
 <app-footer></app-footer>
