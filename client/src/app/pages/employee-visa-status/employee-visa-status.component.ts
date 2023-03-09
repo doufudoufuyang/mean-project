@@ -39,7 +39,7 @@ export class EmployeeVisaStatusComponent implements OnInit {
     6: "submit I-20",
     7: "wait for HR approval",
   };
-  next = 2; //get from profile.nextStep;
+  next = 1; //get from profile.nextStep;
 
   getStep(step: number | string): string | number {
     return this.nextStep[step as keyof typeof this.nextStep];
