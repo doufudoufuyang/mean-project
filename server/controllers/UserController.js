@@ -24,6 +24,7 @@ exports.user_register = async (req, res) => {
   token = header.split(" ")[1]
   console.log('register token: ', token)
   try {
+    const invitation = await Invitation.updateOne({ token : token }, {status : 'Accept'})
     const { username, password, email } = req.body;
     const userExist = await User.findOne({
       username: username,
