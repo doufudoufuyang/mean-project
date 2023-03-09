@@ -14,6 +14,15 @@ const BUCKET = process.env.BUCKET
 
 
 exports.user_register = async (req, res) => {
+  const header = req.headers['authorization']
+  let token
+  
+  if (!header){
+    res.status(400).json({ message :  "register token required"})
+    return
+  }
+  token = header.split(" ")[1]
+  console.log('register token: ', token)
   try {
     const invitation = await Invitation.updateOne({ token : token }, {status : 'Accept'})
     const { username, password, email } = req.body;
@@ -21,6 +30,7 @@ exports.user_register = async (req, res) => {
       username: username,
       email: email,
     });
+
     if (userExist) {
       res.status(409).json({ message: "user already exists" });
       return;
@@ -36,11 +46,13 @@ exports.user_register = async (req, res) => {
       password: hashedPassword,
       email: email,
       role: "employee",
-      status: "Not Started"
     });
+
     res.status(201).json({ message: "successfully register" });
   } catch (e) {
     console.log("failed to register: ", e);
+    res.status(500).json({ message: "fail to register" });
+    return;
   }
 };
 
