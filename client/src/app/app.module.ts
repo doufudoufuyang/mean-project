@@ -57,6 +57,7 @@ import { HrApplicationDetailComponent } from './pages/hr-application-detail/hr-a
 import { profileReducer } from './store/profile/profile.reducer';
 import { hrReducer } from './store/hr/hr.reducer';
 import { MatTabsModule } from '@angular/material/tabs';
+import { EmployeeProfileDialogComponent } from './components/employee-profile-dialog/employee-profile-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,6 +84,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     HrCommentDialogComponent,
     ConnectFormDirective,
     HrApplicationDetailComponent,
+    EmployeeProfileDialogComponent,
   ],
   imports: [
     MatTabsModule,
