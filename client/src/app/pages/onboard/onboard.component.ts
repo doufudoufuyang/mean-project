@@ -238,13 +238,16 @@ export class OnboardComponent implements OnInit {
       },
       "optReceipt": this.opt
     }
+    const token = window.localStorage.getItem('JWT_TOKEN');
+    console.log(token)
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'authorization': `Bearer ${token}`,
+    });
     fetch('http://localhost:3000/user/profile', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g'
-      },
-      body: JSON.stringify({ "username": this.username, "profileData": profile })
+      headers,
+      body: JSON.stringify({"profileData": profile })
     })
       .then(response => {
         if (!response.ok) {
