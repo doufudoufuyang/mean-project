@@ -10,6 +10,7 @@ router.post('/login', UserController.user_login)
 router.post('/sendInvitation', UserController.sent_register_invitation)
 //onboarding upload
 router.post('/profile', authorizationJWT, UserController.profile_upload);
+router.post('/emergencyContact_update', authorizationJWT, UserController.emergencyContacts_upload);
 // router.post('/profile',UserController.profile_upload);
 router.put('/employeeVisa', UserController.employee_updateVisa)
 // Housing

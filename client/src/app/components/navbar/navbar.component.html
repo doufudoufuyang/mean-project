@@ -1,13 +1,19 @@
 <mat-toolbar color="primary" *ngIf="isHr" class="nav-bar">
-    <a mat-button [routerLink]="['/hrHome']">Home</a>
-    <a mat-button [routerLink]="['/hrEmployeeProfiles']">Employee Profiles</a>
-    <a mat-button [routerLink]="['/hrHiringManagement']">Hiring Management</a>
-    <a mat-button [routerLink]="['/hrVisaManagement']">Visa Management</a>
-    <a mat-button [routerLink]="['/hrHousingManagement']">House Management</a>
+    <div class="button-container">
+        <span>HR</span>
+        <a mat-button [routerLink]="['/hrHome']">Home</a>
+        <a mat-button [routerLink]="['/hrEmployeeProfiles']">Employee Profiles</a>
+        <a mat-button [routerLink]="['/hrHiringManagement']">Hiring Management</a>
+        <a mat-button [routerLink]="['/hrVisaManagement']">Visa Management</a>
+        <a mat-button [routerLink]="['/hrHousingManagement']">House Management</a>
+        <a mat-button (click)="logout()">Logout</a>
+    </div>
 </mat-toolbar>
 
 <mat-toolbar color="primary" *ngIf="!isHr" class="nav-bar">
-    <a mat-button [routerLink]="['/employeeInfo']">Profile</a>
-    <a mat-button [routerLink]="['/employeeVisa']">Visa</a>
-    <a mat-button [routerLink]="['/employeeHousing']">House</a>
+    <span>Employee</span>
+        <a mat-button [routerLink]="['/employeeInfo']">Profile</a>
+        <a mat-button [routerLink]="['/employeeVisa']">Visa</a>
+        <a mat-button [routerLink]="['/employeeHousing']">House</a>
+        <a mat-button (click)="logout()">Logout</a>
 </mat-toolbar>

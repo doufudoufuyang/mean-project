@@ -8,15 +8,30 @@
     padding: 20px;
     width: 80%;
     margin: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.personal-container2{
+    margin: auto;
 }
 .form{
         min-width: 150px;
-        max-width: 80%;
+        max-width: 70%;
         /* width: 100%; */
         margin: auto;
         display: flex;
-        flex-direction: column
+        flex-direction: column;
+        justify-content: center;
+}
+.form div{
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 .formField{
-    width: 200px;
+    width: 400px;
+    margin: 0 20px;
+    /* border: 1px saddlebrown solid; */
 }

@@ -261,7 +261,19 @@ exports.profile_upload = async (req, res) => {
     console.log("failed to update profile: ", e);
   }
 };
-
+exports.emergencyContacts_upload = async (req, res) => {
+  try {
+    const payload = req.payload;
+    const { profileData } = req.body;
+    const username = payload.username;
+    const employee = await User.findOne({ username: username });
+    // const profile = await Profile.findById(employee.profile);
+    await Profile.findByIdAndUpdate(employee.profile, profileData);
+    res.status(201).json({ message: "successfully update emergencyContacts" });
+  } catch (e) {
+    console.log("failed to update emergencyContacts: ", e);
+  }
+};
 //make nextStep+1, update optEAD, i983, i20 file name if any
 exports.employee_updateVisa = async (req, res) => {
   try {

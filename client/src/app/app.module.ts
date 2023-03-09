@@ -120,10 +120,10 @@ import { EmployeeProfileDialogComponent } from './components/employee-profile-di
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [
-    {
-      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'outline' },
-    },
+    // {
+    //   provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    //   useValue: { appearance: 'outline' },
+    // },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
   ],
   bootstrap: [AppComponent],
