@@ -70,11 +70,12 @@ export class EmployeePersonalInfoComponent {
   save(): void {
     console.log(this.personalInfoForm.getRawValue() )
     this.personalInfoForm.disable();
+    const token:string = window.localStorage.getItem("JWT_TOKEN")? window.localStorage.getItem("JWT_TOKEN"):"t"
     fetch('http://localhost:3000/user/profile', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g'
+        'Authorization': token
       },
       body: JSON.stringify({ "username": this.username, "profileData":this.personalInfoForm.getRawValue()})
     })

@@ -10,6 +10,7 @@ const authenticateJWT = (req, res, next) => {
                 return res.sendStatus(401)
             }
             req.payload = decode
+            console.log(req.payload)
             next()
         })
     } else {
@@ -24,7 +25,9 @@ const authorizationJWT = (req, res, next) => {
             // if (error || decode.role !== 'admin') {
             //     return res.sendStatus(401)
             // }
+
             req.payload = decode
+            console.log(req.payload)
             next()
         })
     } else {

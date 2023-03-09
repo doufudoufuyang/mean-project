@@ -33,7 +33,6 @@ export class RegisterComponent {
 
   register(){
     console.log(this.registerForm.getRawValue())
-
     const requestBody = this.registerForm.getRawValue()
     let token = '' 
     if (this.registerToken){
