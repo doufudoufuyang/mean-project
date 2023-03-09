@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" *ngIf="isHr">
+<mat-toolbar color="primary" *ngIf="isHr" class="nav-bar">
     <span>HR</span>
      <a mat-button [routerLink]="['/hrHome']">Home</a>
      <a mat-button [routerLink]="['/hrEmployeeProfiles']">Employee Profiles</a>
@@ -7,7 +7,7 @@
      <a mat-button [routerLink]="['/hrHousingManagement']">House Management</a>
 </mat-toolbar>
 
-<mat-toolbar color="primary" *ngIf="!isHr">
+<mat-toolbar color="primary" *ngIf="!isHr" class="nav-bar">
     <span>Employee</span>
      <a mat-button [routerLink]="['/employeeInfo']">Profile</a>
      <a mat-button [routerLink]="['/employeeVisa']">Visa</a>
