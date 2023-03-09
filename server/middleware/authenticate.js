@@ -25,6 +25,7 @@ const authenticateJWT = (req, res, next) => {
 
 const authorizationJWT = (req, res, next) => {
     // const token = req.headers['authorization'].split(' ')[1]
+    console.log(`req.headers['authorization']=`, req.headers['authorization'])
     const token = req.headers['authorization'].split(' ')[1]
     console.log("token:"+token)
     if (token) {

@@ -247,7 +247,7 @@ export class OnboardComponent implements OnInit {
     fetch('http://localhost:3000/user/profile', {
       method: 'POST',
       headers,
-      body: JSON.stringify({"profileData": profile })
+      body: JSON.stringify({ "profileData": profile })
     })
       .then(response => {
         if (!response.ok) {
