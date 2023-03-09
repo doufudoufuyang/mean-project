@@ -14,6 +14,6 @@ export class NavbarComponent {
 
   ngOnInit(){
     const tmp = localStorage.getItem('isHr')
-    this.isHr = Boolean(tmp) ? true : false
+    this.isHr = tmp === 'true' ? true : false
   }
 }
