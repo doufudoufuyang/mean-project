@@ -18,6 +18,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatTableModule} from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -44,14 +48,13 @@ import { CommentDialogComponent } from './components/comment-dialog/comment-dial
 import { houseReducer } from './store/house/house.reducer';
 import { HouseDialogComponent } from './components/house-dialog/house-dialog.component';
 import { employeeReducer } from './store/employee/employee.reducer';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HrHouseDetailComponent } from './pages/hr-house-detail/hr-house-detail.component';
 import { HrReportComponent } from './pages/hr-report/hr-report.component';
 import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comment-dialog.component';
 import { HrApplicationReviewComponent } from './pages/hr-application-review/hr-application-review.component';
 import { HrApplicationDetailComponent } from './pages/hr-application-detail/hr-application-detail.component';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { profileReducer } from './store/profile/profile.reducer';
+import { hrReducer } from './store/hr/hr.reducer';
 
 @NgModule({
   declarations: [
@@ -108,8 +111,11 @@ import { profileReducer } from './store/profile/profile.reducer';
       houses: houseReducer,
       profiles: profileReducer,
       employee: employeeReducer,
+      hr: hrReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    MatTableModule,
+    MatToolbarModule
   ],
   providers: [
     {

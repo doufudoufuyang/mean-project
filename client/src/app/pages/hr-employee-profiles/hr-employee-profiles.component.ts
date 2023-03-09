@@ -21,38 +21,7 @@ export class HrEmployeeProfilesComponent {
   searchForm: FormGroup = this.formBuilder.group({
     name: ['', Validators.required],
   });
-  profiles: any[] = [
-    {
-      step: 0,
-      email: '',
-      firstName: 'Aaron',
-      lastName: 'Wang',
-      // address: {city:'NY'},
-      cellPhoneNumber: '123456789',
-      workPhoneNumber: '1234',
-      // car: 'Toyota',
-      // email: 'aaronub2008@gmail.com',
-      SSN: '123456',
-      dateOfBirth: '01/01/2022',
-      reference: [],
-      emergencyContacts: [],
-    },
-    {
-      step: 0,
-      email: '',
-      firstName: 'Aaron',
-      lastName: 'Wang',
-      // address: {city:'NY'},
-      cellPhoneNumber: '123456789',
-      workPhoneNumber: '1234',
-      // car: 'Toyota',
-      // email: 'aaronub2008@gmail.com',
-      SSN: '123456',
-      dateOfBirth: '01/01/2022',
-      reference: [],
-      emergencyContacts: [],
-    },
-  ];
+  profiles: any[] = []
 
   ngOnInit() {
     fetch(`http://localhost:3000/hr/profiles`, {

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { EmployeeAction } from 'src/app/store/employee/employee.action';
+import { HrAction } from 'src/app/store/hr/hr.action';
 
 @Component({
   selector: 'app-login',
@@ -33,9 +34,10 @@ export class LoginComponent {
         next: (data: any) => {
           console.log('data=', data)
           localStorage.setItem('JWT_TOKEN', data['jwt'])
-          const employeeInfo = data.user
           if (data.user.role === 'employee') {
+            const employeeInfo = data.user
             this.store.dispatch(EmployeeAction.setEmployeeInfo({ employeeInfo }))
+            localStorage.setItem('isHr', String(false))
             if (data.user.status !== 'Approved') {
               this.router.navigate(['onboard'])
               return
@@ -44,6 +46,8 @@ export class LoginComponent {
               return
             }
           } else {
+            const HrInfo = data.user
+            localStorage.setItem('isHr', String(true))
             this.router.navigate(['hrHome'])
             return
           }

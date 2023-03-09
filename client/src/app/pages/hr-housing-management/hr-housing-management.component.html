@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="layout" *ngFor="let house of houses$ | async">
     <mat-card (click)="onCardClick(house._id)">
         <mat-grid-list cols="3" rowHeight="1.5:1">

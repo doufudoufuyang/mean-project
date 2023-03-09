@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <form [formGroup]="personalInfoForm" [connectForm]="personalInfoForm$" class="form">
     <P>Name</P>
     <div>
@@ -134,7 +135,5 @@
 <button *ngIf="!editable; else elseBlock" mat-raised-button color="primary" (click)="edit()">Edit</button>
 <ng-template #elseBlock>
     <button mat-raised-button color="primary" (click)="save()">Save</button>
-
     <button  mat-raised-button color="primary" (click)="cancel()">Cancel</button>
-
 </ng-template>
