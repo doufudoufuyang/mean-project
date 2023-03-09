@@ -18,7 +18,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { MatTableModule} from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -106,6 +105,7 @@ import { hrReducer } from './store/hr/hr.reducer';
     MatIconModule,
     MatPaginatorModule,
     MatTableModule,
+    MatToolbarModule,
     StoreModule.forRoot({
       reports: reportReducer,
       houses: houseReducer,
@@ -114,8 +114,6 @@ import { hrReducer } from './store/hr/hr.reducer';
       hr: hrReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    MatTableModule,
-    MatToolbarModule
   ],
   providers: [
     {
