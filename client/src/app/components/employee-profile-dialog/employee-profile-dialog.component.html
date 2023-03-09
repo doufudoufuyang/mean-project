@@ -28,14 +28,14 @@
     </div>
 
     <div class="panel-box">
-        <p class="font-bold">Employment:</p>
+        <p class="font-bold">Employment</p>
         <p><span>Visa: </span><span>{{profile.title}}</span></p>
         <p><span>Start Date: </span><span>{{profile.startDate}}</span></p>
         <p><span>End Date: </span><span>{{profile.endDate}}</span></p>
     </div>
 
     <div class="panel-box">
-        <p class="font-bold">Emergency Contact</p>
+        <p class="font-bold">Emergency Contacts</p>
         <div *ngFor="let contact of profile.emergencyContacts">
             <p><span>First Name: </span><span>{{contact.firstName}}</span></p>
             <p><span>Last Name: </span><span>{{contact.lastName}}</span></p>
