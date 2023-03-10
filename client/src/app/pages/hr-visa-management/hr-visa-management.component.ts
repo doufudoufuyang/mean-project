@@ -4,7 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Employee } from 'src/app/interfaces/employee';
 import { FileService } from 'src/app/services/file.service';
 import { Observable, catchError, of } from 'rxjs';
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { RejectDialogComponent } from 'src/app/components/reject-dialog/reject-dialog.component';
 
 @Component({
@@ -43,6 +47,7 @@ export class HrVisaManagementComponent {
   allProfiles: any[] = [];
   fileList: any[] = [];
   allFileList: any[] = [];
+  visa = ["p.optReceipt","p.optEAD","p.i983","p.i20"]
   ngOnInit() {
     fetch(`http://localhost:3000/hr/inProgressVisas`, {
       method: 'GET',
@@ -68,27 +73,30 @@ export class HrVisaManagementComponent {
       .catch((error) => {
         console.error('Error:', error);
       });
-    // fetch(`http://localhost:3000/hr/visas`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     authorization:
-    //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g',
-    //   },
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //     if (!response.ok) {
-    //       throw new Error(`HTTP error! status: ${response.status}`);
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((res) => {
-    //     this.allProfiles = res.data;
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   });
+    fetch(`http://localhost:3000/hr/visas`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g',
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((res) => {
+        this.allProfiles = res.data;
+      })
+      .then((res) => {
+        this.getAllDocumnts();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
   sendNotification(name: string, email: string, nextstep: number) {
     console.log(email);
@@ -117,7 +125,7 @@ export class HrVisaManagementComponent {
         console.error('Error:', error);
       });
   }
-  approve(pid: string, next: number,i:number) {
+  approve(pid: string, next: number, i: number) {
     console.log(pid);
     fetch(`http://localhost:3000/hr/approve`, {
       method: 'POST',
@@ -137,7 +145,7 @@ export class HrVisaManagementComponent {
       })
       .then((res) => {
         console.log(res);
-        this.profiles[i].nextStep ++;
+        this.profiles[i].nextStep++;
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -182,32 +190,58 @@ export class HrVisaManagementComponent {
           return '';
       }
     });
-    // const response = this.fileService.fileListService();
-    // response.pipe(catchError((err) => of([{ err }]))).subscribe((file: any) => {
-    //   console.log('file=', file)
-    //   const userFile = [...file].filter((elem: any) => {
-    //     if (dlist.includes(elem)) {
-    //       console.log('inside filter true');
-    //       return true;
-    //     }
-    //     console.log('inside filter false');
-    //     return false;
-    //   });
-    //   const userFile = new Array();
-    //   this.fileList = userFile;
-    //   console.log(dlist);
-    // });
   }
-  openDialog(pid:string,nextStep:number,i:number): void {
+  getAllDocumnts() {
+    this.allFileList =  this.profiles.map((p) => {
+      let list = new Array();
+      if(p.nextStep<2)
+      {
+        list.push(p.optReceipt);
+      }
+      if(p.nextStep<4)
+      {
+        // if(p.optEAD)
+        list.push(p.optEAD);
+      }
+      if(p.nextStep<6)
+      {
+        // if(p.i983)
+        list.push(p.i983);
+      }
+      if(p.nextStep<8)
+      {
+        // if(p.i20)
+        list.push(p.i20);
+      }
+      return [...list];
+    });
+    console.log(this.allFileList)
+  }
+  // const response = this.fileService.fileListService();
+  // response.pipe(catchError((err) => of([{ err }]))).subscribe((file: any) => {
+  //   console.log('file=', file)
+  //   const userFile = [...file].filter((elem: any) => {
+  //     if (dlist.includes(elem)) {
+  //       console.log('inside filter true');
+  //       return true;
+  //     }
+  //     console.log('inside filter false');
+  //     return false;
+  //   });
+  //   const userFile = new Array();
+  //   this.fileList = userFile;
+  //   console.log(dlist);
+  // });
+
+  openDialog(pid: string, nextStep: number, i: number): void {
     const dialogRef = this.dialog.open(RejectDialogComponent, {
-      data: { pid: pid, nextStep: nextStep},
+      data: { pid: pid, nextStep: nextStep },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
-      if(result)
-      {
-        this.profiles[i].nextStep --;
+      if (result) {
+        this.profiles[i].nextStep--;
       }
       // alert(result)
     });
