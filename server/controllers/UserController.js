@@ -487,6 +487,7 @@ exports.put_report = async (req, res) => {
   }
 };
 
+
 // HR view all houses
 exports.get_houses = async (req, res) => {
   try {
