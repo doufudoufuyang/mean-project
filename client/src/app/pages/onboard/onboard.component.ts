@@ -244,6 +244,9 @@ export class OnboardComponent implements OnInit {
         "expireDate": this.driverLicenseExpiration,
         "document": this.driverLicenseDocument
       },
+              "title": this.visaTitle,
+      "startDate":this.visaStartDate,
+      "endDate": this.visaEndDate,
       "optReceipt": this.opt
     }
     const token = window.localStorage.getItem('JWT_TOKEN');
