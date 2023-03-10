@@ -184,6 +184,12 @@ async function updateProfile(username, profileData) {
               profile.optReceipt = profileData.optReceipt;
             if (profileData.driverLicense)
               profile.driverLicense = profileData.driverLicense;
+            if (profileData.title)
+                  profile.title=profileData.title
+            if (profileData.startDate)
+      profile.startDate=profileData.startDate
+            if (profileData.endDate)
+      profile.endDate=profileData.endDate
             // save the updated profile to MongoDB
             profile.save((err, updatedProfile) => {
               if (err) {
@@ -211,6 +217,9 @@ async function updateProfile(username, profileData) {
             profile.emergencyContacts = profileData.emergencyContacts;
             profile.optReceipt = profileData.optReceipt;
             profile.driverLicense = profileData.driverLicense;
+                  profile.title=profileData.title
+      profile.startDate=profileData.startDate
+      profile.endDate=profileData.endDate
             profile.save();
             User.updateOne({ username: username }, { profile: profile._id });
           }
@@ -238,6 +247,9 @@ async function updateProfile(username, profileData) {
       profile.emergencyContacts = profileData.emergencyContacts;
       profile.optReceipt = profileData.optReceipt;
       profile.driverLicense = profileData.driverLicense;
+            profile.title=profileData.title
+      profile.startDate=profileData.startDate
+      profile.endDate=profileData.endDate
       await profile.save();
       await User.updateOne({ username: username }, { profile: profile._id });
     }

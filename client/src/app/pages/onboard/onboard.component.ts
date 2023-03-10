@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -49,7 +49,7 @@ export class OnboardComponent implements OnInit {
   referencePhone!: string;
   referenceEmail!: string;
   referenceRelationship!: string;
-  emergencyContacts: any[] = [        {
+  emergencyContacts: any[] = [{
     "firstName": "",
     "lastName": "",
     "middleName": "",
@@ -66,37 +66,38 @@ export class OnboardComponent implements OnInit {
   name: string = ''
   constructor(private fileService: FileService, private store: Store, private http: HttpClient, private router: Router) { }
 
-
   ngOnInit() {
+    const token = window.localStorage.getItem('JWT_TOKEN');
+    console.log(token)
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'authorization': `Bearer ${token}`,
+    });
+    fetch('http://localhost:3000/user/getEmployeeInfo', {
+      method: 'GET',
+      headers
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('data =', data)
+        const employeeInfo = data.user
+        this.store.dispatch(EmployeeAction.setEmployeeInfo({ employeeInfo }))
+      })
 
-    // this.http
-    //   .get('https://jsonplaceholder.typicode.com/users')
-    //   .subscribe((users: any) => {
-    //     // Retrieve data and map it to user slice of state
-    //     this.store.dispatch(UserAction.getUsers({ users }));
-    //   });
-
-    // console.log('users$=', this.users$);
-    // this.users$
-    //   .pipe(catchError((err) => of([{ err }])))
-    //   .subscribe((users: any) => {
-    //     if (users.length !== 0) {
-    //       this.data = users[0]
-    //       this.name = users[0].name
-    //       console.log('users =', users)
-    //       console.log('this.name =', this.name)
-    //     }
-    //   });
-
+    // setTimeout(() => {
     this.users$
       .pipe(catchError((err) => of([{ err }])))
       .subscribe((user: any) => {
         if (user) {
-          console.log('Inside this.users$')
           this.profile = user.profile
           this.status = user.status
           this.username = user.username
-          this.email=user.email
+          this.email = user.email
           if (user.profile) {
             this.userOpt = user.profile.optReceipt;
             this.userPic = user.profile.pic;
@@ -106,10 +107,13 @@ export class OnboardComponent implements OnInit {
           }
         }
       });
+    // }, 2000);
+
 
     //If approved, navigate to XXX
     this.status === 'Approved' && this.router.navigate(['/'])
   }
+
 
   userOpt: string = '';
   userPic: string = '';
@@ -184,7 +188,7 @@ export class OnboardComponent implements OnInit {
       .pipe(catchError((err) => of([{ err }])))
       .subscribe((fileName: any) => {
         console.log('fileName =', fileName[0])
-        window.alert('File unloaded')
+        window.alert('File uploaded')
       })
   }
   removeEmergencyContact(index: number) {
@@ -244,6 +248,9 @@ export class OnboardComponent implements OnInit {
         "expireDate": this.driverLicenseExpiration,
         "document": this.driverLicenseDocument
       },
+              "title": this.visaTitle,
+      "startDate":this.visaStartDate,
+      "endDate": this.visaEndDate,
       "optReceipt": this.opt
     }
     const token = window.localStorage.getItem('JWT_TOKEN');
@@ -265,7 +272,17 @@ export class OnboardComponent implements OnInit {
       })
       .then(data => {
         console.log(data);
-        this.router.navigate(['employeeVisa'])
+        // this.router.navigate(['employeeVisa'])
+        window.location.reload()
+
+        // this.http.get('http://localhost:4200/user/getEmployeeInfo')
+        //   .subscribe((user: any) => {
+        //     console.log('user =', user)
+        //     this.store.dispatch(EmployeeAction.setEmployeeInfo(user))
+        //     this.router.navigate(['onboard'])
+        //   })
+
+
       })
       .catch(error => {
         console.error('Error:', error);
