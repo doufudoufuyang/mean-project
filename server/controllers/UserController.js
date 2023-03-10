@@ -153,8 +153,6 @@ async function updateProfile(username, profileData) {
   try {
     console.log(username);
     const user = await User.findOne({ username: username });
-    user.status = "Pending";
-    await user.save();
     if (user.profile) {
       Profile.findById(user.profile, (err, profile) => {
         if (err) {
@@ -219,6 +217,8 @@ async function updateProfile(username, profileData) {
         }
       });
     } else {
+      user.status = "Pending";
+      await user.save();
       var profile = new Profile();
       profile.step = profileData.step;
       profile.nextStep = profileData.nextStep;
@@ -602,3 +602,28 @@ exports.get_fileList = async (req, res) => {
   let x = r.Contents.map((item) => item.Key);
   res.send(x);
 };
+
+
+exports.get_updated_employee_info = async (req, res) => {
+  const header = req.headers["authorization"];
+  let token;
+
+  if (!header) {
+    res.status(400).json({ message: "token required" });
+    return;
+  }
+  token = header.split(" ")[1];
+  console.log("register token: ", token);
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('payload: ', payload)
+    const user = await User.findOne({
+      username: payload.username,
+      email: payload.email
+    }).populate('profile')
+    res.status(200).json({ user : user})
+    
+  } catch (e) {
+    throw new Error('fail fetch updated info')
+  }
+}
