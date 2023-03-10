@@ -32,7 +32,7 @@ export class HrVisaManagementComponent {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     public dialog: MatDialog
-  ) {}
+  ) { }
   getStep(step: number | string): string | number {
     // console.log(step);
     return this.nextStep[step as keyof typeof this.nextStep];
@@ -47,7 +47,7 @@ export class HrVisaManagementComponent {
   allProfiles: any[] = [];
   fileList: any[] = [];
   allFileList: any[] = [];
-  visa = ["p.optReceipt","p.optEAD","p.i983","p.i20"]
+  visa = ["p.optReceipt", "p.optEAD", "p.i983", "p.i20"]
   ngOnInit() {
     fetch(`http://localhost:3000/hr/inProgressVisas`, {
       method: 'GET',
@@ -128,6 +128,7 @@ export class HrVisaManagementComponent {
   }
   approve(pid: string, next: number, i: number) {
     console.log(pid);
+    console.log('next =', next)
     fetch(`http://localhost:3000/hr/approve`, {
       method: 'POST',
       headers: {
@@ -193,24 +194,20 @@ export class HrVisaManagementComponent {
     });
   }
   getAllDocumnts() {
-    this.allFileList =  this.profiles.map((p) => {
+    this.allFileList = this.profiles.map((p) => {
       let list = new Array();
-      if(p.nextStep<2)
-      {
+      if (p.nextStep < 2) {
         list.push(p.optReceipt);
       }
-      if(p.nextStep<4)
-      {
+      if (p.nextStep < 4) {
         // if(p.optEAD)
         list.push(p.optEAD);
       }
-      if(p.nextStep<6)
-      {
+      if (p.nextStep < 6) {
         // if(p.i983)
         list.push(p.i983);
       }
-      if(p.nextStep<8)
-      {
+      if (p.nextStep < 8) {
         // if(p.i20)
         list.push(p.i20);
       }
