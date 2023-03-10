@@ -209,6 +209,9 @@ export class OnboardComponent implements OnInit {
   }
 
   submitForm(): void {
+      if (this.workAuthorization !== 'other') {
+      this.visaTitle = this.workAuthorization;
+    }
     const profile = {
       "firstName": this.firstName,
       "step": 2,
