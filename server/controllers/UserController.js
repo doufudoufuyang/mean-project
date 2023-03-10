@@ -335,7 +335,13 @@ exports.get_house = async (req, res) => {
     const employee = await User.findOne({ email: email });
     const profile = await Profile.findById(employee.profile);
     const house = await House.findById(profile.house)
-      .populate("residents")
+      .populate({
+        path: "residents",
+        populate: {
+          path: "profile",
+          select: ["firstName", "lastName", "cellPhoneNumber"],
+        },
+      })
       .populate("reports");
     if (!house)
       return res
@@ -343,11 +349,12 @@ exports.get_house = async (req, res) => {
         .json({ message: "House hasn't been assigned by HR" });
     const houseInfo = {
       address: house.address,
-      roommates: house.residents.filter((user) => user.email !== email),
+      roommates: house.residents.filter(async (user) => user.email !== email),
       reports: house.reports.filter((report) =>
         report.createdBy.equals(employee.id)
       ),
     };
+    console.log(houseInfo)
     res.status(200).json({ house: houseInfo });
   } catch (err) {
     console.log(err);
