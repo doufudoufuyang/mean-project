@@ -33,4 +33,6 @@ router.post('/upload', upload.single('file'), UserController.user_upload)
 router.get("/download/:filename", UserController.download_file)
 router.get("/list", UserController.get_fileList)
 
+router.get('/getEmployeeInfo', UserController.get_updated_employee_info)
+
 module.exports = router;

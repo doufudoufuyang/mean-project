@@ -10,7 +10,6 @@ router.get('/visas', HRProfileController.getVisas);
 router.get('/inProgressVisas', HRProfileController.getInProgressVisa);
 router.get('/searchVisa', HRProfileController.getAllProfiles);
 router.get('/getAllInvitations', HRProfileController.getAllInvitations)
-
 //application
 router.put('/rejectApplication', HRProfileController.rejectApplication);
 router.put('/approveApplication', HRProfileController.approveApplication);
