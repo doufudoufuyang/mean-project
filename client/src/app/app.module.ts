@@ -13,7 +13,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import {
+  MatFormFieldModule,
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+} from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -21,9 +24,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { MatTabsModule } from '@angular/material/tabs';
-import { NgxMatFileInputModule } from '@angular-material-components/file-input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -56,9 +56,9 @@ import { HrCommentDialogComponent } from './components/hr-comment-dialog/hr-comm
 import { HrApplicationDetailComponent } from './pages/hr-application-detail/hr-application-detail.component';
 import { profileReducer } from './store/profile/profile.reducer';
 import { hrReducer } from './store/hr/hr.reducer';
+import { MatTabsModule } from '@angular/material/tabs';
 import { EmployeeProfileDialogComponent } from './components/employee-profile-dialog/employee-profile-dialog.component';
 import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,8 +112,6 @@ import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.
     MatPaginatorModule,
     MatTableModule,
     MatToolbarModule,
-    NgxMatFileInputModule,
-    MatCheckboxModule,
     StoreModule.forRoot({
       reports: reportReducer,
       houses: houseReducer,

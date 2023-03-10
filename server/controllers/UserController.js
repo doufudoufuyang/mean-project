@@ -335,13 +335,7 @@ exports.get_house = async (req, res) => {
     const employee = await User.findOne({ email: email });
     const profile = await Profile.findById(employee.profile);
     const house = await House.findById(profile.house)
-      .populate({
-        path: "residents",
-        populate: {
-          path: "profile",
-          select: ["firstName", "lastName", "cellPhoneNumber"],
-        },
-      })
+      .populate("residents")
       .populate("reports");
     if (!house)
       return res
