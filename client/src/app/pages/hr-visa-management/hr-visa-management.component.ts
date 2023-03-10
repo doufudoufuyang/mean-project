@@ -245,4 +245,7 @@ export class HrVisaManagementComponent {
       // alert(result)
     });
   }
+  // search(type: string) {
+  //   this.profiles = 
+  // }
 }

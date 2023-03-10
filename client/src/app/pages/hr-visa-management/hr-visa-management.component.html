@@ -1,5 +1,15 @@
 <app-navbar></app-navbar>
 <div class="container">
+    <!-- <form class="form" [formGroup]="searchForm">
+        <mat-form-field class="formField" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+            <mat-hint>name</mat-hint>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="search('firstName')">search FirstName</button>
+        <button mat-raised-button color="primary" (click)="search('lastName')">search LastName</button>
+        <button mat-raised-button color="primary" (click)="search('preferredName')">search PreferredName</button>
+    </form> -->
     <mat-tab-group>
         <mat-tab label="In Progress Visa">
             <div *ngIf="profiles.length; else elseBlock">

@@ -2,7 +2,9 @@
 
 html,
 body {
-  height: 100vh;
+  max-height: 100vh;
+  overflow-x: hidden;
+  /* height: fit-content; */
   /* background-color: rgb(241, 241, 241); */
 }
 

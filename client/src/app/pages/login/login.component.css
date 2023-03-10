@@ -65,7 +65,6 @@ button {
     z-index: -1;
   position: absolute;
   top: 50px;
-
   width: 300px;
   height: 300px;
   clip-path: circle(50% at 50% 50%);
