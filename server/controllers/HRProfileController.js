@@ -147,7 +147,7 @@ exports.approve = async (req, res) => {
     const { pid, nextStep } = req.body;
     console.log(pid);
     if (pid) {
-      await Profile.findByIdAndUpdate({ _id: pid }, { nextStep: nextStep+1});
+      await Profile.findByIdAndUpdate({ _id: pid }, { nextStep: nextStep});
       // profile.nextStep = profile.nextStep + 1;
       // await profile.save();
       return res.status(201).json({ message: "approve successfully" });
