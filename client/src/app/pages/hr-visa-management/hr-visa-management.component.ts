@@ -101,6 +101,7 @@ export class HrVisaManagementComponent {
   sendNotification(name: string, email: string, nextstep: number) {
     console.log(email);
     console.log(nextstep);
+    
     fetch(`http://localhost:3000/hr/sendNotification`, {
       method: 'POST',
       headers: {

@@ -12,6 +12,7 @@ import { Observable, catchError, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { FileService } from 'src/app/services/file.service';
 import {
+  selectContacts,
   selectEmployee,
   selectProfile,
 } from 'src/app/store/employee/employee.selector';
@@ -30,10 +31,13 @@ export class EmployeePersonalInfoComponent {
     private formBuilder: FormBuilder,
     private http: HttpClient
   ) {}
+
   username: string = 'aaron';
   personalInfoForm$: Observable<any> = this.store.select(selectProfile);
+  ec$: Observable<any> = this.store.select(selectContacts);
   editable: boolean = false;
   editable2: boolean = false;
+  documentsList = [];
   // personalInfoForm: FormGroup = this.formBuilder.group({
   //   firstName: [{ value: '', disabled: true }],
   //   lastName: [{ value: '', disabled: true }, ],
@@ -64,7 +68,7 @@ export class EmployeePersonalInfoComponent {
     middleName: [{ value: '', disabled: true }],
     preferredName: [{ value: '', disabled: true }],
     SSN: [{ value: '', disabled: true }, Validators.required],
-    gender:[{ value: '', disabled: true }],
+    gender: [{ value: '', disabled: true }],
     dateOfBirth: [{ value: '', disabled: true }, Validators.required],
     address: this.formBuilder.group({
       building: [{ value: '', disabled: true }, Validators.required],
@@ -85,6 +89,7 @@ export class EmployeePersonalInfoComponent {
     // eemail: [{ value: '', disabled: true }, Validators.required],
     // relationship: [{ value: '', disabled: true }, Validators.required],
   });
+  ecform = []
   emergencyForm = this.formBuilder.group({
     emergencyContacts: this.formBuilder.array([
       this.formBuilder.group({
@@ -97,8 +102,19 @@ export class EmployeePersonalInfoComponent {
       }),
     ]),
   });
-  init() {
+  ngOnInit() {
     this.personalInfoForm.disable();
+    // this.personalInfoForm$
+    //   .pipe(catchError((err) => of([{ err }])))
+    //   .subscribe((profile: any) => {
+    //     if (user) {
+    //       console.log('inside this.users$');
+    //       this.username = user.username;
+    //       if (user.profile) {
+    //         this.ecform = user.profile.emergencyContacts;
+    //       }
+    //     }
+    //   });
   }
   initAddress() {
     return this.formBuilder.group({
@@ -109,22 +125,25 @@ export class EmployeePersonalInfoComponent {
       email: [{ value: '', disabled: true }, Validators.required],
       relationship: [{ value: '', disabled: true }, Validators.required],
     });
-}
-  ngOnInit() {}
+  }
+
   getControls() {
     return (this.emergencyForm.get('emergencyContacts') as FormArray).controls;
   }
-  getLength(){
-    return (this.emergencyForm.get('emergencyContacts') as FormArray).length>1;
+  getLength() {
+    return (
+      (this.emergencyForm.get('emergencyContacts') as FormArray).length > 1
+    );
   }
   addAddress() {
     const control = <FormArray>this.emergencyForm.get('emergencyContacts');
     control.push(this.initAddress());
-}
-removeAddress(i: number) {
+    this.emergencyForm.enable();
+  }
+  removeAddress(i: number) {
     const control = <FormArray>this.emergencyForm.get('emergencyContacts');
     control.removeAt(i);
-}
+  }
   edit() {
     this.editable = true;
     this.personalInfoForm.enable();

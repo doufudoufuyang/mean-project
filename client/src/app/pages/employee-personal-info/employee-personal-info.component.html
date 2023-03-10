@@ -141,7 +141,7 @@
     <br />
     <div class="personal-container">
         <h1>Emergency Contacts</h1>
-        <form [formGroup]="emergencyForm">
+        <form [formGroup]="emergencyForm" [connectForm]="ec$| async">
             <!-- {{emergencyForm.get('emergencyContacts').length}} -->
             <div formArrayName="emergencyContacts">
                 <div *ngFor="let item of  getControls();let i=index">
