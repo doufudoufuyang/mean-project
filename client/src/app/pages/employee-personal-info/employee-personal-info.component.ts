@@ -37,7 +37,7 @@ export class EmployeePersonalInfoComponent {
   ec$: Observable<any> = this.store.select(selectContacts);
   editable: boolean = false;
   editable2: boolean = false;
-  documentsList = [];
+  documentsList: {} = {};
   // personalInfoForm: FormGroup = this.formBuilder.group({
   //   firstName: [{ value: '', disabled: true }],
   //   lastName: [{ value: '', disabled: true }, ],
@@ -89,32 +89,76 @@ export class EmployeePersonalInfoComponent {
     // eemail: [{ value: '', disabled: true }, Validators.required],
     // relationship: [{ value: '', disabled: true }, Validators.required],
   });
-  ecform = []
+  ecform = [];
   emergencyForm = this.formBuilder.group({
     emergencyContacts: this.formBuilder.array([
-      this.formBuilder.group({
-        firstName: [{ value: '', disabled: true }, Validators.required],
-        lastName: [{ value: '', disabled: true }, Validators.required],
-        middleName: [{ value: '', disabled: true }],
-        phone: [{ value: '', disabled: true }],
-        email: [{ value: '', disabled: true }, Validators.required],
-        relationship: [{ value: '', disabled: true }, Validators.required],
-      }),
+      // this.formBuilder.group({
+      //   firstName: [{ value: '', disabled: true }, Validators.required],
+      //   lastName: [{ value: '', disabled: true }, Validators.required],
+      //   middleName: [{ value: '', disabled: true }],
+      //   phone: [{ value: '', disabled: true }],
+      //   email: [{ value: '', disabled: true }, Validators.required],
+      //   relationship: [{ value: '', disabled: true }, Validators.required],
+      // }),
     ]),
   });
   ngOnInit() {
     this.personalInfoForm.disable();
-    // this.personalInfoForm$
-    //   .pipe(catchError((err) => of([{ err }])))
-    //   .subscribe((profile: any) => {
-    //     if (user) {
-    //       console.log('inside this.users$');
-    //       this.username = user.username;
-    //       if (user.profile) {
-    //         this.ecform = user.profile.emergencyContacts;
-    //       }
-    //     }
-    //   });
+    this.personalInfoForm$
+      .pipe(catchError((err) => of([{ err }])))
+      .subscribe((profile: any) => {
+        if (profile.pic)
+          this.documentsList = { ...this.documentsList, picture: profile.pic };
+        if (profile.driverLicense&&profile.driverLicense.document)
+          this.documentsList = {
+            ...this.documentsList,
+            driverLicense: profile.driverLicense.document,
+          };
+        if (profile.optReceipt)
+          this.documentsList = {
+            ...this.documentsList,
+            optReceipt: profile.optReceipt,
+          };
+        if (profile.optEAD)
+          this.documentsList = {
+            ...this.documentsList,
+            optEAD: profile.optEAD,
+          };
+        if (profile.i20)
+          this.documentsList = { ...this.documentsList, i20: profile.i20 };
+        if (profile.i983)
+          this.documentsList = { ...this.documentsList, i983: profile.i983 };
+          console.log(this.documentsList)
+      });
+    this.ec$.pipe(catchError((err) => of([{ err }]))).subscribe((ec: any) => {
+      if (ec) {
+        console.log(ec);
+        const control = <FormArray>this.emergencyForm.get('emergencyContacts');
+        ec.forEach((e: any) => {
+          control.push(
+            this.formBuilder.group({
+              firstName: [
+                { value: e.firstName, disabled: true },
+                Validators.required,
+              ],
+              lastName: [
+                { value: e.lastName, disabled: true },
+                Validators.required,
+              ],
+              middleName: [{ value: e.middleName, disabled: true }],
+              phone: [{ value: e.phone, disabled: true }],
+              email: [{ value: e.email, disabled: true }, Validators.required],
+              relationship: [
+                { value: e.relationship, disabled: true },
+                Validators.required,
+              ],
+            })
+          );
+        });
+      } else {
+        this.addAddress();
+      }
+    });
   }
   initAddress() {
     return this.formBuilder.group({
