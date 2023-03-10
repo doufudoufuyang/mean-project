@@ -40,7 +40,9 @@ export class HrEmployeeProfilesComponent {
         return response.json();
       })
       .then((res) => {
-        this.profiles = res.data;
+        this.profiles = res.data.sort((p:any,p2:any)=>{
+          return p.firstName.localeCompare(p2.firstName) 
+        });
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -63,7 +65,9 @@ export class HrEmployeeProfilesComponent {
         return response.json();
       })
       .then((data) => {
-        this.profiles = data.data;
+        this.profiles = data.data.sort((p:any,p2:any)=>{
+          return p.lastName.localeCompare(p2.lastName) 
+        });
       })
       .catch((error) => {
         console.error('Error:', error);

@@ -2,6 +2,15 @@
   /* background-color: rgb(241, 241, 241); */
   background-color: #e4e7ed;
 }
+img{
+  height: 100px;
+  width: 100px;
+  transition: 0.2s;
+  border-radius: 5px;
+}
+img:hover{
+  transform: scale(2);
+}
 .personal-container {
   background-color: white;
   box-shadow: 15px 1px 25px rgba(172, 169, 182, 0.244);

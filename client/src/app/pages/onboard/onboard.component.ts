@@ -19,7 +19,7 @@ export class OnboardComponent implements OnInit {
   lastName!: string;
   middleName!: string;
   preferredName!: string;
-  profilePicture: string = 'https://via.placeholder.com/150';
+  profilePicture: string="";
   apt!: string;
   street!: string;
   city!: string;
