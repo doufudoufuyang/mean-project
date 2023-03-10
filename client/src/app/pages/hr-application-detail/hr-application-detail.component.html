@@ -37,7 +37,8 @@
         <mat-list>
             <mat-list-item>{{ profile.address.street }}</mat-list-item>
             <mat-list-item *ngIf="profile.address.apt">{{ profile.address.apt }}</mat-list-item>
-            <mat-list-item>{{ profile.address.city + ", " + profile.address.state + " " + profile.address.zip }}</mat-list-item>
+            <mat-list-item>{{ profile.address.city + ", " + profile.address.state + " " + profile.address.zip
+                }}</mat-list-item>
         </mat-list>
 
         <div *ngIf="profile.car">
@@ -93,14 +94,17 @@
                 </mat-list-item>
             </mat-list>
         </div>
+        <div *ngIf="showDocuments">
+            <h3 class="font-bold">Documents</h3>
+            <ul>
+                <li *ngFor='let file of documentsList | keyvalue'>
+                    {{file.key}}:
+                    <a href='http://localhost:3000/user/download/{{file.value}}'>Download
+                        {{file.value}}</a>
 
-        <h3 class="font-bold">Documents</h3>
-        <ul>
-            <li *ngFor='let file of fileList'>
-                {{file}}
-                <a href='http://localhost:3000/user/download/{{file}}'>Download {{file}}</a>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
         <button mat-stroked-button color="primary" (click)='showFileList()'>Show File Summary</button>
     </div>
 
@@ -108,7 +112,8 @@
     <div class="flex-column" *ngIf="employee.status === 'Pending'">
         <mat-form-field color="warn">
             <mat-label>Feedback</mat-label>
-            <textarea matInput [(ngModel)]="feedback" placeholder="Please give feedback if you reject the application"></textarea>
+            <textarea matInput [(ngModel)]="feedback"
+                placeholder="Please give feedback if you reject the application"></textarea>
         </mat-form-field>
         <div class="button-flex-row">
             <button mat-raised-button color="warn" (click)="onReject()">Reject</button>
