@@ -46,7 +46,9 @@ export class EmployeeVisaStatusComponent implements OnInit {
           console.log('inside this.users$')
           this.username = user.username
           if (user.profile) {
-            this.next = user.profile.nextStep
+            this.next = user.profile.nextStep;
+            if( user.profile.documentFeedback)
+            this.fb = user.profile.documentFeedback;
           }
         }
       })
@@ -63,7 +65,7 @@ export class EmployeeVisaStatusComponent implements OnInit {
     7: "wait for HR approval",
   };
   next = 1; //get from profile.nextStep;
-
+  fb = "no feedback yet."
   getStep(step: number | string): string | number {
     return this.nextStep[step as keyof typeof this.nextStep];
   }

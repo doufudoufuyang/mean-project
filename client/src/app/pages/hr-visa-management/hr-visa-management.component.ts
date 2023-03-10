@@ -121,6 +121,7 @@ export class HrVisaManagementComponent {
       .then((res) => {
         // this.profiles = res.data;
         console.log(res);
+        alert("send notification successfully!")
       })
       .catch((error) => {
         console.error('Error:', error);

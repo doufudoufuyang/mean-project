@@ -2,7 +2,7 @@
 <h1>Employee Visa Management</h1>
 <h2>Upload Files</h2>
 <div [ngSwitch]='next'>
-
+    <p>last feedback: {{fb}}</p>
     <p>next:{{getStep(next)}}</p>
     <div *ngSwitchCase="2">
         <input type="file" (change)="onFilePicked($event)" name='optEAD'>

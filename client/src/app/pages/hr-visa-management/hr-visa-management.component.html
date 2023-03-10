@@ -17,7 +17,7 @@
                             <span>Work Authorization title:</span> <span>{{ p.title }}</span>
                             <span>Start At:</span> <span>{{ p.startDate }}</span>
                             <span>End At:</span> <span>{{ p.endDate }}</span>
-                            <span>Days Remaining:</span><span>{{ p.title }}</span>
+                            <!-- <span>Days Remaining:</span><span>{{ p.title }}</span> -->
                             <div *ngIf="fileList[i]">
                                 {{fileList[i]}}
                                 <a href='http://localhost:3000/user/download/{{fileList[i]}}'>Download
@@ -51,7 +51,7 @@
                             <span>Work Authorization title:</span> <span>{{ p.title }}</span>
                             <span>Start At:</span> <span>{{ p.startDate }}</span>
                             <span>End At:</span> <span>{{ p.endDate }}</span>
-                            <span>Days Remaining:</span><span>{{ p.title }}</span>
+                            <!-- <span>Days Remaining:</span><span>{{ p.title }}</span> -->
                             <div *ngFor="let f of allFileList[i];let j = index">
                                 <!-- {{arr}}{{j}} -->
                                 <p>{{visa[j]}}:

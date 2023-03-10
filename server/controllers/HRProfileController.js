@@ -131,8 +131,7 @@ exports.reject = async (req, res) => {
     console.log(feedback);
     await Profile.findByIdAndUpdate(
       { _id: pid },
-      { nextStep: nextstep},
-      { documentFeedback: feedback }
+      { nextStep: nextstep,documentFeedback: feedback},
     );
     // profile.nextStep = profile.nextStep - 1;
     // if (req.params.feedback) profile.feedback = req.params.feedback;
