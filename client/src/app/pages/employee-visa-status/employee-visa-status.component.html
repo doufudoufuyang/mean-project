@@ -5,15 +5,15 @@
     <p>next:{{getStep(next)}}</p>
     <div *ngSwitchCase="2">
         <input type="file" (change)="onFilePicked($event)" name='optEAD'>
-        <button (click)="onFileUpload()">Upload OPT EAD</button>
+        <button (click)="onFileUpload($event)">Upload OPT EAD</button>
     </div>
     <div *ngSwitchCase="4">
         <input type="file" (change)="onFilePicked($event)" name='i983'>
-        <button (click)="onFileUpload()">Upload i-983</button>
+        <button (click)="onFileUpload($event)">Upload i-983</button>
     </div>
     <div *ngSwitchCase="6">
         <input type="file" (change)="onFilePicked($event)" name='i20'>
-        <button (click)="onFileUpload()">Upload i-20</button>
+        <button (click)="onFileUpload($event)">Upload i-20</button>
     </div>
 </div>
 
