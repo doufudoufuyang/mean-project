@@ -2,6 +2,7 @@
 
 html,
 body {
+  height: -webkit-fill-available;
   max-height: 100vh;
   overflow-x: hidden;
   /* height: fit-content; */
@@ -11,6 +12,7 @@ body {
 body {
   position: absolute;
   top: 0;
+
   width: 100vw;
   left: 0;
   height: 100vh;
