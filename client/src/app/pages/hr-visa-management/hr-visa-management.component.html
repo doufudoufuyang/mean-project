@@ -52,12 +52,11 @@
                             <span>Start At:</span> <span>{{ p.startDate }}</span>
                             <span>End At:</span> <span>{{ p.endDate }}</span>
                             <span>Days Remaining:</span><span>{{ p.title }}</span>
-                            <div *ngFor="let f of allFileList[i];let j = index" class="grid-panel">
+                            <div *ngFor="let f of allFileList[i];let j = index">
                                 <!-- {{arr}}{{j}} -->
-                                <p>{{visa[j]}}: </p>
-                                <p>
-                                <a  *ngIf="f" href='http://localhost:3000/user/download/{{f}}'>Download
-                                    {{f}}</a>
+                                <p>{{visa[j]}}:
+                                    <a *ngIf="f" href='http://localhost:3000/user/download/{{f}}'>Download
+                                        {{f}}</a>
                                 </p>
                             </div>
                         </div>
