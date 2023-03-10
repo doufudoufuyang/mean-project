@@ -168,7 +168,7 @@ export class HrVisaManagementComponent {
   //     });
   // }
   getDocumnt() {
-    const dlist = this.profiles.map((p) => {
+    this.fileList = this.profiles.map((p) => {
       switch (p.nextStep) {
         case 1:
           return p.optReceipt;
@@ -182,19 +182,21 @@ export class HrVisaManagementComponent {
           return '';
       }
     });
-    const response = this.fileService.fileListService();
-    response.pipe(catchError((err) => of([{ err }]))).subscribe((file: any) => {
-      // console.log('file=', file)
-      const userFile = [...file].filter((elem: any) => {
-        if (dlist.includes(elem)) {
-          console.log('inside filter true');
-          return true;
-        }
-        console.log('inside filter false');
-        return false;
-      });
-      this.fileList = userFile;
-    });
+    // const response = this.fileService.fileListService();
+    // response.pipe(catchError((err) => of([{ err }]))).subscribe((file: any) => {
+    //   console.log('file=', file)
+    //   const userFile = [...file].filter((elem: any) => {
+    //     if (dlist.includes(elem)) {
+    //       console.log('inside filter true');
+    //       return true;
+    //     }
+    //     console.log('inside filter false');
+    //     return false;
+    //   });
+    //   const userFile = new Array();
+    //   this.fileList = userFile;
+    //   console.log(dlist);
+    // });
   }
   openDialog(pid:string,nextStep:number,i:number): void {
     const dialogRef = this.dialog.open(RejectDialogComponent, {

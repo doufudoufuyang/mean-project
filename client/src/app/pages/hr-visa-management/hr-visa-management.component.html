@@ -17,10 +17,12 @@
                         <span>Start At:</span> <span>{{ p.start }}</span>
                         <span>End At:</span> <span>{{ p.end }}</span>
                         <span>Days Remaining:</span><span>{{ p.title }}</span>
+                        <div *ngIf="fileList[i]">
                         {{fileList[i]}}
                         <a href='http://localhost:3000/user/download/{{fileList[i]}}'>Download {{fileList[i]}}</a>
+                        </div>
                         <div *ngIf="isStep(p.nextStep); else sendBlock">
-                            {{p._id}}
+                      
                             <button (click)="approve(p._id,p.nextStep,i)">approve</button>
                             <button (click)="openDialog(p._id,p.nextStep,i)">reject</button>
                         </div> 
@@ -49,9 +51,11 @@
                         <span>Start At:</span> <span>{{ p.start }}</span>
                         <span>End At:</span> <span>{{ p.end }}</span>
                         <span>Days Remaining:</span><span>{{ p.title }}</span>
+                        <div *ngIf="fileList[i]!==''">
                         {{fileList[i]}}
-                        <a href='http://localhost:3000/user/download/{{fileList[i]}}'>Download {{fileList[i]}}</a>
-                    </div>
+                        
+                        <a  href='http://localhost:3000/user/download/{{fileList[i]}}'>Download {{fileList[i]}}</a>
+                    </div></div>
                 </mat-expansion-panel>
             </mat-accordion>
         </div>
