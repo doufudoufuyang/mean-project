@@ -50,12 +50,12 @@ export class OnboardComponent implements OnInit {
   referenceEmail!: string;
   referenceRelationship!: string;
   emergencyContacts: any[] = [{
-    firstName: "",
-    lastName: "",
-    middleName: "",
-    phone: "",
-    email: "",
-    relationship: ""
+    "firstName": "",
+    "lastName": "",
+    "middleName": "",
+    "phone": "",
+    "email": "",
+    "relationship": ""
   }];
   documents: any[] = [];
   opt!: string
@@ -99,35 +99,6 @@ export class OnboardComponent implements OnInit {
           this.username = user.username
           this.email = user.email
           if (user.profile) {
-            console.log(user.profile)
-            this.firstName = user.profile.firstName;
-            this.lastName = user.profile.lastName;
-            this.middleName = user.profile.middleName;
-            this.preferredName = user.profile.preferredName;
-            this.profilePicture = user.profile.pic;
-            this.apt = user.profile.address.apt;
-            this.street = user.profile.address.street;
-            this.city = user.profile.address.city;
-            this.state = user.profile.address.state;
-            this.zip = user.profile.address.zip;
-            this.cellPhone = user.profile.cellPhoneNumber;
-            this.workPhone = user.profile.workPhoneNumber;
-            this.carMake = user.profile.car.make;
-            this.carModel = user.profile.car.model;
-            this.carColor = user.profile.car.color;
-            this.ssn = user.profile.SSN;
-            this.dateOfBirth = user.profile.dateOfBirth;
-            this.gender = user.profile.gender;
-            this.citizenship = user.profile.citizenship;
-            this.workAuthorization = user.profile.workAuthorization;
-            
-            this.referenceFirstName = user.profile.reference.firstName;
-            this.referenceLastName = user.profile.reference.lastName;
-            this.referenceMiddleName = user.profile.reference.middleName;
-            this.referencePhone = user.profile.reference.phone;
-            this.referenceEmail = user.profile.reference.email;
-            this.referenceRelationship = user.profile.reference.referenceRelationship;
-
             this.userOpt = user.profile.optReceipt;
             this.userPic = user.profile.pic;
             if (user.profile.driverLicense) {
@@ -149,34 +120,24 @@ export class OnboardComponent implements OnInit {
   userDriverlicense: string = '';
   username: string = 'aaron'
   status: string = 'Not Started'
+  // status: string = 'Rejected'
+  // status: string = 'Pending'
+  // status: string = 'Approved'
   profile: any = {
-    firstName: this.firstName,
-    lastName: this.lastName,
-    address: {
-      apt: this.apt,
-      street: this.street,
-      city: this.city,
-      state: this.state,
-      zip: this.zip,
-    },
-    cellPhoneNumber: this.cellPhone,
-    car: {
-      make: this.carMake,
-      model: this.carModel,
-      color: this.carColor,
-    },
-    email: this.email,
-    SSN: this.ssn,
-    dateOfBirth: this.dateOfBirth,
-    gender: this.gender,
-    driverLicense: {
-      number: this.driverLicenseNumber,
-      expireDate: this.driverLicenseExpiration,
-      document: this.driverLicenseDocument,
-    },
-    reference: '',
-    emergencyContacts: '',
+    firstName: 'Aaron',
+    lastName: 'Wang',
+    address: 'NY',
+    cellPhoneNumber: '123456789',
+    car: 'Toyota',
+    email: 'aaronub2008@gmail.com',
+    SSN: '123456',
+    dateOfBirth: '01/01/2022',
+    gender: 'male',
+    driverLicense: 'NG12345',
+    reference: 'Beaconfire',
+    emergencyContacts: 'Dora'
   }
+
 
   fileList: string[] = [];
   showFileList() {
