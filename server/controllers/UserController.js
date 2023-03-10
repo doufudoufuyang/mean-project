@@ -242,6 +242,8 @@ async function updateProfile(username, profileData) {
       profile.car = profileData.car;
       profile.SSN = profileData.SSN;
       profile.dateOfBirth = profileData.dateOfBirth;
+      if(profileData.email)
+      profile.email = profileData.email;
       profile.gender = profileData.gender;
       profile.reference = profileData.reference;
       profile.emergencyContacts = profileData.emergencyContacts;

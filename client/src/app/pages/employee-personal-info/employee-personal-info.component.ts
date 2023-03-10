@@ -71,7 +71,7 @@ export class EmployeePersonalInfoComponent {
     gender: [{ value: '', disabled: true }],
     dateOfBirth: [{ value: '', disabled: true }, Validators.required],
     address: this.formBuilder.group({
-      building: [{ value: '', disabled: true }, Validators.required],
+      apt: [{ value: '', disabled: true }, Validators.required],
       street: [{ value: '', disabled: true }, Validators.required],
       city: [{ value: '', disabled: true }, Validators.required],
       state: [{ value: '', disabled: true }, Validators.required],
