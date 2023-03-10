@@ -58,6 +58,7 @@ import { profileReducer } from './store/profile/profile.reducer';
 import { hrReducer } from './store/hr/hr.reducer';
 import { MatTabsModule } from '@angular/material/tabs';
 import { EmployeeProfileDialogComponent } from './components/employee-profile-dialog/employee-profile-dialog.component';
+import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,6 +86,7 @@ import { EmployeeProfileDialogComponent } from './components/employee-profile-di
     ConnectFormDirective,
     HrApplicationDetailComponent,
     EmployeeProfileDialogComponent,
+    RejectDialogComponent,
   ],
   imports: [
     MatTabsModule,

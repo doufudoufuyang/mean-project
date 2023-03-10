@@ -21,10 +21,11 @@
                         <a href='http://localhost:3000/user/download/{{fileList[i]}}'>Download {{fileList[i]}}</a>
                         <div *ngIf="isStep(p.nextStep); else sendBlock">
                             {{p._id}}
-                            <button (click)="approve(p._id,p.nextStep)">approve</button> <button
-                                (click)="reject(p._id,p.nextStep)">reject</button>
-                        </div>
-                        <ng-template #sendBlock><button (click)="sendNotification(p.firstName,p.email,p.nextStep)">Send Notification</button></ng-template>
+                            <button (click)="approve(p._id,p.nextStep,i)">approve</button>
+                            <button (click)="openDialog(p._id,p.nextStep,i)">reject</button>
+                        </div> 
+                        <ng-template #sendBlock><button (click)="sendNotification(p.firstName,p.email,p.nextStep)">Send
+                                Notification</button></ng-template>
 
                     </div>
                 </mat-expansion-panel>

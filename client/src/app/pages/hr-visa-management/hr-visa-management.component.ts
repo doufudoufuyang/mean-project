@@ -4,6 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Employee } from 'src/app/interfaces/employee';
 import { FileService } from 'src/app/services/file.service';
 import { Observable, catchError, of } from 'rxjs';
+import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { RejectDialogComponent } from 'src/app/components/reject-dialog/reject-dialog.component';
+
 @Component({
   selector: 'app-hr-visa-management',
   templateUrl: './hr-visa-management.component.html',
@@ -23,7 +26,8 @@ export class HrVisaManagementComponent {
   constructor(
     private fileService: FileService,
     private formBuilder: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    public dialog: MatDialog
   ) {}
   getStep(step: number | string): string | number {
     // console.log(step);
@@ -87,8 +91,8 @@ export class HrVisaManagementComponent {
     //   });
   }
   sendNotification(name: string, email: string, nextstep: number) {
-    console.log(email)
-    console.log(nextstep)
+    console.log(email);
+    console.log(nextstep);
     fetch(`http://localhost:3000/hr/sendNotification`, {
       method: 'POST',
       headers: {
@@ -113,7 +117,7 @@ export class HrVisaManagementComponent {
         console.error('Error:', error);
       });
   }
-  approve(pid: string, next: number) {
+  approve(pid: string, next: number,i:number) {
     console.log(pid);
     fetch(`http://localhost:3000/hr/approve`, {
       method: 'POST',
@@ -133,35 +137,36 @@ export class HrVisaManagementComponent {
       })
       .then((res) => {
         console.log(res);
+        this.profiles[i].nextStep ++;
       })
       .catch((error) => {
         console.error('Error:', error);
       });
   }
-  reject(pid: string, next: number) {
-    fetch(`http://localhost:3000/hr/a`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g',
-      },
-      body: JSON.stringify({ pid: pid }),
-    })
-      .then((response) => {
-        console.log(response);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }
+  // reject(pid: string, next: number) {
+  //   fetch(`http://localhost:3000/hr/a`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       authorization:
+  //         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoxLCJlbWFpbCI6ImRhejAwNEB1Y3NkLmVkdSIsImlhdCI6MTY3ODE1NTE1MywiZXhwIjoxNjc4MTY1OTUzfQ.QRtihBwAhBvidh4scWNEv6GdiJY0AcgkxXPy7UNr_0g',
+  //     },
+  //     body: JSON.stringify({ pid: pid }),
+  //   })
+  //     .then((response) => {
+  //       console.log(response);
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error:', error);
+  //     });
+  // }
   getDocumnt() {
     const dlist = this.profiles.map((p) => {
       switch (p.nextStep) {
@@ -189,6 +194,20 @@ export class HrVisaManagementComponent {
         return false;
       });
       this.fileList = userFile;
+    });
+  }
+  openDialog(pid:string,nextStep:number,i:number): void {
+    const dialogRef = this.dialog.open(RejectDialogComponent, {
+      data: { pid: pid, nextStep: nextStep},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      if(result)
+      {
+        this.profiles[i].nextStep --;
+      }
+      // alert(result)
     });
   }
 }

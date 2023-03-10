@@ -125,11 +125,14 @@ exports.getVisas = async (req, res) => {
 };
 exports.reject = async (req, res) => {
   try {
-    const { pid, nextStep, feedback } = req.body;
+    const { pid, nextstep, feedback } = req.body;
+    console.log(pid);
+    console.log(nextstep);
+    console.log(feedback);
     await Profile.findByIdAndUpdate(
       { _id: pid },
-      { nextStep: nextStep },
-      { feedback: feedback }
+      { nextStep: nextstep},
+      { documentFeedback: feedback }
     );
     // profile.nextStep = profile.nextStep - 1;
     // if (req.params.feedback) profile.feedback = req.params.feedback;
@@ -144,7 +147,7 @@ exports.approve = async (req, res) => {
     const { pid, nextStep } = req.body;
     console.log(pid);
     if (pid) {
-      await Profile.findByIdAndUpdate({ _id: pid }, { nextStep: nextStep });
+      await Profile.findByIdAndUpdate({ _id: pid }, { nextStep: nextStep+1});
       // profile.nextStep = profile.nextStep + 1;
       // await profile.save();
       return res.status(201).json({ message: "approve successfully" });
