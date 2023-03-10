@@ -2,11 +2,8 @@
     <br>
     <h1>Onboarding Application</h1>
     <br>
-    <p *ngIf="status === 'Approved'">Congratulations! Your application has been approved. You will now be redirected to the home page.</p>
-    <p *ngIf="status === 'Pending'">You have submitted you application. Please wait for HR to review your application.</p>
-    <p *ngIf="status === 'Rejected'">Your application has been rejecte. Here is the feedfack:</p>
-    <br>
-    <form #myForm="ngForm" *ngIf="status === 'Not Started'">
+    <form #myForm="ngForm" *ngIf="status === 'Not Started' || status === 'Rejected'">
+        <p *ngIf="status === 'Rejected'">{{ "Your application has been rejected. Here is the feedfack: " + profile.feedback + ". Please make changes and resubmit." }}</p>
         <table>
         <tr>
             <td>
@@ -353,8 +350,11 @@
         </div>
     </form>
 
-
-    <div *ngIf=" status === 'Pending' || status === 'Rejected'">
+    <!------------------------------------------------------------------------------------------------------------------>
+    <div *ngIf=" status === 'Pending'">
+        <br>
+        <p>You have submitted you application. Please wait for HR to review your application.</p>
+        <br>
         <h3 class="font-bold">Personal Information</h3>
         <div class="flex-row">
             <mat-list>
