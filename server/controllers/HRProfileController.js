@@ -237,7 +237,11 @@ exports.sendNotification = async (req, res) => {
 };
 
 exports.getAllInvitations = async (req, res) => {
+  const { role } = req.payload;
   try {
+    console.log('role:',  role)
+    if (role === "employee")
+      return res.status(403).json({ message: "Not authorized" });
     const invitations = await Invitation.find();
     res.status(200).json({ invitations: invitations });
   } catch (e) {

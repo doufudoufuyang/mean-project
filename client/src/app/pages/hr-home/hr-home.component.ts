@@ -37,7 +37,8 @@ export class HrHomeComponent {
         console.log('invitations: ', this.invitations)
       },
       error: (error) => {
-        console.log('fail to fetch all invitations')
+        window.alert(error.error.message)
+        // console.log('fail to fetch all invitations', error)
       }
     })
   }
